@@ -11,6 +11,16 @@
 |
 */
 
+// Entries collection routes
+Route::get('/entries', 'EntryController@index');
+Route::post('/entries', 'EntryController@create');
+
+// Entries singular routes
+Route::get('/entries/{id}', 'EntryController@show');
+Route::put('/entries/{id}', 'EntryController@update');
+Route::delete('/entries/{id}', 'EntryController@destroy');
+
+// HTML/view responses
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
 });
