@@ -1,6 +1,16 @@
 <template>
   <div class="Entry panel panel-default">
-    <div class="panel-heading">
+    <div class="card">
+    <div class="card-header">
+    Featured
+  </div>
+  <div class="card-block">
+    <h4 class="card-title">Special title treatment</h4>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+    </div>
+    <!--<div class="panel-heading">
       <a :href="'tel:' + entry.phone">
         <i class="glyphicon glyphicon-earphone"></i>
       </a>
@@ -28,7 +38,7 @@
           <button class="btn btn-default" @click="cancel">Cancel</button>
         </p>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -73,14 +83,14 @@ export default {
       console.log('Entry -> save');
       axios.put(`/entries/${this.entry.id}`, {
           creationDate: this.creationDate,
-          entryText: this.entryText,
+          text: this.entryText,
           favorite: this.favorite
         })
         .then((response) => {
           console.log('Entry -> save success');
           this.$emit('updated', {
             creationDate: this.creationDate,
-            entryText: this.entryText,
+            text: this.entryText,
             favorite: this.favorite
           });
           this.editing = false;

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Entry;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
 
 class EntryController extends Controller
 {

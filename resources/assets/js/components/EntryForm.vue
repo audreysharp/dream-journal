@@ -1,23 +1,29 @@
 <template>
   <div class="EntryForm">
-    <input type="text" v-model="date" />
-    
-    <input type="text" v-model="entry" />
-    <input type="checkbox" v-model="favorite" />
-    <button class="btn btn-primary" @click="create" :disabled="loading">Add Entry</button>
+    <div class="container">
+      <datepicker :value="creationDate.date" name="datePicker"></datepicker>
+      <div class="form-group">
+        <label for="exampleTextarea">Dream Journal Entry</label>
+        <textarea class="form-control" id="entry" v-model="entry"></textarea>
+      </div>
+      <input type="checkbox" v-model="favorite" />
+      <button class="btn btn-primary" @click="create" :disabled="loading">Add Entry</button>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Datepicker from 'vuejs-datepicker';
 
 export default {
   components: {
+    Datepicker
   },
 
   data() {
     return {
-      date: '',
+      creationDate: new Date(2016, 9,  16),
       entry: '',
       favorite: false,
       loading: false
@@ -37,9 +43,8 @@ export default {
 
     sendRequest () {
       axios.post('/entries', {
-        first: this.first,
-        last: this.last,
-        phone: this.phone,
+        creationDate: this.creationDate,
+        text: this.entryText,
         favorite: this.favorite
       })
       .then((response) => {
@@ -51,15 +56,15 @@ export default {
       })
       .catch((error) => {
         console.error('EntryForm -> sendRequest error');
+        console.log(error);
         // show an error message
       });
     },
 
     reset () {
-      this.first = '';
-      this.last = '';
-      this.phone = '';
-      this.favorite = false;
+      this.creationDate = '',
+      this.entryText = '',
+      this.favorite = false
     }
   }
 };

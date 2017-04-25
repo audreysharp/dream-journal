@@ -3,11 +3,13 @@
     <div id="app" v-cloak>
       <div class="container">
         <h4>Testing</h4>
+        <div class="EntryList" v-show="entries.length > 0">
+          <Entry v-for="(text, index) in entries" :key="index" :entry="text" @updated="update" @deleted="remove(index)"></Entry>
+        </div>
         <EntryForm></EntryForm>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -19,7 +21,7 @@ export default {
 
   components: {
     Entry,
-    EntryForm,
+    EntryForm
   },
 
   data() {
