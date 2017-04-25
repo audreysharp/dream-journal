@@ -2,6 +2,7 @@
   <div id="container">
     <div id="app" v-cloak>
       <div class="container">
+        <Navigation></Navigation>
         <h4>Testing</h4>
         <div class="EntryList" v-show="entries.length > 0">
           <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
@@ -14,12 +15,14 @@
 
 <script>
 import axios from 'axios';
+import Navigation from './Navigation';
 import Entry from './Entry';
 import EntryForm from './EntryForm';
 
 export default {
 
   components: {
+    Navigation,
     Entry,
     EntryForm
   },
@@ -78,6 +81,10 @@ export default {
 * {
   font-family: Lato;
   font-weight: 400;
+}
+
+body {
+  padding-top: 70px;
 }
 
 </style>

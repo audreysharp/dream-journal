@@ -12422,10 +12422,12 @@ module.exports = function spread(callback) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entry__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entry___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Entry__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EntryForm__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EntryForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__EntryForm__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navigation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Navigation__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Entry__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Entry___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Entry__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__EntryForm__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__EntryForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__EntryForm__);
 //
 //
 //
@@ -12440,6 +12442,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 
@@ -12448,8 +12452,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 
   components: {
-    Entry: __WEBPACK_IMPORTED_MODULE_1__Entry___default.a,
-    EntryForm: __WEBPACK_IMPORTED_MODULE_2__EntryForm___default.a
+    Navigation: __WEBPACK_IMPORTED_MODULE_1__Navigation___default.a,
+    Entry: __WEBPACK_IMPORTED_MODULE_2__Entry___default.a,
+    EntryForm: __WEBPACK_IMPORTED_MODULE_3__EntryForm___default.a
   },
 
   data: function data() {
@@ -12602,8 +12607,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -12638,7 +12641,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       console.log(this.creationDate);
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/entries', {
         creationDate: this.creationDate,
-        text: this.entryText
+        text: this.entry
       }).then(function (response) {
         console.log('EntryForm -> sendRequest success');
         console.log(response.data);
@@ -15106,14 +15109,14 @@ exports.push([module.i, "\n.tool>i {\n  margin-left: 15px;\n}\n", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n#date[data-v-6b938bde] {\n    width: 500px;\n    overflow: hidden;\n    white-space: nowrap;\n    display: inline-block\n}\n\n", ""]);
+exports.push([module.i, "\ntextarea[data-v-6b938bde] {\n  min-height: 200px;\n}\n\n", ""]);
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n* {\n  font-family: Lato;\n  font-weight: 400;\n}\n\n", ""]);
+exports.push([module.i, "\n* {\n  font-family: Lato;\n  font-weight: 400;\n}\nbody {\n  padding-top: 70px;\n}\n\n", ""]);
 
 /***/ }),
 /* 41 */
@@ -32352,12 +32355,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "EntryForm"
   }, [_c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "input-group",
-    attrs: {
-      "id": "date"
-    }
+    staticClass: "input-group date"
   }, [_c('span', {
     staticClass: "glyphicon glyphicon-calendar",
     attrs: {
@@ -32409,7 +32407,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.create
     }
-  }, [_vm._v("Add Entry")])])])
+  }, [_vm._v("Add Entry")])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -32434,7 +32432,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "container"
-  }, [_c('h4', [_vm._v("Testing")]), _vm._v(" "), _c('div', {
+  }, [_c('Navigation'), _vm._v(" "), _c('h4', [_vm._v("Testing")]), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -41947,6 +41945,149 @@ module.exports = function(module) {
 __webpack_require__(14);
 module.exports = __webpack_require__(15);
 
+
+/***/ }),
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(69)
+
+var Component = __webpack_require__(5)(
+  /* script */
+  __webpack_require__(65),
+  /* template */
+  __webpack_require__(68),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/Audrey/Dropbox/school/MEJO 583/project4/dream-journal/resources/assets/js/components/Navigation.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Navigation.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-678d962e", Component.options)
+  } else {
+    hotAPI.reload("data-v-678d962e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('nav', {
+    staticClass: "navbar navbar-default navbar-fixed-top"
+  }, [_c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "navbar-header"
+  }, [_c('a', {
+    staticClass: "navbar-brand",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Dream Journal")])]), _vm._v(" "), _c('ul', {
+    staticClass: "nav navbar-nav"
+  }, [_c('li', {
+    staticClass: "active"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Dreams")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Add Dream")])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-678d962e", module.exports)
+  }
+}
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(66);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(6)("7a3cccdc", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-678d962e!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Navigation.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-678d962e!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Navigation.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

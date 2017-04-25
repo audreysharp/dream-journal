@@ -1,7 +1,6 @@
 <template>
   <div class="EntryForm">
-    <div class="container">
-      <div class="input-group" id="date">
+      <div class="input-group date">
         <span class="glyphicon glyphicon-calendar" id="basic-addon"></span>
         <datepicker v-model="creationDate" name="datePicker" format="D MMMM dd yyyy"></datepicker>
       </div>
@@ -11,7 +10,6 @@
         <textarea class="form-control" id="entry" v-model="entry"></textarea>
       </div>
       <button class="btn btn-primary" @click="create" :disabled="loading">Add Entry</button>
-    </div>
   </div>
 </template>
 
@@ -47,7 +45,7 @@ export default {
       console.log(this.creationDate);
       axios.post('/entries', {
         creationDate: this.creationDate,
-        text: this.entryText,
+        text: this.entry,
       })
       .then((response) => {
         console.log('EntryForm -> sendRequest success');
@@ -73,11 +71,8 @@ export default {
 
 <style scoped>
 
-#date {
-    width: 500px;
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block
+textarea {
+  min-height: 200px;
 }
 
 </style>
