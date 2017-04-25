@@ -1,12 +1,15 @@
 <template>
   <div class="EntryForm">
     <div class="container">
-      <datepicker :value="creationDate.date" name="datePicker"></datepicker>
+      <div class="input-group" id="date">
+        <span class="glyphicon glyphicon-calendar" id="basic-addon"></span>
+        <datepicker v-model="creationDate" name="datePicker" format="D MMMM dd yyyy"></datepicker>
+      </div>
+      <!--<datepicker v-model="creationDate" name="datePicker" format="D MMMM dd yyyy"></datepicker>-->
       <div class="form-group">
-        <label for="exampleTextarea">Dream Journal Entry</label>
+        <label for="entry">Dream Journal Entry</label>
         <textarea class="form-control" id="entry" v-model="entry"></textarea>
       </div>
-      <input type="checkbox" v-model="favorite" />
       <button class="btn btn-primary" @click="create" :disabled="loading">Add Entry</button>
     </div>
   </div>
@@ -23,9 +26,8 @@ export default {
 
   data() {
     return {
-      creationDate: new Date(2016, 9,  16),
+      creationDate: new Date(),
       entry: '',
-      favorite: false,
       loading: false
     }
   },
@@ -42,10 +44,10 @@ export default {
     },
 
     sendRequest () {
+      console.log(this.creationDate);
       axios.post('/entries', {
         creationDate: this.creationDate,
         text: this.entryText,
-        favorite: this.favorite
       })
       .then((response) => {
         console.log('EntryForm -> sendRequest success');
@@ -63,12 +65,19 @@ export default {
 
     reset () {
       this.creationDate = '',
-      this.entryText = '',
-      this.favorite = false
+      this.entryText = ''
     }
   }
 };
 </script>
 
 <style scoped>
+
+#date {
+    width: 500px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block
+}
+
 </style>

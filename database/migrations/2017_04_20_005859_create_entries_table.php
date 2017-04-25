@@ -17,7 +17,6 @@ class CreateEntriesTable extends Migration
             $table->increments('id'); // ID of entry
             $table->string('creationDate'); // date entry was created
             $table->longText('text'); // journal entry
-            $table->boolean('favorite'); // if entry has been favorited
             $table->timestamps(); // database timestamp of entry
         });
     }
