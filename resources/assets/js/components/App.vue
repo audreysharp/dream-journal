@@ -2,12 +2,22 @@
   <div id="container">
     <div id="app" v-cloak>
       <div class="container">
-        <Navigation></Navigation>
-        <h4>Testing</h4>
-        <div class="EntryList" v-show="entries.length > 0">
-          <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
-        </div>
-        <EntryForm></EntryForm>
+        <Navigation>
+          <Tab name="Dreams" :selected="true">
+            <div class="EntryList" v-show="entries.length > 0">
+              <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
+            </div>
+          </Tab>
+          <Tab name="Add Dream">
+            <EntryForm></EntryForm>
+          </Tab>
+          <Tab name="Style Guide">
+            Style Guide
+          </Tab>
+          <Tab name="Credits">
+            Credits
+          </Tab>
+        </Navigation>
       </div>
     </div>
   </div>
@@ -16,6 +26,7 @@
 <script>
 import axios from 'axios';
 import Navigation from './Navigation';
+import Tab from './Tab';
 import Entry from './Entry';
 import EntryForm from './EntryForm';
 
@@ -23,6 +34,7 @@ export default {
 
   components: {
     Navigation,
+    Tab,
     Entry,
     EntryForm
   },
@@ -40,7 +52,7 @@ export default {
 
   methods: {
 
-    fetch () {
+    fetch() {
       console.log('App -> fetch');
       this.loading = true;
       axios.get('/entries')
@@ -58,7 +70,7 @@ export default {
         })
     },
 
-    update (data) {
+    update(data) {
       // this.fetch();
       var i = this.entries.indexOf(data.entry);
       for (var d in data) {
@@ -66,7 +78,7 @@ export default {
       }
     },
 
-    remove (i) {
+    remove(i) {
       console.log(`App -> remove ID: ${i}`);
       this.entries.splice(i, 1);
     }
@@ -77,14 +89,13 @@ export default {
 </script>
 
 <style>
-
 * {
   font-family: Lato;
   font-weight: 400;
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 60px;
+  padding-bottom: 10px;
 }
-
 </style>

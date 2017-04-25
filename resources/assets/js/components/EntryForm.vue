@@ -2,9 +2,9 @@
   <div class="EntryForm">
       <div class="input-group date">
         <span class="glyphicon glyphicon-calendar" id="basic-addon"></span>
-        <datepicker v-model="creationDate" name="datePicker" format="D MMMM dd yyyy"></datepicker>
+        <!--<datepicker v-model="creationDate" name="datePicker" format="D MMMM dd yyyy"></datepicker>-->
+        <Datepicker v-model="creationDate" value="creationDate" format="MMMM/dd/yyyy" placeholder="2015-06-09" ></Datepicker>
       </div>
-      <!--<datepicker v-model="creationDate" name="datePicker" format="D MMMM dd yyyy"></datepicker>-->
       <div class="form-group">
         <label for="entry">Dream Journal Entry</label>
         <textarea class="form-control" id="entry" v-model="entry"></textarea>
@@ -15,7 +15,7 @@
 
 <script>
 import axios from 'axios';
-import Datepicker from 'vuejs-datepicker';
+import Datepicker from 'vue-strap/src/datepicker';
 
 export default {
   components: {
@@ -24,7 +24,7 @@ export default {
 
   data() {
     return {
-      creationDate: new Date(),
+      creationDate: '2015-06-09',
       entry: '',
       loading: false
     }
