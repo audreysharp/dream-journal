@@ -1,7 +1,10 @@
 <template>
   <div id="container">
     <div id="app" v-cloak>
-      <h4>Testing</h4>
+      <div class="container">
+        <h4>Testing</h4>
+        <EntryForm></EntryForm>
+      </div>
     </div>
   </div>
 
@@ -11,14 +14,12 @@
 import axios from 'axios';
 import Entry from './Entry';
 import EntryForm from './EntryForm';
-import MainLoader from './MainLoader';
 
 export default {
 
   components: {
     Entry,
     EntryForm,
-    MainLoader
   },
 
   data() {
@@ -71,5 +72,10 @@ export default {
 </script>
 
 <style>
+
+* {
+  font-family: Lato;
+  font-weight: 400;
+}
 
 </style>

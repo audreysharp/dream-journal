@@ -1,6 +1,7 @@
 <template>
-  <div class="ContactForm">
+  <div class="EntryForm">
     <input type="text" v-model="date" />
+    
     <input type="text" v-model="entry" />
     <input type="checkbox" v-model="favorite" />
     <button class="btn btn-primary" @click="create" :disabled="loading">Add Entry</button>
@@ -9,11 +10,9 @@
 
 <script>
 import axios from 'axios';
-import Loader from './Loader';
 
 export default {
   components: {
-    Loader
   },
 
   data() {
@@ -37,21 +36,21 @@ export default {
     },
 
     sendRequest () {
-      axios.post('/contacts', {
+      axios.post('/entries', {
         first: this.first,
         last: this.last,
         phone: this.phone,
         favorite: this.favorite
       })
       .then((response) => {
-        console.log('ContactForm -> sendRequest success');
+        console.log('EntryForm -> sendRequest success');
         console.log(response.data);
         this.loading = false;
         this.reset();
         this.$emit('created');
       })
       .catch((error) => {
-        console.error('ContactForm -> sendRequest error');
+        console.error('EntryForm -> sendRequest error');
         // show an error message
       });
     },
