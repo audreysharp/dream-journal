@@ -33,7 +33,6 @@
       </div>
     </nav>
 
-    <!--@yield('content')-->
     <div id="container">
         @yield('content')
     </div>
