@@ -27160,8 +27160,8 @@ __webpack_require__(160);
 var evt = new Vue();
 Vue.prototype.$evt = evt;
 
-Vue.component('IndexPage', __webpack_require__(217));
-Vue.component('AddPage', __webpack_require__(216));
+Vue.component('app-index', __webpack_require__(217));
+Vue.component('app-add', __webpack_require__(216));
 
 var app = new Vue({
   el: '#app'

@@ -17,8 +17,8 @@ require('./bootstrap');
 const evt = new Vue();
 Vue.prototype.$evt = evt;
 
-Vue.component('IndexPage', require('./components/AppIndex.vue'));
-Vue.component('AddPage', require('./components/AppAdd.vue'));
+Vue.component('app-index', require('./components/AppIndex.vue'));
+Vue.component('app-add', require('./components/AppAdd.vue'));
 
 const app = new Vue({
     el: '#app'
