@@ -3,17 +3,17 @@
   
     <div v-show="error" class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>There was an error adding your dream entry.</strong> Please refresh the page and try again.
+      <strong>There was an error adding your dream entry.</strong> Please try again.
     </div>
   
     <!--<div v-show="success" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>There was an error adding your dream entry.</strong> Please refresh the page and try again!.
-          </div>-->
-
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>There was an error adding your dream entry.</strong> Please refresh the page and try again!.
+            </div>-->
+  
     <Spinner v-if="loading"></Spinner>
   
-    <div class="table-responsive">
+    <div>
       <table class="table">
         <tbody>
           <tr>
@@ -30,7 +30,7 @@
         </tbody>
       </table>
     </div>
-
+  
     <button class="btn btn-primary" @click="create" :disabled="loading">Add Entry</button>
   </div>
 </template>
@@ -54,7 +54,7 @@ export default {
       entry: '',
       loading: false,
       error: false,
-      success: true
+      success: false
     }
   },
 
@@ -81,12 +81,12 @@ export default {
           console.log(response.data);
           this.loading = false;
           this.reset();
-          this.$evt.$emit('addEntry', response.data)
         })
         .catch((error) => {
           console.error('EntryForm -> sendRequest error');
           console.log(error); // log error message
           this.error = true; // show error alert box
+          this.loading = false;
         });
     },
 
@@ -108,22 +108,42 @@ textarea {
   padding: 0px;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   border: 1px !important;
   padding: 0px;
+}
+
+/* Styling for mobile devices */
+@media (max-width: 40.0rem) {
+  td {
+    display: block;
+  }
+
+  .calendar {
+    /*width: 100%;*/
+    height: 330px;
+  }
+
+  .text-entry {
+    width: 100%;
+  }
+}
+
+/* Styling for desktop devices */
+@media (min-width: 40.0rem) {
+  .calendar {
+    width: 30%;
+  }
+
+  .text-entry {
+    width: 70%;
+    padding-left: 15px !important;
+  }
 }
 
 .fixed-table-container {
   border: 0px !important;
   padding: 0px;
-}
-
-.calendar {
-  width: 30%;
-}
-
-.text-entry {
-  width: 70%;
-  padding-left: 15px !important;
 }
 </style>

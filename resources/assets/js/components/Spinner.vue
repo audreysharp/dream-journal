@@ -36,6 +36,7 @@ export default {
   }
 }
 
+/* Styling for mobile devices */
 @media (max-width: 40.0rem) { 
   #overlay {
     margin-left: 60px;

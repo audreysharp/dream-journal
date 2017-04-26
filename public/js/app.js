@@ -28237,7 +28237,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       entry: '',
       loading: false,
       error: false,
-      success: true
+      success: false
     };
   },
 
@@ -28264,11 +28264,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(response.data);
         _this.loading = false;
         _this.reset();
-        _this.$evt.$emit('addEntry', response.data);
       }).catch(function (error) {
         console.error('EntryForm -> sendRequest error');
         console.log(error); // log error message
         _this.error = true; // show error alert box
+        _this.loading = false;
       });
     },
     reset: function reset() {
@@ -30747,7 +30747,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ntextarea[data-v-6b938bde] {\n  min-height: 295px;\n}\n.table[data-v-6b938bde] {\n  border-bottom: 0px !important;\n  padding: 0px;\n}\n.table th[data-v-6b938bde], .table td[data-v-6b938bde] {\n  border: 1px !important;\n  padding: 0px;\n}\n.fixed-table-container[data-v-6b938bde] {\n  border: 0px !important;\n  padding: 0px;\n}\n.calendar[data-v-6b938bde] {\n  width: 30%;\n}\n.text-entry[data-v-6b938bde] {\n  width: 70%;\n  padding-left: 15px !important;\n}\n", ""]);
+exports.push([module.i, "\ntextarea[data-v-6b938bde] {\n  min-height: 295px;\n}\n.table[data-v-6b938bde] {\n  border-bottom: 0px !important;\n  padding: 0px;\n}\n.table th[data-v-6b938bde],\n.table td[data-v-6b938bde] {\n  border: 1px !important;\n  padding: 0px;\n}\n\n/* Styling for mobile devices */\n@media (max-width: 40.0rem) {\ntd[data-v-6b938bde] {\n    display: block;\n}\n.calendar[data-v-6b938bde] {\n    /*width: 100%;*/\n    height: 330px;\n}\n.text-entry[data-v-6b938bde] {\n    width: 100%;\n}\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n.calendar[data-v-6b938bde] {\n    width: 30%;\n}\n.text-entry[data-v-6b938bde] {\n    width: 70%;\n    padding-left: 15px !important;\n}\n}\n.fixed-table-container[data-v-6b938bde] {\n  border: 0px !important;\n  padding: 0px;\n}\n", ""]);
 
 /***/ }),
 /* 168 */,
@@ -48299,9 +48299,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "role": "alert"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('strong', [_vm._v("There was an error adding your dream entry.")]), _vm._v(" Please refresh the page and try again.\n  ")]), _vm._v(" "), (_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "table-responsive"
-  }, [_c('table', {
+  }, [_vm._m(0), _vm._v(" "), _c('strong', [_vm._v("There was an error adding your dream entry.")]), _vm._v(" Please try again.\n  ")]), _vm._v(" "), (_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', [_c('table', {
     staticClass: "table"
   }, [_c('tbody', [_c('tr', [_c('td', {
     staticClass: "calendar"
@@ -58794,7 +58792,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* overlay spinner on top */\n#overlay[data-v-ca6d01d8] {\n  padding: 50px;\n  position: absolute;\n  z-index: 1;\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n#overlay[data-v-ca6d01d8] {\n    margin-left: 350px;\n}\n}\n@media (max-width: 40.0rem) {\n#overlay[data-v-ca6d01d8] {\n    margin-left: 60px;\n}\n}\n.fade-enter-active[data-v-ca6d01d8],\n.fade-leave-active[data-v-ca6d01d8] {\n  transition: opacity .5s\n}\n.fade-enter[data-v-ca6d01d8],\n.fade-leave-to[data-v-ca6d01d8] {\n  opacity: 0\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* overlay spinner on top */\n#overlay[data-v-ca6d01d8] {\n  padding: 50px;\n  position: absolute;\n  z-index: 1;\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n#overlay[data-v-ca6d01d8] {\n    margin-left: 350px;\n}\n}\n\n/* Styling for mobile devices */\n@media (max-width: 40.0rem) {\n#overlay[data-v-ca6d01d8] {\n    margin-left: 60px;\n}\n}\n.fade-enter-active[data-v-ca6d01d8],\n.fade-leave-active[data-v-ca6d01d8] {\n  transition: opacity .5s\n}\n.fade-enter[data-v-ca6d01d8],\n.fade-leave-to[data-v-ca6d01d8] {\n  opacity: 0\n}\n", ""]);
 
 /***/ }),
 /* 258 */
