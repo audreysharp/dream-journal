@@ -14,12 +14,12 @@ require('./bootstrap');
  */
 
 // event bus
-const evt = new Vue()
-Vue.prototype.$evt = evt
+const evt = new Vue();
+Vue.prototype.$evt = evt;
 
-Vue.component('App', require('./components/App.vue'));
+Vue.component('IndexPage', require('./components/AppIndex.vue'));
+Vue.component('AddPage', require('./components/AppAdd.vue'));
 
 const app = new Vue({
-    el: '#app',
-    template: '<App />'
+    el: '#app'
 });

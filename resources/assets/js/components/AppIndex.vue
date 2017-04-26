@@ -1,25 +1,31 @@
 <template>
-  <div id="container">
-    <div id="app" v-cloak>
-      <div class="container">
-        <Navigation>
-          <Tab name="Dreams" :selected="true">
-            <div class="EntryList" v-show="entries.length > 0">
-              <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
-              <p v-show="entries.length === 0">No one has entered any dreams yet! You should add one.</p>
-            </div>
-          </Tab>
-          <Tab name="Add Dream">
-            <EntryForm></EntryForm>
-          </Tab>
-          <Tab name="Style Guide">
-            <StyleGuide></StyleGuide>
-          </Tab>
-          <Tab name="Credits">
-            <Credits></Credits>
-          </Tab>
-        </Navigation>
+  <!--<div id="container">
+      <div id="app" v-cloak>
+        <div class="container">
+          <Navigation>
+            <Tab name="Dreams" :selected="true">
+              <div class="EntryList" v-show="entries.length > 0">
+                <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
+                <p v-show="entries.length === 0">No one has entered any dreams yet! You should add one.</p>
+              </div>
+            </Tab>
+            <Tab name="Add Dream">
+              <EntryForm></EntryForm>
+            </Tab>
+            <Tab name="Style Guide">
+              <StyleGuide></StyleGuide>
+            </Tab>
+            <Tab name="Credits">
+              <Credits></Credits>
+            </Tab>
+          </Navigation>
+        </div>
       </div>
+    </div>-->
+  <div id="app-index" v-cloak>
+    <div class="EntryList" v-show="entries.length > 0">
+      <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
+      <p v-show="entries.length === 0">No one has entered any dreams yet! You should add one.</p>
     </div>
   </div>
 </template>

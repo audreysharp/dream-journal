@@ -22,5 +22,13 @@ Route::delete('/entries/{id}', 'EntryController@destroy');
 
 // HTML/view responses
 Route::get('/', function () {
-    return view('app');
+    return view('index');
+});
+
+Route::get('/new', function () {
+    return view('new');
+});
+
+Route::get('/style', function () {
+    return view('style');
 });
