@@ -1,13 +1,10 @@
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600); // import Raleway font
 @import url(https://fonts.googleapis.com/css?family=Lato:300,300italic,400,600,700); // import Lato font
-
 // Variables
 @import "variables";
-
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
 .my-btn {
   //@include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
   @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
@@ -16,9 +13,17 @@
 * {
   font-family: Lato;
   font-weight: 400;
+  color: #bbc0c8;
 }
 
 body {
   padding-top: 65px;
   padding-bottom: 10px;
+  background: url("../background.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.navbar-default {
+  background: rgba(248, 248, 248, 0.8);
 }

@@ -28,7 +28,7 @@
 }
 
 .gray {
-  background-color: #636B6F
+  background-color: #bbc0c8
 }
 
 /* Fonts */
@@ -77,7 +77,7 @@
     <br>
     <div class="box seafoam"></div> #A8DBA8
     <br>
-    <div class="box gray"></div> #636B6F
+    <div class="box gray"></div> #BBC0C8
 
     <br>
     
@@ -91,15 +91,17 @@
     <h3 class="raleway-light">Raleway Light</h3>
     <h3 class="raleway">Raleway Regular</h3>
     <h3 class="raleway-bold">Raleway Bold</h3>
+
+    <br>
     
     <!-- Paragraph examples -->
-    <h4 class="dark-teal-text">Examples:</h4>
+    <h4>Examples:</h4>
   
-    <h1 color="">h1. A very large header</h1>
+    <h1>h1. A very large header</h1>
     <h2 style="color:#3B8686">h2. ANOTHER LARGE HEADER</h2>
     <h3 class="dark-teal-text"><b>h3. Another header</b></h3>
     <h4>h4. A slightly smaller header</h4>
-    <h5>h5. A smaller header</h5>
+    <h5 style="color:#A8DBA8">h5. A smaller header</h5>
   
     <p><b>A paragraph.</b> Proin scelerisque sed turpis id suscipit. Duis vitae nibh id risus tristique tristique. Duis non posuere mi, nec tincidunt lectus. Praesent in ex quis libero dictum porta. Curabitur efficitur, purus vel egestas vestibulum, eros nunc rutrum ipsum, eget interdum diam turpis sed nibh.</p>
     <p class="lead"><b>p.lead paragraph.</b> Morbi vitae bibendum neque, id egestas enim. Etiam fermentum gravida orci, quis rhoncus purus aliquam non. Maecenas sit amet sapien sit amet ligula dapibus rhoncus. Nulla consectetur egestas tempor.</p>

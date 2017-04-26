@@ -58773,7 +58773,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('center', [_c('MoonLoader', {
     attrs: {
-      "color": "#000000",
+      "color": "#ffffff",
       "size": "100px"
     }
   })], 1)], 1)], 1)

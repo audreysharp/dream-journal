@@ -1,7 +1,7 @@
 <template>
 <div id="overlay">
   <transition name="fade">
-    <center><MoonLoader color="#000000" size="100px"></MoonLoader></center>
+    <center><MoonLoader color="#ffffff" size="100px"></MoonLoader></center>
     <!--<MoonLoader color="#000000" size="100px"></MoonLoader>-->
   </transition>
 </div>
