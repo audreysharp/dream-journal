@@ -1,53 +1,20 @@
 <template>
-  <!--<div id="container">
-      <div id="app" v-cloak>
-        <div class="container">
-          <Navigation>
-            <Tab name="Dreams" :selected="true">
-              <div class="EntryList" v-show="entries.length > 0">
-                <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
-                <p v-show="entries.length === 0">No one has entered any dreams yet! You should add one.</p>
-              </div>
-            </Tab>
-            <Tab name="Add Dream">
-              <EntryForm></EntryForm>
-            </Tab>
-            <Tab name="Style Guide">
-              <StyleGuide></StyleGuide>
-            </Tab>
-            <Tab name="Credits">
-              <Credits></Credits>
-            </Tab>
-          </Navigation>
-        </div>
-      </div>
-    </div>-->
   <div id="app-index" v-cloak>
     <div class="EntryList" v-show="entries.length > 0">
       <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
-      <p v-show="entries.length === 0">No one has entered any dreams yet! You should add one.</p>
+      <p v-show="entries.length === 0">No one has entered any dreams yet! You should <a href="/add">add one.</a></p>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import Navigation from './Navigation';
-import Tab from './Tab';
 import Entry from './Entry';
-import EntryForm from './EntryForm';
-import StyleGuide from './StyleGuide';
-import Credits from './Credits';
 
 export default {
 
   components: {
-    Navigation,
-    Tab,
-    Entry,
-    EntryForm,
-    StyleGuide,
-    Credits
+    Entry
   },
 
   data() {

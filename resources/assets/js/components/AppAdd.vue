@@ -6,22 +6,12 @@
 
 <script>
 import axios from 'axios';
-import Navigation from './Navigation';
-import Tab from './Tab';
-import Entry from './Entry';
 import EntryForm from './EntryForm';
-import StyleGuide from './StyleGuide';
-import Credits from './Credits';
 
 export default {
 
   components: {
-    Navigation,
-    Tab,
-    Entry,
-    EntryForm,
-    StyleGuide,
-    Credits
+    EntryForm
   },
 
   data() {

@@ -25,10 +25,14 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/new', function () {
+Route::get('/add', function () {
     return view('new');
 });
 
 Route::get('/style', function () {
     return view('style');
+});
+
+Route::get('/credits', function () {
+    return view('credits');
 });
