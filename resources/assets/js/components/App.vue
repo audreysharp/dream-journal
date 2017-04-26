@@ -12,12 +12,10 @@
             <EntryForm></EntryForm>
           </Tab>
           <Tab name="Style Guide">
-            Style Guide
             <StyleGuide></StyleGuide>
           </Tab>
           <Tab name="Credits">
             <Credits></Credits>
-            <Calendar></Calendar>
           </Tab>
         </Navigation>
       </div>
@@ -31,7 +29,6 @@ import Navigation from './Navigation';
 import Tab from './Tab';
 import Entry from './Entry';
 import EntryForm from './EntryForm';
-import Calendar from './Calendar';
 import StyleGuide from './StyleGuide';
 import Credits from './Credits';
 
@@ -43,8 +40,7 @@ export default {
     Entry,
     EntryForm,
     StyleGuide,
-    Credits,
-    Calendar
+    Credits
   },
 
   data() {
@@ -55,12 +51,12 @@ export default {
   },
 
   mounted() {
-    this.fetch();
+    this.fetch(); // get entries from database
   },
 
   methods: {
 
-    fetch() {
+    fetch() { // fetch database entries
       console.log('App -> fetch');
       this.loading = true;
       axios.get('/entries')
@@ -78,7 +74,7 @@ export default {
         })
     },
 
-    update(data) {
+    update(data) { // update entry
       // this.fetch();
       var i = this.entries.indexOf(data.entry);
       for (var d in data) {
@@ -86,7 +82,7 @@ export default {
       }
     },
 
-    remove(i) {
+    remove(i) { // remove entry
       console.log(`App -> remove ID: ${i}`);
       this.entries.splice(i, 1);
     }

@@ -13,7 +13,7 @@ class CreateEntriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create('entries', function (Blueprint $table) { // create table
             $table->increments('id'); // ID of entry
             $table->string('creationDate'); // date entry was created
             $table->longText('text'); // journal entry
@@ -28,6 +28,6 @@ class CreateEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entries');
+        Schema::dropIfExists('entries'); // drop table if it exists
     }
 }
