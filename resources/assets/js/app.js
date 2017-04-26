@@ -13,12 +13,9 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// event bus
-const evt = new Vue();
-Vue.prototype.$evt = evt;
-
 Vue.component('app-index', require('./components/AppIndex.vue'));
 Vue.component('app-add', require('./components/AppAdd.vue'));
+Vue.component('app-view', require('./components/AppView.vue'));
 
 const app = new Vue({
     el: '#app'

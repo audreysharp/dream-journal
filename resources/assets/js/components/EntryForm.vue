@@ -10,6 +10,8 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>There was an error adding your dream entry.</strong> Please refresh the page and try again!.
           </div>-->
+
+    <Spinner v-if="loading"></Spinner>
   
     <div class="table-responsive">
       <table class="table">
@@ -28,7 +30,7 @@
         </tbody>
       </table>
     </div>
-    <!--<Spinner spinner size="md" fixed text="I will close in 2 secs"></Spinner>-->
+
     <button class="btn btn-primary" @click="create" :disabled="loading">Add Entry</button>
   </div>
 </template>
@@ -36,8 +38,8 @@
 <script>
 import axios from 'axios';
 import Calendar from './Calendar';
-import Spinner from 'vue-strap/src/spinner';
 import Datepicker from 'vuejs-datepicker';
+import Spinner from './Spinner';
 
 export default {
   components: {

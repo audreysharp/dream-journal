@@ -1,63 +1,53 @@
 <template>
-  <div id="app-index" v-cloak>
-
-    <Spinner v-if="loading"></Spinner>
-
-    <div class="EntryList" v-show="entries.length > 0 && !loading">
-      <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
+    <div id="app-view" v-cloak>
+      <EntryView></EntryView>
     </div>
-  
-    <p v-show="entries.length === 0 && !loading">No one has added any dreams yet! You should <a href="http://localhost:8888/add">add one.</a></p>
-
-  </div>
 </template>
 
 <script>
 import axios from 'axios';
-import Entry from './Entry';
-import Spinner from './Spinner';
+import EntryView from './EntryView';
 
 export default {
 
   components: {
-    Entry,
-    Spinner
+    EntryView
   },
 
   data() {
     return {
       entries: [],
-      loading: false
     }
   },
 
   mounted() {
-    console.log('AppIndex -> mounted.')
+    console.log('App -> mounted.')
     this.fetch(); // get entries from database
   },
 
   beforeDestroy() {
     console.log('App -> beforeDestroy.')
-    this.$evt.$off('addEntry', this.entryAdded)
   },
 
   methods: {
 
+    entryAdded() {
+      console.log('App -> entryAdded');
+      this.fetch();
+    },
+
     fetch() { // fetch database entries
       console.log('App -> fetch');
-      this.loading = true;
       axios.get('/entries')
         .then((response) => {
           console.log('App -> fetch success');
           // console.log(response.data);
-          this.loading = false;
           this.entries = response.data;
         })
         .catch((response) => {
           console.log('App -> fetch error');
           // show error
           console.log(reponse);
-          this.loading = false;
         })
     },
 
@@ -67,11 +57,6 @@ export default {
       for (var d in data) {
         this.entries[i][d] = data[d];
       }
-    },
-
-    remove(i) { // remove entry
-      console.log(`App -> remove ID: ${i}`);
-      this.entries.splice(i, 1);
     }
 
   }

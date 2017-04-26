@@ -87,7 +87,4 @@
 </script>
 
 <style>
-  .tool>i {
-    margin-left: 15px;
-  }
 </style>

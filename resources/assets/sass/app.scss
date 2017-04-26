@@ -12,3 +12,13 @@
   //@include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
   @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
 }
+
+* {
+  font-family: Lato;
+  font-weight: 400;
+}
+
+body {
+  padding-top: 65px;
+  padding-bottom: 10px;
+}
