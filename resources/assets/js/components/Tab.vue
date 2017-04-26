@@ -1,6 +1,6 @@
 <template>
-  <div v-show="isActive">
-    <slot></slot>
+  <div v-show="isActive"> 
+    <slot></slot> <!-- Show tab content -->
   </div>
 </template>
 
@@ -28,7 +28,7 @@
     },
 
     mounted () {
-      this.isActive = this.selected
+      this.isActive = this.selected // see if tab is active
     }
   }
 

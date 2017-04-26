@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>Styles</h1>
-  
+    
+    <!-- Color examples -->
     <h3 class="style-heading"><b>Colors</b></h3>
     <div class="box dark-teal"></div> #0B486B
     <br>
@@ -14,9 +15,10 @@
     <div class="box gray"></div> #636B6F
 
     <br>
-  
+    
     <h3 class="style-heading"><b>Typography</b></h3>
-  
+    
+    <!-- Font examples -->
     <h3>Lato Light</h3>
     <h3 class="text-regular">Lato Regular</h3>
     <h3><b>Lato Bold</b></h3>
@@ -24,7 +26,8 @@
     <h3 class="raleway-light">Raleway Light</h3>
     <h3 class="raleway">Raleway Regular</h3>
     <h3 class="raleway-bold">Raleway Bold</h3>
-  
+    
+    <!-- Paragraph examples -->
     <h4 class="dark-teal-text">Examples:</h4>
   
     <h1 color="">h1. A very large header</h1>
@@ -36,7 +39,8 @@
     <p><b>A paragraph.</b> Proin scelerisque sed turpis id suscipit. Duis vitae nibh id risus tristique tristique. Duis non posuere mi, nec tincidunt lectus. Praesent in ex quis libero dictum porta. Curabitur efficitur, purus vel egestas vestibulum, eros nunc rutrum ipsum, eget interdum diam turpis sed nibh.</p>
     <p class="lead"><b>p.lead paragraph.</b> Morbi vitae bibendum neque, id egestas enim. Etiam fermentum gravida orci, quis rhoncus purus aliquam non. Maecenas sit amet sapien sit amet ligula dapibus rhoncus. Nulla consectetur egestas tempor.</p>
     <p class="light text-muted"><b>p.light-text paragraph.</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc risus erat, vulputate vel commodo et, rutrum eu dolor. Curabitur id mauris a odio condimentum pretium. In eget aliquam tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-  
+    
+    <!-- Button types -->
     <h3 class="style-heading"><b>Buttons</b></h3>
     <button type="button" class="btn btn-default btn-lg" href="#">Large Button</button>
     <br>
@@ -47,7 +51,8 @@
     <button type="button" class="my-btn btn-default" href="#">Delete Button</button>
   
     <br>
-  
+    
+    <!-- Input types -->
     <h3 class="style-heading"><b>Input</b></h3>
     <div class="input-group">
       <label for="textInput">Text Input</label>

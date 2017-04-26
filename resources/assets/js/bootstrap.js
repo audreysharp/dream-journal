@@ -32,6 +32,10 @@ window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
+/**
+ * Load in Moment.js for dates for datetime picker
+ * Load in datetime-picker for entry form
+ */
 window.moment = require('moment');
 window.Datepicker = require('vue-datetime-picker');
 

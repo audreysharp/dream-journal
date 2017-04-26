@@ -75,7 +75,7 @@ export default {
     },
 
     update(data) { // update entry
-      // this.fetch();
+      this.fetch();
       var i = this.entries.indexOf(data.entry);
       for (var d in data) {
         this.entries[i][d] = data[d];
