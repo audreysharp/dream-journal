@@ -6,6 +6,7 @@
           <Tab name="Dreams" :selected="true">
             <div class="EntryList" v-show="entries.length > 0">
               <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
+              <p v-show="entries.length === 0">No one has entered any dreams yet! You should add one.</p>
             </div>
           </Tab>
           <Tab name="Add Dream">
@@ -51,10 +52,22 @@ export default {
   },
 
   mounted() {
+    console.log('App -> mounted.')
+    this.$evt.$on('addEntry', this.entryAdded)
     this.fetch(); // get entries from database
   },
 
+  beforeDestroy() {
+    console.log('App -> beforeDestroy.')
+    this.$evt.$off('addEntry', this.entryAdded)
+  },
+
   methods: {
+
+    entryAdded() {
+      console.log('App -> entryAdded');
+      this.fetch();
+    },
 
     fetch() { // fetch database entries
       console.log('App -> fetch');
@@ -62,7 +75,7 @@ export default {
       axios.get('/entries')
         .then((response) => {
           console.log('App -> fetch success');
-          console.log(response.data);
+          // console.log(response.data);
           this.entries = response.data;
           this.loading = false;
         })
@@ -99,7 +112,7 @@ export default {
 }
 
 body {
-  padding-top: 60px;
+  padding-top: 65px;
   padding-bottom: 10px;
 }
 </style>

@@ -1,7 +1,12 @@
 <template>
 <div>
   <h1>Credits</h1>
-  Background image from <a href="http://wallpapersafari.com/w/tqkUPK/">WallpaperSafari</a>
+  
+  Built with <a href="https://vuejs.org/">Vue.js</a>, <a href="https://laravel.com">Laravel</a>, <a href="https://php.net">PHP</a>, and <a href="https://mysql.com">MySQL</a>, and <a href="http://getbootstrap.com/">Bootstrap</a>.
+  <br>
+  Vue.js Date picker made by <a href="https://github.com/charliekassel/vuejs-datepicker">@charliekassel</a>.
+  Spinner made by <a href="https://yuche.github.io/vue-strap/">@yuche</a>.
+
 </div>
 </template>
 

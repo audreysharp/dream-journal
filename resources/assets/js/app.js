@@ -13,6 +13,10 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// event bus
+const evt = new Vue()
+Vue.prototype.$evt = evt
+
 Vue.component('App', require('./components/App.vue'));
 
 const app = new Vue({

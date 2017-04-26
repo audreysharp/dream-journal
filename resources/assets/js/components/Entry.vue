@@ -2,7 +2,7 @@
   <div class="Entry">
     <div class="panel panel-default">
       <div class="panel-heading">
-        {{ entry.creationDate }}
+        {{ this.parseCreationDate(creationDate) }}
       </div>
       <div class="panel-body">
         {{ entry.text }}
@@ -63,7 +63,7 @@
           })
           .catch((error) => {
             console.log('Entry -> save error');
-            //show the user that it couldn't be updated
+            // show the user that it couldn't be updated
           });
       },
   
@@ -72,6 +72,13 @@
         this.creationDate = this.entry.creationDate,
           this.entryText = this.entry.text,
           this.editing = false
+      },
+
+      parseCreationDate(dateToParse) { // parse date to "month day, year"
+        var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
+        var parsedDate = new Date(dateToParse);
+        var result = monthNames[parsedDate.getMonth()] + ' ' + parsedDate.getDate() + ', ' + parsedDate.getFullYear();
+        return result;
       }
   
     }

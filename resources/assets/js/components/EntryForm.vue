@@ -3,7 +3,7 @@
   
     <div v-show="error" class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>There was an error adding your dream entry.</strong> Please refresh the page and try again!.
+      <strong>There was an error adding your dream entry.</strong> Please refresh the page and try again.
     </div>
   
     <!--<div v-show="success" class="alert alert-danger alert-dismissible" role="alert">
@@ -79,7 +79,7 @@ export default {
           console.log(response.data);
           this.loading = false;
           this.reset();
-          this.$emit('created');
+          this.$evt.$emit('addEntry', response.data)
         })
         .catch((error) => {
           console.error('EntryForm -> sendRequest error');
@@ -106,8 +106,7 @@ textarea {
   padding: 0px;
 }
 
-.table th,
-.table td {
+.table th, .table td {
   border: 1px !important;
   padding: 0px;
 }
