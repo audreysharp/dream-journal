@@ -1,9 +1,9 @@
 <template>
   <div class="EntryForm">
       <div class="input-group date">
-        <span class="glyphicon glyphicon-calendar" id="basic-addon"></span>
+        <Calendar></Calendar>
         <!--<datepicker v-model="creationDate" name="datePicker" format="D MMMM dd yyyy"></datepicker>-->
-        <Datepicker v-model="creationDate" value="creationDate" format="MMMM/dd/yyyy" placeholder="2015-06-09" ></Datepicker>
+        <!--<Datepicker v-model="creationDate" value="creationDate" format="MMMM/dd/yyyy" placeholder="2015-06-09" ></Datepicker>-->
       </div>
       <div class="form-group">
         <label for="entry">Dream Journal Entry</label>
@@ -15,11 +15,13 @@
 
 <script>
 import axios from 'axios';
-import Datepicker from 'vue-strap/src/datepicker';
+import Calendar from './Calendar';
+// import Datepicker from 'vue-strap/src/datepicker';
 
 export default {
   components: {
-    Datepicker
+    // Datepicker
+    Calendar
   },
 
   data() {

@@ -13,9 +13,11 @@
           </Tab>
           <Tab name="Style Guide">
             Style Guide
+            <StyleGuide></StyleGuide>
           </Tab>
           <Tab name="Credits">
-            Credits
+            <Credits></Credits>
+            <Calendar></Calendar>
           </Tab>
         </Navigation>
       </div>
@@ -29,6 +31,9 @@ import Navigation from './Navigation';
 import Tab from './Tab';
 import Entry from './Entry';
 import EntryForm from './EntryForm';
+import Calendar from './Calendar';
+import StyleGuide from './StyleGuide';
+import Credits from './Credits';
 
 export default {
 
@@ -36,7 +41,10 @@ export default {
     Navigation,
     Tab,
     Entry,
-    EntryForm
+    EntryForm,
+    StyleGuide,
+    Credits,
+    Calendar
   },
 
   data() {
