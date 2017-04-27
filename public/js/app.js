@@ -28275,11 +28275,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   mounted: function mounted() {
-    console.log('AppView -> mounted.');
+    console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
   },
   beforeDestroy: function beforeDestroy() {
-    console.log('AppView -> beforeDestroy.');
+    console.log('AppView -> beforeDestroy');
   },
 
 
@@ -28404,11 +28404,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -28475,6 +28470,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
 //
@@ -28489,6 +28486,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -28496,7 +28506,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   props: ['entry'],
 
   data: function data() {
-    return {};
+    return {
+      entryData: this.entry,
+      upvoteArrowColor: '#0B486B',
+      downvoteArrowColor: '#0B486B',
+      upvoted: false, // to toggle upvoting
+      downvoted: false
+    };
   },
 
 
@@ -28507,6 +28523,96 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var parsedDate = new Date(dateToParse);
       var result = monthNames[parsedDate.getMonth()] + ' ' + parsedDate.getDate() + ', ' + parsedDate.getFullYear();
       return result;
+    },
+    upvote: function upvote() {
+      if (!this.upvoted) {
+        this.upvoted = true;
+        this.upvoteArrowColor = '#79BD9A';
+        this.updateUpvotes();
+      } else {
+        // remove upvote and change color back to default
+        this.upvoted = false;
+        this.upvoteArrowColor = '#0B486B';
+        this.updateUpvotes();
+      }
+    },
+    downvote: function downvote() {
+      if (!this.downvoted) {
+        this.downvoted = true;
+        this.downvoteArrowColor = '#79BD9A';
+        this.updateDownvotes();
+      } else {
+        // remove downvoted and change color back to default
+        this.downvoted = false;
+        this.downvoteArrowColor = '#0B486B';
+        this.updateDownvotes();
+      }
+    },
+    updateUpvotes: function updateUpvotes() {
+      var _this = this;
+
+      if (this.upvoted) {
+        // add upvote
+        console.log('EntryView -> add upvote');
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entry.id, { upvotes: upvotes + 1 }).then(function (response) {
+          console.log('EntryView -> upvote success');
+          console.log(response.data);
+          _this.entryData = response.data;
+        }).catch(function (response) {
+          console.log('EntryView -> upvote error');
+          console.log(reponse); // show error
+        });
+      } else {
+        console.log('EntryView -> remove upvote');
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entry.id, { upvotes: this.upvotes - 1 }).then(function (response) {
+          console.log('EntryView -> upvote success');
+          console.log(response.data);
+          _this.entryData = response.data;
+        }).catch(function (response) {
+          console.log('EntryView -> upvote error');
+          console.log(reponse); // show error
+        });
+      }
+    },
+    updateDownvotes: function updateDownvotes() {
+      var _this2 = this;
+
+      if (this.downvoted) {
+        console.log('EntryView -> add downvote');
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entry.id, { downvotes: this.downvotes + 1 }).then(function (response) {
+          console.log('EntryView -> downvote success');
+          console.log(response.data);
+          _this2.entryData = response.data;
+        }).catch(function (response) {
+          console.log('EntryView -> downvote error');
+          console.log(reponse); // show error
+        });
+      } else {
+        console.log('EntryView -> remove downvote');
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entry.id, { downvotes: downvotes - 1 }).then(function (response) {
+          console.log('EntryView -> downvote success');
+          console.log(response.data);
+          _this2.entryData = response.data;
+        }).catch(function (response) {
+          console.log('EntryView -> downvote error');
+          console.log(reponse); // show error
+        });
+      }
+    }
+  },
+
+  computed: {
+    entryText: function entryText() {
+      return this.entryData.text;
+    },
+    creationDate: function creationDate() {
+      return this.parseCreationDate(this.entryData.creationDate);
+    },
+    upvotes: function upvotes() {
+      return this.entryData.upvotes;
+    },
+    downvotes: function downvotes() {
+      return this.entryData.downvotes;
     }
   }
 
@@ -30989,7 +31095,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.glyphicon-arrow-up:hover,\n.glyphicon-arrow-down:hover {\n  cursor: pointer\n}\n", ""]);
 
 /***/ }),
 /* 162 */
@@ -48673,15 +48779,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("\n      " + _vm._s(this.parseCreationDate(this.entry.creationDate)) + "\n    ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n      " + _vm._s(_vm.creationDate) + "\n      "), _c('span', {
+    staticClass: "pull-right"
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-arrow-up",
+    style: ({
+      color: _vm.upvoteArrowColor
+    }),
+    on: {
+      "click": _vm.upvote
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "glyphicon glyphicon-arrow-down",
+    style: ({
+      color: _vm.downvoteArrowColor
+    }),
+    on: {
+      "click": _vm.downvote
+    }
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\n      " + _vm._s(this.entry.text) + "\n    ")])])])
+  }, [_vm._v("\n      " + _vm._s(_vm.entryText) + "\n    ")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('b', [_vm._v("Upvotes")]), _vm._v(": " + _vm._s(_vm.upvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Downvotes")]), _vm._v(": " + _vm._s(_vm.downvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Share Link")]), _vm._v(": http://localhost:8888/view/" + _vm._s(this.entry.id) + "\n    ")])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('h4', [_c('a', {
     attrs: {
       "href": "/"
     }
-  }, [_vm._v("← Go back")])])
+  }, [_vm._v("← View all")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

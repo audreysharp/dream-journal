@@ -41,12 +41,12 @@ export default {
   },
 
   mounted() {
-    console.log('AppView -> mounted.');
+    console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
   },
 
   beforeDestroy() {
-    console.log('AppView -> beforeDestroy.')
+    console.log('AppView -> beforeDestroy')
   },
 
   methods: {

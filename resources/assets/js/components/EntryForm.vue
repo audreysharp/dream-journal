@@ -6,11 +6,6 @@
       <strong>There was an error adding your dream entry.</strong> Please try again.
     </div>
 
-    <!--<div v-show="success" class="alert alert-danger alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <strong>There was an error adding your dream entry.</strong> Please refresh the page and try again!.
-            </div>-->
-
     <Spinner v-if="loading"></Spinner>
 
     <div>

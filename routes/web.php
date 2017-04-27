@@ -32,13 +32,13 @@ Route::get('/add', function () {
     return view('new');
 });
 
-Route::get('/view/{id}/{justCreated?}', function ($id, $justCreated = null) {
+Route::get('/view/{id}', function ($id) {
     $data = [];
     $data['id'] = $id;
-    if ($justCreated === null) {
-        $data['justCreated'] = 'false';
-    } else {
+    if (Input::has('created')) {
         $data['justCreated'] = 'true';
+    } else {
+        $data['justCreated'] = 'false';
     }
     return view('view', $data);
 });
