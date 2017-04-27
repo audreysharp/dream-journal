@@ -2,6 +2,6 @@
 
 @section('content')
     <div id="app">
-        <app-view></app-view>
+        <app-view :entry-id="{{ $id }}" ></app-view>
     </div>
 @endsection

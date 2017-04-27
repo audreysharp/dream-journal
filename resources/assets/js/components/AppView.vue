@@ -1,6 +1,8 @@
 <template>
     <div id="app-view" v-cloak>
-      <EntryView></EntryView>
+      <div class="EntryDisplay" v-show="!loading">
+        <EntryView :entry="entryData"></EntryView>
+      </div>
     </div>
 </template>
 
@@ -14,49 +16,45 @@ export default {
     EntryView
   },
 
+  props: [
+    'entry-id'
+  ],
+
   data() {
     return {
-      entries: [],
+      entryData: [],
+      loading: false,
+      key: this.entryId
     }
   },
 
   mounted() {
-    console.log('App -> mounted.')
-    this.fetch(); // get entries from database
+    console.log('AppView -> mounted.');
+    this.fetch(this.key); // get entry from database
   },
 
   beforeDestroy() {
-    console.log('App -> beforeDestroy.')
+    console.log('AppView -> beforeDestroy.')
   },
 
   methods: {
 
-    entryAdded() {
-      console.log('App -> entryAdded');
-      this.fetch();
-    },
-
-    fetch() { // fetch database entries
-      console.log('App -> fetch');
-      axios.get('/entries')
+    fetch(entryId) { // fetch database entries
+      console.log('AppView -> fetch');
+      this.loading = true;
+      axios.get('/entries/' + entryId)
         .then((response) => {
-          console.log('App -> fetch success');
+          console.log('AppView -> fetch success');
           // console.log(response.data);
-          this.entries = response.data;
+          this.loading = false;
+          this.entryData = response.data;
         })
         .catch((response) => {
-          console.log('App -> fetch error');
+          console.log('AppView -> fetch error');
           // show error
           console.log(reponse);
+          this.loading = false;
         })
-    },
-
-    update(data) { // update entry
-      this.fetch();
-      var i = this.entries.indexOf(data.entry);
-      for (var d in data) {
-        this.entries[i][d] = data[d];
-      }
     }
 
   }

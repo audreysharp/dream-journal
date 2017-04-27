@@ -2,6 +2,11 @@
 
 @section('styles')
 <style>
+
+* {
+  color: #bbc0c8;
+}
+
 /* Color boxes */
 .box {
   display: inline-block;

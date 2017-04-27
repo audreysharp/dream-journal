@@ -2,28 +2,25 @@
   <div class="Entry">
     <div class="panel panel-default">
       <div class="panel-heading">
-        {{ this.parseCreationDate(creationDate) }}
+        {{ this.parseCreationDate(this.entry.creationDate) }}
       </div>
       <div class="panel-body">
-        {{ entry.text }}
+        {{ this.entry.text }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import axios from 'axios';
   
   export default {
   
     props: [
-      'entry'
+      'entry',
     ],
   
     data() {
       return {
-        creationDate: this.entry.creationDate,
-        entryText: this.entry.text
       }
     },
   

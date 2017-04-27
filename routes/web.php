@@ -29,8 +29,10 @@ Route::get('/add', function () {
     return view('new');
 });
 
-Route::get('/view/{id}', function () {
-    return view('view');
+Route::get('/view/{id}', function ($id) {
+    $data = [];
+    $data['id'] = $id;
+    return view('view', $data);
 });
 
 Route::get('/style', function () {
