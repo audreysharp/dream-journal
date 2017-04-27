@@ -114,13 +114,11 @@
     
     <!-- Button types -->
     <h3 class="style-heading"><b>Buttons</b></h3>
-    <button type="button" class="btn btn-default btn-lg" href="#">Large Button</button>
+    <button type="button" class="btn my-btn btn-default btn-lg" href="#">Large Button</button>&nbsp;
+    <button type="button" class="btn btn-default" href="#">Medium Button</button>&nbsp;
+    <button type="button" class="btn btn-default btn-sm" href="#">Small Button</button>&nbsp;
+    <button type="button" class="btn my-btn btn-default" href="#">Add Button</button>
     <br>
-    <button type="button" class="btn btn-default" href="#">Medium Button</button>
-    <br>
-    <button type="button" class="btn btn-default btn-sm" href="#">Small Button</button>
-    <br>
-    <button type="button" class="my-btn btn-default" href="#">Delete Button</button>
   
     <br>
     

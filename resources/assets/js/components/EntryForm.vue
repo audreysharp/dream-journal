@@ -31,7 +31,7 @@
       </table>
     </div>
   
-    <button class="btn btn-primary" @click="create" :disabled="loading">Add Entry</button>
+    <button class="btn my-btn pull-right" @click="create" :disabled="loading">Add Entry</button>
   </div>
 </template>
 

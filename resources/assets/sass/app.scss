@@ -5,10 +5,6 @@
 @import "variables";
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-.my-btn {
-  //@include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
-  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
-}
 
 * {
   font-family: Lato;
@@ -29,4 +25,55 @@ body {
 
 .panel-default {
   background: rgba(248, 248, 248, 0.9);
+}
+
+.panel > .panel-heading {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+// my button
+.my-btn { 
+  color: #FFFFFF; 
+  background-color: #79BD9A; 
+  border-color: #53826A; 
+} 
+ 
+.my-btn:hover, 
+.my-btn:focus, 
+.my-btn:active, 
+.my-btn.active, 
+.open .dropdown-toggle.my-btn { 
+  color: #FFFFFF; 
+  background-color: #6FAB8C; 
+  border-color: #53826A; 
+} 
+ 
+.my-btn:active, 
+.my-btn.active, 
+.open .dropdown-toggle.my-btn { 
+  background-image: none; 
+} 
+ 
+.my-btn.disabled, 
+.my-btn[disabled], 
+fieldset[disabled] .my-btn, 
+.my-btn.disabled:hover, 
+.my-btn[disabled]:hover, 
+fieldset[disabled] .my-btn:hover, 
+.my-btn.disabled:focus, 
+.my-btn[disabled]:focus, 
+fieldset[disabled] .my-btn:focus, 
+.my-btn.disabled:active, 
+.my-btn[disabled]:active, 
+fieldset[disabled] .my-btn:active, 
+.my-btn.disabled.active, 
+.my-btn[disabled].active, 
+fieldset[disabled] .my-btn.active { 
+  background-color: #79BD9A; 
+  border-color: #53826A; 
+} 
+ 
+.my-btn .badge { 
+  color: #79BD9A; 
+  background-color: #FFFFFF; 
 }
