@@ -28264,21 +28264,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     Spinner: __WEBPACK_IMPORTED_MODULE_2__Spinner___default.a
   },
 
-  props: ['entry-id', 'is-newly-created'],
+  props: ['entry-id', 'is-just-created'],
 
   data: function data() {
     return {
       entryData: [],
       loading: false, // stop showing spinner
       key: this.entryId, // component passed from view.blade.php file
-      newlyCreated: this.isNewlyCreated
+      justCreated: this.isJustCreated
     };
   },
   mounted: function mounted() {
     console.log('AppView -> mounted.');
     this.fetch(this.key); // get entry from database
-    console.log('HEYHEYHEYHASLDKJFLAS');
-    console.log(this.newlyCreated);
   },
   beforeDestroy: function beforeDestroy() {
     console.log('AppView -> beforeDestroy.');
@@ -28453,9 +28451,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).then(function (response) {
         console.log('EntryForm -> sendRequest success');
         console.log(response.data);
-        // redirect user to page of newly created entry
         _this.loading = false;
         _this.reset();
+        // redirect user to page of newly created entry
         window.location.href = 'http://localhost:8888/view/' + response.data.id + '?created=true';
       }).catch(function (error) {
         console.error('EntryForm -> sendRequest error');
@@ -31026,7 +31024,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 167 */
@@ -48834,8 +48832,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.newlyCreated),
-      expression: "newlyCreated"
+      value: (_vm.justCreated),
+      expression: "justCreated"
     }],
     staticClass: "alert alert-success alert-dismissible",
     attrs: {

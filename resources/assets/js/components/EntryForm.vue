@@ -78,9 +78,9 @@ export default {
         .then((response) => {
           console.log('EntryForm -> sendRequest success');
           console.log(response.data);
-          // redirect user to page of newly created entry
           this.loading = false;
           this.reset();
+          // redirect user to page of newly created entry
           window.location.href = 'http://localhost:8888/view/' + response.data.id + '?created=true';
         })
         .catch((error) => {

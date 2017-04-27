@@ -2,6 +2,9 @@
 
 @section('content')
     <div id="app">
-        <app-view :entry-id="{{ $id }}" :is-newly-created="{{ $newlyCreated }}" ></app-view>
+        <app-view :entry-id="{{ $id }}" :is-just-created="{{ $justCreated }}" ></app-view>
     </div>
+    <script>
+
+    </script>
 @endsection
