@@ -20,6 +20,10 @@
   background-color: #0B486B;
 }
 
+.white {
+  background-color: #ffffff;
+}
+
 .teal {
   background-color: #3B8686;
 }
@@ -44,6 +48,13 @@
 .style-heading {
   color: #3B8686;
   border-bottom: 1px solid #083955;
+  padding: 4px 0;
+  margin-top: 38px;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 20px;
 }
 
 .text-regular {
@@ -83,8 +94,8 @@
     <div class="box seafoam"></div> #A8DBA8
     <br>
     <div class="box gray"></div> #BBC0C8
-
     <br>
+    <div class="box white"></div> #FFFFFF
     
     <h3 class="style-heading"><b>Typography</b></h3>
     
@@ -118,9 +129,6 @@
     <button type="button" class="btn btn-default" href="#">Medium Button</button>&nbsp;
     <button type="button" class="btn btn-default btn-sm" href="#">Small Button</button>&nbsp;
     <button type="button" class="btn my-btn btn-default" href="#">Add Button</button>
-    <br>
-  
-    <br>
     
     <!-- Input types -->
     <h3 class="style-heading"><b>Input</b></h3>

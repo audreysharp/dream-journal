@@ -5,7 +5,6 @@
 @import "variables";
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
 * {
   font-family: Lato;
   font-weight: 400;
@@ -17,6 +16,14 @@ a {
 
 a:hover {
   color: #79BD9A;
+}
+
+.vdp-datepicker__calendar {
+  position: absolute;
+  z-index: 100;
+  background: #fff;
+  width: 100%;
+  border: 1px solid #ccc;
 }
 
 body {
@@ -42,54 +49,34 @@ body {
   background: rgba(248, 248, 248, 0.9);
 }
 
-.panel > .panel-heading, .panel > .panel-footer {
+.panel>.panel-heading, .panel>.panel-footer {
   background-color: rgba(255, 255, 255, 0.4);
   color: #0B486B;
 }
 
 // my green button
-.my-btn { 
-  color: #FFFFFF; 
-  background-color: #79BD9A; 
-  border-color: #53826A; 
-} 
- 
-.my-btn:hover, 
-.my-btn:focus, 
-.my-btn:active, 
-.my-btn.active, 
-.open .dropdown-toggle.my-btn { 
-  color: #FFFFFF; 
-  background-color: #6FAB8C; 
-  border-color: #53826A; 
-} 
- 
-.my-btn:active, 
-.my-btn.active, 
-.open .dropdown-toggle.my-btn { 
-  background-image: none; 
-} 
- 
-.my-btn.disabled, 
-.my-btn[disabled], 
-fieldset[disabled] .my-btn, 
-.my-btn.disabled:hover, 
-.my-btn[disabled]:hover, 
-fieldset[disabled] .my-btn:hover, 
-.my-btn.disabled:focus, 
-.my-btn[disabled]:focus, 
-fieldset[disabled] .my-btn:focus, 
-.my-btn.disabled:active, 
-.my-btn[disabled]:active, 
-fieldset[disabled] .my-btn:active, 
-.my-btn.disabled.active, 
-.my-btn[disabled].active, 
-fieldset[disabled] .my-btn.active { 
-  background-color: #79BD9A; 
-  border-color: #53826A; 
-} 
- 
-.my-btn .badge { 
-  color: #79BD9A; 
-  background-color: #FFFFFF; 
+.my-btn {
+  color: #FFFFFF;
+  background-color: #79BD9A;
+  border-color: #53826A;
+}
+
+.my-btn:hover, .my-btn:focus, .my-btn:active, .my-btn.active, .open .dropdown-toggle.my-btn {
+  color: #FFFFFF;
+  background-color: #6FAB8C;
+  border-color: #53826A;
+}
+
+.my-btn:active, .my-btn.active, .open .dropdown-toggle.my-btn {
+  background-image: none;
+}
+
+.my-btn.disabled, .my-btn[disabled], fieldset[disabled] .my-btn, .my-btn.disabled:hover, .my-btn[disabled]:hover, fieldset[disabled] .my-btn:hover, .my-btn.disabled:focus, .my-btn[disabled]:focus, fieldset[disabled] .my-btn:focus, .my-btn.disabled:active, .my-btn[disabled]:active, fieldset[disabled] .my-btn:active, .my-btn.disabled.active, .my-btn[disabled].active, fieldset[disabled] .my-btn.active {
+  background-color: #79BD9A;
+  border-color: #53826A;
+}
+
+.my-btn .badge {
+  color: #79BD9A;
+  background-color: #FFFFFF;
 }

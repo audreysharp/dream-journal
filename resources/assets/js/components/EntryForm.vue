@@ -100,6 +100,10 @@ label {
   color: #bbc0c8;
 }
 
+.my-btn {
+  margin-top: -25px;
+}
+
 textarea {
   min-height: 295px;
 }
@@ -137,11 +141,11 @@ textarea {
 /* Styling for desktop devices */
 @media (min-width: 40.0rem) {
   .calendar {
-    width: 30%;
+    width: 45%;
   }
 
   .text-entry {
-    width: 70%;
+    width: 55%;
     padding-left: 15px !important;
   }
 }

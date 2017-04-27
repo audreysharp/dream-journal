@@ -1,7 +1,7 @@
 <template>
 <div id="overlay">
   <transition name="fade">
-    <center><MoonLoader color="#A8DBA8" size="100px"></MoonLoader></center>
+    <MoonLoader color="#A8DBA8" size="100px"></MoonLoader>
   </transition>
 </div>
 </template>
@@ -24,22 +24,9 @@ export default {
 /* overlay spinner on top */
 #overlay {
   padding: 50px;
-  position: absolute;
   z-index: 1;
-}
-
-/* Styling for desktop devices */
-@media (min-width: 40.0rem) { 
-  #overlay {
-    margin-left: 350px;
-  }
-}
-
-/* Styling for mobile devices */
-@media (max-width: 40.0rem) { 
-  #overlay {
-    margin-left: 60px;
-  }
+  position: fixed;
+  left: calc(50vw - 100px);
 }
 
 .fade-enter-active,
