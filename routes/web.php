@@ -11,6 +11,9 @@
 |
 */
 
+// import Input to get url parameters
+use Illuminate\Support\Facades\Input;
+
 // Entries collection routes
 Route::get('/entries', 'EntryController@index');
 Route::post('/entries', 'EntryController@create');
@@ -32,7 +35,7 @@ Route::get('/add', function () {
 Route::get('/view/{id}', function ($id) {
     $data = [];
     $data['id'] = $id;
-    $data['newlyCreated'] = isset($_GET['created']);
+    $data['newlyCreated'] = Input::has('created');
     return view('view', $data);
 });
 
