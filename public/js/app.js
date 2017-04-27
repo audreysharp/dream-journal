@@ -27182,6 +27182,10 @@ __webpack_require__(159);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// event bus
+var evt = new Vue();
+Vue.prototype.$evt = evt;
+
 Vue.component('app-index', __webpack_require__(174));
 Vue.component('app-add', __webpack_require__(173));
 Vue.component('app-view', __webpack_require__(175));
@@ -28277,9 +28281,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
+    this.$evt.$on('upvoted', this.updateUpvotes);
+    this.$evt.$on('downvoted', this.updateDownvotes);
   },
   beforeDestroy: function beforeDestroy() {
     console.log('AppView -> beforeDestroy');
+    this.$evt.$off('upvoted', this.updateUpvotes);
+    this.$evt.$off('downvoted', this.updateDownvotes);
   },
 
 
@@ -28300,6 +28308,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // show error
         console.log(reponse); // show error
         _this.loading = false;
+      });
+    },
+    updateUpvotes: function updateUpvotes(data) {
+      var _this2 = this;
+
+      console.log('AppView -> update upvotes');
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entryData.id, { upvotes: data.upvotes }).then(function (response) {
+        console.log('AppView -> upvote success');
+        console.log(response.data);
+        _this2.entryData.upvotes = data.upvotes;
+      }).catch(function (response) {
+        console.log('AppView -> upvote error');
+        console.log(reponse); // show error
+      });
+    },
+    updateDownvotes: function updateDownvotes(data) {
+      var _this3 = this;
+
+      console.log('EntryView -> update downvotes');
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entryData.id, { downvotes: data.downvotes }).then(function (response) {
+        console.log('EntryView -> downvote success');
+        console.log(response.data);
+        _this3.entryData.downvotes = data.downvotes;
+      }).catch(function (response) {
+        console.log('EntryView -> downvote error');
+        console.log(reponse); // show error
       });
     }
   }
@@ -28528,74 +28562,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (!this.upvoted) {
         this.upvoted = true;
         this.upvoteArrowColor = '#79BD9A';
-        this.updateUpvotes();
+        console.log('upvote');
+        this.$evt.$emit('upvoted', {
+          upvotes: this.entry.upvotes + 1
+        });
       } else {
         // remove upvote and change color back to default
         this.upvoted = false;
         this.upvoteArrowColor = '#0B486B';
-        this.updateUpvotes();
+        this.$evt.$emit('upvoted', {
+          upvotes: this.entry.upvotes - 1
+        });
       }
     },
     downvote: function downvote() {
       if (!this.downvoted) {
         this.downvoted = true;
         this.downvoteArrowColor = '#79BD9A';
-        this.updateDownvotes();
+        this.$evt.$emit('downvoted', {
+          downvotes: this.entry.downvotes + 1
+        });
       } else {
         // remove downvoted and change color back to default
         this.downvoted = false;
         this.downvoteArrowColor = '#0B486B';
-        this.updateDownvotes();
-      }
-    },
-    updateUpvotes: function updateUpvotes() {
-      var _this = this;
-
-      if (this.upvoted) {
-        // add upvote
-        console.log('EntryView -> add upvote');
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entry.id, { upvotes: upvotes + 1 }).then(function (response) {
-          console.log('EntryView -> upvote success');
-          console.log(response.data);
-          _this.entryData = response.data;
-        }).catch(function (response) {
-          console.log('EntryView -> upvote error');
-          console.log(reponse); // show error
-        });
-      } else {
-        console.log('EntryView -> remove upvote');
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entry.id, { upvotes: this.upvotes - 1 }).then(function (response) {
-          console.log('EntryView -> upvote success');
-          console.log(response.data);
-          _this.entryData = response.data;
-        }).catch(function (response) {
-          console.log('EntryView -> upvote error');
-          console.log(reponse); // show error
-        });
-      }
-    },
-    updateDownvotes: function updateDownvotes() {
-      var _this2 = this;
-
-      if (this.downvoted) {
-        console.log('EntryView -> add downvote');
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entry.id, { downvotes: this.downvotes + 1 }).then(function (response) {
-          console.log('EntryView -> downvote success');
-          console.log(response.data);
-          _this2.entryData = response.data;
-        }).catch(function (response) {
-          console.log('EntryView -> downvote error');
-          console.log(reponse); // show error
-        });
-      } else {
-        console.log('EntryView -> remove downvote');
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entry.id, { downvotes: downvotes - 1 }).then(function (response) {
-          console.log('EntryView -> downvote success');
-          console.log(response.data);
-          _this2.entryData = response.data;
-        }).catch(function (response) {
-          console.log('EntryView -> downvote error');
-          console.log(reponse); // show error
+        this.$evt.$emit('downvoted', {
+          downvotes: this.entry.downvotes - 1
         });
       }
     }
@@ -28603,16 +28595,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {
     entryText: function entryText() {
-      return this.entryData.text;
+      return this.entry.text;
+    },
+    entryId: function entryId() {
+      return this.entry.id;
     },
     creationDate: function creationDate() {
-      return this.parseCreationDate(this.entryData.creationDate);
+      return this.parseCreationDate(this.entry.creationDate);
     },
     upvotes: function upvotes() {
-      return this.entryData.upvotes;
+      return this.entry.upvotes;
     },
     downvotes: function downvotes() {
-      return this.entryData.downvotes;
+      return this.entry.downvotes;
     }
   }
 
@@ -31130,7 +31125,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 167 */
@@ -48801,7 +48796,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_vm._v("\n      " + _vm._s(_vm.entryText) + "\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "panel-footer"
-  }, [_c('b', [_vm._v("Upvotes")]), _vm._v(": " + _vm._s(_vm.upvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Downvotes")]), _vm._v(": " + _vm._s(_vm.downvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Share Link")]), _vm._v(": http://localhost:8888/view/" + _vm._s(this.entry.id) + "\n    ")])])])
+  }, [_c('b', [_vm._v("Upvotes")]), _vm._v(": " + _vm._s(_vm.upvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Downvotes")]), _vm._v(": " + _vm._s(_vm.downvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Share Link")]), _vm._v(": http://localhost:8888/view/" + _vm._s(_vm.entryId) + "\n    ")])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('h4', [_c('a', {
     attrs: {

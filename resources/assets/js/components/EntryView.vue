@@ -17,7 +17,7 @@
         <br>
         <b>Downvotes</b>: {{ downvotes }}
         <br>
-        <b>Share Link</b>: http://localhost:8888/view/{{ this.entry.id }}
+        <b>Share Link</b>: http://localhost:8888/view/{{ entryId }}
       </div>
     </div>
   </div>
@@ -56,12 +56,17 @@ export default {
       if (!this.upvoted) {
         this.upvoted = true;
         this.upvoteArrowColor = '#79BD9A';
-        this.updateUpvotes();
+        console.log('upvote');
+        this.$evt.$emit('upvoted', {
+          upvotes: this.entry.upvotes+1
+        });
       } else {
         // remove upvote and change color back to default
         this.upvoted = false;
         this.upvoteArrowColor = '#0B486B';
-        this.updateUpvotes();
+        this.$evt.$emit('upvoted', {
+          upvotes: this.entry.upvotes-1
+        });
       }
     },
 
@@ -69,93 +74,41 @@ export default {
       if (!this.downvoted) {
         this.downvoted = true;
         this.downvoteArrowColor = '#79BD9A';
-        this.updateDownvotes();
+        this.$evt.$emit('downvoted', {
+          downvotes: this.entry.downvotes+1
+        });
       } else {
         // remove downvoted and change color back to default
         this.downvoted = false;
         this.downvoteArrowColor = '#0B486B';
-        this.updateDownvotes();
-      }
-    },
-
-    updateUpvotes() {
-      if (this.upvoted) { // add upvote
-        console.log('EntryView -> add upvote');
-        axios.put('/entries/' + this.entry.id, { upvotes: upvotes+1 } )
-          .then((response) => {
-            console.log('EntryView -> upvote success');
-            console.log(response.data);
-            this.entryData = response.data;
-          })
-          .catch((response) => {
-            console.log('EntryView -> upvote error');
-            console.log(reponse); // show error
-          })
-      } else {
-        console.log('EntryView -> remove upvote');
-        axios.put('/entries/' + this.entry.id, { upvotes: this.upvotes-1 } )
-          .then((response) => {
-            console.log('EntryView -> upvote success');
-            console.log(response.data);
-            this.entryData = response.data;
-          })
-          .catch((response) => {
-            console.log('EntryView -> upvote error');
-            console.log(reponse); // show error
-          })
-      }
-    },
-
-    updateDownvotes() {
-      if (this.downvoted) {
-        console.log('EntryView -> add downvote');
-        axios.put('/entries/' + this.entry.id, { downvotes: this.downvotes+1 } )
-          .then((response) => {
-            console.log('EntryView -> downvote success');
-            console.log(response.data);
-            this.entryData = response.data;
-          })
-          .catch((response) => {
-            console.log('EntryView -> downvote error');
-            console.log(reponse); // show error
-          })
-      } else {
-        console.log('EntryView -> remove downvote');
-        axios.put('/entries/' + this.entry.id, { downvotes: downvotes-1 } )
-          .then((response) => {
-            console.log('EntryView -> downvote success');
-            console.log(response.data);
-            this.entryData = response.data;
-          })
-          .catch((response) => {
-            console.log('EntryView -> downvote error');
-            console.log(reponse); // show error
-          })
+        this.$evt.$emit('downvoted', {
+          downvotes: this.entry.downvotes-1
+        });
       }
     }
 
   },
 
   computed: {
-
-
     entryText() {
-      return this.entryData.text
+      return this.entry.text
+    },
+
+    entryId() {
+      return this.entry.id
     },
 
     creationDate() {
-      return this.parseCreationDate(this.entryData.creationDate)
+      return this.parseCreationDate(this.entry.creationDate)
     },
 
     upvotes() {
-      return this.entryData.upvotes
+      return this.entry.upvotes
     },
 
     downvotes() {
-      return this.entryData.downvotes
+      return this.entry.downvotes
     },
-
-
   }
 
 }

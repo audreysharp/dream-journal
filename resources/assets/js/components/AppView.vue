@@ -43,10 +43,14 @@ export default {
   mounted() {
     console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
+    this.$evt.$on('upvoted', this.updateUpvotes)
+    this.$evt.$on('downvoted', this.updateDownvotes)
   },
 
   beforeDestroy() {
     console.log('AppView -> beforeDestroy')
+    this.$evt.$off('upvoted', this.updateUpvotes)
+    this.$evt.$off('downvoted', this.updateDownvotes)
   },
 
   methods: {
@@ -66,6 +70,34 @@ export default {
           // show error
           console.log(reponse); // show error
           this.loading = false;
+        })
+    },
+
+    updateUpvotes(data) {
+      console.log('AppView -> update upvotes');
+      axios.put('/entries/' + this.entryData.id, { upvotes: data.upvotes })
+        .then((response) => {
+          console.log('AppView -> upvote success');
+          console.log(response.data);
+          this.entryData.upvotes = data.upvotes;
+        })
+        .catch((response) => {
+          console.log('AppView -> upvote error');
+          console.log(reponse); // show error
+        })
+    },
+
+    updateDownvotes(data) {
+      console.log('EntryView -> update downvotes');
+      axios.put('/entries/' + this.entryData.id, { downvotes: data.downvotes })
+        .then((response) => {
+          console.log('EntryView -> downvote success');
+          console.log(response.data);
+          this.entryData.downvotes = data.downvotes;
+        })
+        .catch((response) => {
+          console.log('EntryView -> downvote error');
+          console.log(reponse); // show error
         })
     }
 
