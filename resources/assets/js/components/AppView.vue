@@ -1,5 +1,8 @@
 <template>
     <div id="app-view" v-cloak>
+
+      <Spinner v-if="loading"></Spinner>
+
       <div class="EntryDisplay" v-show="!loading">
         <EntryView :entry="entryData"></EntryView>
       </div>
@@ -9,11 +12,13 @@
 <script>
 import axios from 'axios';
 import EntryView from './EntryView';
+import Spinner from './Spinner';
 
 export default {
 
   components: {
-    EntryView
+    EntryView,
+    Spinner
   },
 
   props: [
@@ -52,7 +57,7 @@ export default {
         .catch((response) => {
           console.log('AppView -> fetch error');
           // show error
-          console.log(reponse);
+          console.log(reponse); // show error
           this.loading = false;
         })
     }

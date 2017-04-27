@@ -51,12 +51,4 @@
 
 <style scoped>
 
-a {
-  color: #3B8686;
-}
-
-a:hover {
-  color: #79BD9A;
-}
-
 </style>

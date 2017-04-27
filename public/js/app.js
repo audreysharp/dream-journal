@@ -28262,6 +28262,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EntryView__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EntryView___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__EntryView__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Spinner__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Spinner__);
 //
 //
 //
@@ -28270,6 +28272,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -28277,7 +28283,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 
   components: {
-    EntryView: __WEBPACK_IMPORTED_MODULE_1__EntryView___default.a
+    EntryView: __WEBPACK_IMPORTED_MODULE_1__EntryView___default.a,
+    Spinner: __WEBPACK_IMPORTED_MODULE_2__Spinner___default.a
   },
 
   props: ['entry-id'],
@@ -28313,7 +28320,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (response) {
         console.log('AppView -> fetch error');
         // show error
-        console.log(reponse);
+        console.log(reponse); // show error
         _this.loading = false;
       });
     }
@@ -28575,6 +28582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -28606,7 +28614,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_MoonLoader_vue__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_MoonLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_MoonLoader_vue__);
-//
 //
 //
 //
@@ -31076,7 +31083,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 164 */
@@ -31112,21 +31119,21 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ntextarea[data-v-6b938bde] {\n  min-height: 295px;\n}\n.table[data-v-6b938bde] {\n  border-bottom: 0px !important;\n  padding: 0px;\n}\n.table th[data-v-6b938bde],\n.table td[data-v-6b938bde] {\n  border: 1px !important;\n  padding: 0px;\n}\n\n/* Styling for mobile devices */\n@media (max-width: 40.0rem) {\ntd[data-v-6b938bde] {\n    display: block;\n}\n.calendar[data-v-6b938bde] {\n    /*width: 100%;*/\n    height: 330px;\n}\n.text-entry[data-v-6b938bde] {\n    width: 100%;\n}\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n.calendar[data-v-6b938bde] {\n    width: 30%;\n}\n.text-entry[data-v-6b938bde] {\n    width: 70%;\n    padding-left: 15px !important;\n}\n}\n.fixed-table-container[data-v-6b938bde] {\n  border: 0px !important;\n  padding: 0px;\n}\n", ""]);
+exports.push([module.i, "\nlabel[data-v-6b938bde] {\n  color: #bbc0c8;\n}\ntextarea[data-v-6b938bde] {\n  min-height: 295px;\n}\n.table[data-v-6b938bde] {\n  border-bottom: 0px !important;\n  padding: 0px;\n}\n.table th[data-v-6b938bde],\n.table td[data-v-6b938bde] {\n  border: 1px !important;\n  padding: 0px;\n}\n\n/* Styling for mobile devices */\n@media (max-width: 40.0rem) {\ntd[data-v-6b938bde] {\n    display: block;\n}\n.calendar[data-v-6b938bde] {\n    /*width: 100%;*/\n    height: 330px;\n}\n.text-entry[data-v-6b938bde] {\n    width: 100%;\n}\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n.calendar[data-v-6b938bde] {\n    width: 30%;\n}\n.text-entry[data-v-6b938bde] {\n    width: 70%;\n    padding-left: 15px !important;\n}\n}\n.fixed-table-container[data-v-6b938bde] {\n  border: 0px !important;\n  padding: 0px;\n}\n", ""]);
 
 /***/ }),
 /* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* overlay spinner on top */\n#overlay[data-v-ca6d01d8] {\n  padding: 50px;\n  position: absolute;\n  z-index: 1;\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n#overlay[data-v-ca6d01d8] {\n    margin-left: 350px;\n}\n}\n\n/* Styling for mobile devices */\n@media (max-width: 40.0rem) {\n#overlay[data-v-ca6d01d8] {\n    margin-left: 60px;\n}\n}\n.fade-enter-active[data-v-ca6d01d8],\n.fade-leave-active[data-v-ca6d01d8] {\n  transition: opacity .5s\n}\n.fade-enter[data-v-ca6d01d8],\n.fade-leave-to[data-v-ca6d01d8] {\n  opacity: 0\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* overlay spinner on top */\n#overlay[data-v-ca6d01d8] {\n  padding: 50px;\n  position: absolute;\n  z-index: 1;\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n#overlay[data-v-ca6d01d8] {\n    margin-left: 350px;\n}\n}\n\n/* Styling for mobile devices */\n@media (max-width: 40.0rem) {\n#overlay[data-v-ca6d01d8] {\n    margin-left: 60px;\n}\n}\n.fade-enter-active[data-v-ca6d01d8],\n.fade-leave-active[data-v-ca6d01d8] {\n  transition: opacity .5s\n}\n.fade-enter[data-v-ca6d01d8],\n.fade-leave-to[data-v-ca6d01d8] {\n  opacity: 0\n}\n", ""]);
 
 /***/ }),
 /* 172 */
@@ -48783,14 +48790,20 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Entry"
-  }, [_c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
   }, [_vm._v("\n      " + _vm._s(this.parseCreationDate(this.entry.creationDate)) + "\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_vm._v("\n      " + _vm._s(this.entry.text) + "\n    ")])])])
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h4', [_c('a', {
+    attrs: {
+      "href": "/"
+    }
+  }, [_vm._v("← Go back")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -48981,7 +48994,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "app-view"
     }
-  }, [_c('div', {
+  }, [(_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -48993,7 +49006,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "entry": _vm.entryData
     }
-  })], 1)])
+  })], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -49112,7 +49125,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('center', [_c('MoonLoader', {
     attrs: {
-      "color": "#ffffff",
+      "color": "#A8DBA8",
       "size": "100px"
     }
   })], 1)], 1)], 1)
@@ -58724,7 +58737,7 @@ module.exports = __webpack_require__(134);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\na[data-v-5a6d5dad] {\n  color: #3B8686;\n}\na[data-v-5a6d5dad]:hover {\n  color: #79BD9A;\n}\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 213 */

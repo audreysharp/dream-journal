@@ -1,5 +1,6 @@
 <template>
   <div class="Entry">
+    <h4><a href="/">← Go back</a></h4>
     <div class="panel panel-default">
       <div class="panel-heading">
         {{ this.parseCreationDate(this.entry.creationDate) }}

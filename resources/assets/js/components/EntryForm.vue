@@ -99,6 +99,11 @@ export default {
 </script>
 
 <style scoped>
+
+label {
+  color: #bbc0c8;
+}
+
 textarea {
   min-height: 295px;
 }
