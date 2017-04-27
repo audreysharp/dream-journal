@@ -17,8 +17,8 @@ class EntryController extends Controller
     public function create(Request $request) {
         // create new entry - POST /entries
         // DB::table('entries')->insert();
-        Entry::create($request->all()); // create a new entry object
-        return Response::json(['entry created' => true]);
+        $entry = Entry::create($request->all()); // create a new entry object
+        return Response::json(['entry created' => true, 'id' => $entry->id]);
     }
 
     public function show($id) {

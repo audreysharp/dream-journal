@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import EntryForm from './EntryForm';
 
 export default {

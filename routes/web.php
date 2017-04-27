@@ -32,6 +32,7 @@ Route::get('/add', function () {
 Route::get('/view/{id}', function ($id) {
     $data = [];
     $data['id'] = $id;
+    $data['newlyCreated'] = isset($_GET['created']);
     return view('view', $data);
 });
 

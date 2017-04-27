@@ -4,7 +4,7 @@
     <Spinner v-if="loading"></Spinner>
 
     <div class="EntryList" v-show="entries.length > 0 && !loading">
-      <Entry v-for="(entry, index) in entries" :key="index" :entry="entry" @updated="update" @deleted="remove(index)"></Entry>
+      <Entry v-for="(entry, index) in entries" :key="index" :entry="entry"></Entry>
     </div>
   
     <p v-show="entries.length === 0 && !loading">No one has added any dreams yet! You should <a href="http://localhost:8888/add">add one.</a></p>
@@ -50,7 +50,7 @@ export default {
         .then((response) => {
           console.log('App -> fetch success');
           // console.log(response.data);
-          this.loading = false;
+          this.loading = false; // stop showing spinner
           this.entries = response.data;
         })
         .catch((response) => {
@@ -59,19 +59,6 @@ export default {
           console.log(reponse);
           this.loading = false;
         })
-    },
-
-    update(data) { // update entry
-      this.fetch();
-      var i = this.entries.indexOf(data.entry);
-      for (var d in data) {
-        this.entries[i][d] = data[d];
-      }
-    },
-
-    remove(i) { // remove entry
-      console.log(`App -> remove ID: ${i}`);
-      this.entries.splice(i, 1);
     }
 
   }

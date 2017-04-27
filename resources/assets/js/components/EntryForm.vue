@@ -1,19 +1,20 @@
 <template>
   <div class="EntryForm">
-  
+
     <div v-show="error" class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <strong>There was an error adding your dream entry.</strong> Please try again.
     </div>
-  
+
     <!--<div v-show="success" class="alert alert-danger alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <strong>There was an error adding your dream entry.</strong> Please refresh the page and try again!.
             </div>-->
-  
+
     <Spinner v-if="loading"></Spinner>
-  
+
     <div>
+      <!-- A table was the only way to get them inline because of the Datepicker component I'm so sorry -->
       <table class="table">
         <tbody>
           <tr>
@@ -30,21 +31,19 @@
         </tbody>
       </table>
     </div>
-  
+
     <button class="btn my-btn pull-right" @click="create" :disabled="loading">Add Entry</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import Calendar from './Calendar';
 import Datepicker from 'vuejs-datepicker';
 import Spinner from './Spinner';
 
 export default {
   components: {
     Datepicker,
-    Calendar,
     Spinner
   },
 
@@ -54,7 +53,7 @@ export default {
       entry: '',
       loading: false,
       error: false,
-      success: false
+      success: false,
     }
   },
 
@@ -79,8 +78,10 @@ export default {
         .then((response) => {
           console.log('EntryForm -> sendRequest success');
           console.log(response.data);
+          // redirect user to page of newly created entry
           this.loading = false;
           this.reset();
+          window.location.href = 'http://localhost:8888/view/' + response.data.id + '?created=true';
         })
         .catch((error) => {
           console.error('EntryForm -> sendRequest error');
@@ -92,7 +93,7 @@ export default {
 
     reset() { // make form blank
       this.creationDate = new Date().toString(),
-        this.entry = ''
+      this.entry = ''
     }
   },
 };
@@ -121,18 +122,21 @@ textarea {
 
 /* Styling for mobile devices */
 @media (max-width: 40.0rem) {
+  /*.entryForm {
+    width: 100%;
+  }*/
+
   td {
     display: block;
   }
 
   .calendar {
-    /*width: 100%;*/
     height: 330px;
   }
 
-  .text-entry {
+  /*.text-entry {
     width: 100%;
-  }
+  }*/
 }
 
 /* Styling for desktop devices */

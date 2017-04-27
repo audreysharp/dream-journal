@@ -3,7 +3,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         {{ this.parseCreationDate(creationDate) }}
-        <span class="text-right pull-right"><a :href="linkToEntry">View Details</a></span>
+        <span class="pull-right"><a :href="linkToEntry">View Details</a></span>
       </div>
       <div class="panel-body">
         {{ entry.text }}
@@ -25,7 +25,7 @@
         creationDate: this.entry.creationDate,
         entryText: this.entry.text,
         id: this.entry.id,
-        linkToEntry: '/view/' + this.entry.id,
+        linkToEntry: '/view/' + this.entry.id, // to go to individual entry page
         editing: false,
         loading: false
       }

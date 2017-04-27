@@ -27,8 +27,15 @@ body {
   background-attachment: fixed;
 }
 
+@media (min-width: 40.0rem) {
+  .container {
+    width: 650px;
+  }
+}
+
+// change opacity
 .navbar-default {
-  background: rgba(248, 248, 248, 0.8);
+  background: rgba(248, 248, 248, 0.9);
 }
 
 .panel-default {
@@ -37,9 +44,10 @@ body {
 
 .panel > .panel-heading {
   background-color: rgba(255, 255, 255, 0.4);
+  color: #0B486B;
 }
 
-// my button
+// my green button
 .my-btn { 
   color: #FFFFFF; 
   background-color: #79BD9A; 
