@@ -15,17 +15,27 @@ You can view the API documentation [here](https://audreysharp.gitbooks.io/dream-
 
 Clone this repository.
 
-In MAMP > Preferences > Web Server, set the project root to the 'public' folder of the directory.
-
-The Apache port should be 8888 and the MySQL port 8889.
-The database the tables are stored in is named 'app'.
-Ensure that you already have or have created a database named 'app'.
+Run `composer install` to set up the PHP dependency manager.
 
 Run `npm install` to install the node dependencies.
 
-Run `php artisan:migrate` to make the 'entries' table for the API.
+Run `php artisan key:generate` to generate a new application key.
 
-In the terminal, enter `npm run dev`. This builds and starts the Vue application.
+In MAMP > Preferences > Web Server, set the project root to the '**public**' folder of the directory.
+
+The Apache port should be **8888** and the MySQL port **8889**.
+The database the tables are stored in is named '**app**'.
+Ensure that you already have or have created a database named 'app'.
+
+The .env file should already be set up for you. If it is not, ensure that:  
+&nbsp;&nbsp;`DB_PORT=8889`  
+&nbsp;&nbsp;`DB_DATABASE=app`  
+&nbsp;&nbsp;`DB_USERNAME=root`  
+&nbsp;&nbsp;`DB_PASSWORD=root`  
+
+Run `php artisan migrate` to make the 'entries' table in the 'app' database for the API.
+
+Run the command `npm run dev`. This builds and starts the Vue application.
 
 Point your browser to [http://localhost:8888](http://localhost:8888). This is where the application lives.
 
