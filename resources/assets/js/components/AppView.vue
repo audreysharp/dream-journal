@@ -54,14 +54,14 @@ export default {
   mounted() {
     console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
-    this.$evt.$on('upvoted', this.updateUpvotes)
-    this.$evt.$on('downvoted', this.updateDownvotes)
+    this.$evt.$on('upvote', this.updateUpvotes)
+    this.$evt.$on('downvote', this.updateDownvotes)
   },
 
   beforeDestroy() {
     console.log('AppView -> beforeDestroy')
-    this.$evt.$off('upvoted', this.updateUpvotes)
-    this.$evt.$off('downvoted', this.updateDownvotes)
+    this.$evt.$off('upvote', this.updateUpvotes)
+    this.$evt.$off('downvote', this.updateDownvotes)
   },
 
   methods: {
