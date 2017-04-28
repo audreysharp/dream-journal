@@ -23,7 +23,7 @@ Run `npm install` to install the node dependencies.
 
 Run `php artisan:migrate` to make the tables for the API.
 
-In the terminal, enter `npm run dev`. This starts the Vueapplication.
+In the terminal, enter `npm run dev`. This starts the Vue application.
 
 Point your browser to [http://localhost:8888](http://localhost:8888). This is where the application lives.
 

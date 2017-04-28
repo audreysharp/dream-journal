@@ -3,8 +3,8 @@
 <template>
   <div id="app-index" v-cloak>
 
-    <!-- Show modal only the first time the user logs into the application - if there are no entries, it's not loading, and the user didn't just delete the last entry' ' -->
-    <div v-show="!showModal && entries.length === 0 && !loading && !justDeleted" class="model fade" role="dialog">
+    <!-- Show modal only the first time the user logs into the application - if there are no entries, it's not loading, and the user didn't just delete the last entry -->
+    <div v-show="!this.showModal && this.entries.length === 0 && !this.loading && !this.showDeletedMessage" class="modal fade" role="dialog" id="startModal" style="display:block; top:60px">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -40,7 +40,9 @@
       <Entry v-for="(entry, index) in entries" :key="index" :arrayIndex="index" :entry="entry"></Entry>
     </div>
   
-    <p v-show="entries.length === 0 && !loading" class="my-message">No one has added any dreams yet! You should <a href="http://localhost:8888/add">add one.</a></p>
+    <div v-show="entries.length === 0 && !loading" class="my-message container">
+      No one has added any dreams yet! You should <a href="http://localhost:8888/add">add one.</a>
+    </div>
   
   </div>
 </template>
@@ -75,6 +77,7 @@ export default {
     this.fetch(); // get entries from database
     this.$evt.$on('indexPageUpvote', this.updateUpvotes) // add event handlers
     this.$evt.$on('indexPageDownvote', this.updateDownvotes)
+    $("#startModal").modal("show");
   },
 
   beforeDestroy() {
@@ -136,6 +139,7 @@ export default {
 
     toggleModal() { // close modal
       this.showModal = !this.showModal;
+      $("#startModal").modal("hide");
     },
 
     compare(a, b) { // function to sort entries and display the most upvoted entries first
@@ -157,9 +161,5 @@ export default {
 <style scoped>
 .my-message {
   color: #E3E5E9;
-}
-
-.my-modal {
-  display: inline;
 }
 </style>

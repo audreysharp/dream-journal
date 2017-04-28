@@ -83,7 +83,7 @@
         });
       } else {
         // remove downvoted and change color back to default
-        this.downvoted = true;
+        this.downvoted = false;
         this.downvoteArrowColor = '#0B486B';
         this.$evt.$emit('indexPageDownvote', {
           downvotes: this.entry.downvotes-1,
