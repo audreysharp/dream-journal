@@ -22,12 +22,14 @@
       </button>
       <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud"></span>&nbsp;&nbsp;Dream Journal</a>
     </div>
+    <!-- Navigation links -->
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="/">Dreams</a></li>
         <li><a href="/add">Add Dream</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://audreysharp.gitbooks.io/dream-journal/content/">API Documentation</a></li>
         <li><a href="/styleguide">Style Guide</a></li>
         <li><a href="/credits">Credits</a></li>
       </ul>
@@ -35,11 +37,13 @@
   </div>
   </nav>
 
+    <!-- Where the actual application goes -->
     <div class="container">
         @yield('content')
     </div>
 
   <script>
+    // for CSRF token to work properly
     window.Laravel = {!! json_encode([
         'csrfToken' => csrf_token(),
     ]) !!};
