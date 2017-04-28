@@ -28127,6 +28127,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -28136,8 +28138,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     EntryForm: __WEBPACK_IMPORTED_MODULE_0__EntryForm___default.a
   },
 
+  props: ['update-entry-id'],
+
   data: function data() {
-    return {};
+    return {
+      id: this.updateEntryId
+    };
   },
   mounted: function mounted() {
     console.log('App -> mounted.');
@@ -28177,6 +28183,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -28189,10 +28202,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     Spinner: __WEBPACK_IMPORTED_MODULE_2__Spinner___default.a
   },
 
+  props: ['just-deleted'],
+
   data: function data() {
     return {
       entries: [],
-      loading: false
+      loading: false,
+      showDeletedMessage: this.justDeleted
     };
   },
   mounted: function mounted() {
@@ -28220,7 +28236,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (response) {
         console.log('App -> fetch error');
         // show error
-        console.log(reponse);
+        console.log(response);
         _this.loading = false;
       });
     }
@@ -28256,6 +28272,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -28268,14 +28294,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     Spinner: __WEBPACK_IMPORTED_MODULE_2__Spinner___default.a
   },
 
-  props: ['entry-id', 'is-just-created'],
+  props: ['entry-id', 'is-just-created', 'was-just-updated'],
 
   data: function data() {
     return {
       entryData: [],
       loading: false, // stop showing spinner
       key: this.entryId, // component passed from view.blade.php file
-      justCreated: this.isJustCreated
+      justCreated: this.isJustCreated,
+      justUpdated: this.wasJustUpdated
     };
   },
   mounted: function mounted() {
@@ -28306,9 +28333,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (response) {
         console.log('AppView -> fetch error');
         // show error
-        console.log(reponse); // show error
+        console.log(response); // show error
         _this.loading = false;
       });
+    },
+    deleteEntry: function deleteEntry() {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/entries/' + this.entryData.id).then(function (response) {
+        console.log('AppView -> delete success');
+        console.log(response.data);
+        // redirect user to page of newly created entry
+        window.location.href = 'http://localhost:8888/?deleted=true';
+      }).catch(function (response) {
+        console.log('AppView -> delete error');
+        console.log(response); // show error
+      });
+    },
+    updateEntry: function updateEntry() {
+      // redirect to entry edit page
+      window.location.href = 'http://localhost:8888/add?update=' + this.key;
     },
     updateUpvotes: function updateUpvotes(data) {
       var _this2 = this;
@@ -28320,7 +28362,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this2.entryData.upvotes = data.upvotes;
       }).catch(function (response) {
         console.log('AppView -> upvote error');
-        console.log(reponse); // show error
+        console.log(response); // show error
       });
     },
     updateDownvotes: function updateDownvotes(data) {
@@ -28333,7 +28375,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this3.entryData.downvotes = data.downvotes;
       }).catch(function (response) {
         console.log('EntryView -> downvote error');
-        console.log(reponse); // show error
+        console.log(response); // show error
       });
     }
   }
@@ -28346,6 +28388,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -28438,6 +28482,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -28449,14 +28496,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     Spinner: __WEBPACK_IMPORTED_MODULE_2__Spinner___default.a
   },
 
+  props: ['id'],
+
   data: function data() {
     return {
       creationDate: new Date().toString(),
       entry: '',
       loading: false,
       error: false,
-      success: false
+      success: false,
+      key: this.id,
+      update: false
     };
+  },
+  mounted: function mounted() {
+    if (parseInt(this.key) > -1) {
+      this.setEntryData();
+      this.update = true;
+    }
   },
 
 
@@ -28468,12 +28525,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return false;
       }
       this.loading = true;
-      this.sendRequest();
+      this.sendPostRequest();
     },
-    sendRequest: function sendRequest() {
+    updateEntry: function updateEntry() {
+      this.loading = true;
+      this.sendPutRequest();
+    },
+    sendPostRequest: function sendPostRequest() {
       var _this = this;
 
-      console.log(this.creationDate);
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/entries', { // post input to 'entries' table
         creationDate: this.creationDate,
         text: this.entry
@@ -28494,6 +28554,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     reset: function reset() {
       // make form blank
       this.creationDate = new Date().toString(), this.entry = '';
+    },
+    setEntryData: function setEntryData() {
+      var _this2 = this;
+
+      console.log('AppView -> fetch');
+      this.loading = true;
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/entries/' + this.key).then(function (response) {
+        console.log('EntryForm -> fetch success');
+        // console.log(response.data);
+        _this2.loading = false;
+        _this2.creationDate = response.data.creationDate;
+        _this2.entry = response.data.text;
+      }).catch(function (response) {
+        console.log('EntryForm -> fetch error');
+        // show error
+        console.log(response); // show error
+        _this2.loading = false;
+      });
+    },
+    sendPutRequest: function sendPutRequest() {
+      var _this3 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.key, {
+        creationDate: this.creationDate,
+        text: this.entry
+      }).then(function (response) {
+        console.log('EntryForm -> update success');
+        console.log(response.data);
+        // redirect user to page of edited entry entry
+        window.location.href = 'http://localhost:8888/view/' + _this3.key + '?updated=true';
+      }).catch(function (response) {
+        console.log('EntryForm -> update error');
+        console.log(response); // show error
+      });
     }
   }
 });
@@ -28621,6 +28715,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_MoonLoader_vue__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_MoonLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_spinner_src_MoonLoader_vue__);
+//
+//
 //
 //
 //
@@ -31105,7 +31201,7 @@ exports.push([module.i, "\n.v-spinner .v-moon1\n{\n\n    -webkit-animation: v-mo
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 165 */,
@@ -31113,7 +31209,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 167 */
@@ -31127,7 +31223,7 @@ exports.push([module.i, "\nlabel[data-v-6b938bde] {\n  color: #bbc0c8;\n}\n.my-b
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* overlay spinner on top */\n#overlay[data-v-ca6d01d8] {\n  padding: 50px;\n  z-index: 1;\n  position: fixed;\n  left: calc(50vw - 100px);\n}\n.fade-enter-active[data-v-ca6d01d8],\n.fade-leave-active[data-v-ca6d01d8] {\n  transition: opacity .5s\n}\n.fade-enter[data-v-ca6d01d8],\n.fade-leave-to[data-v-ca6d01d8] {\n  opacity: 0\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* overlay spinner on top */\n#overlay[data-v-ca6d01d8] {\n  padding: 50px;\n  z-index: 1;\n  position: fixed;\n  left: calc(50vw - 100px);\n}\n.fade-enter-active[data-v-ca6d01d8],\n.fade-leave-active[data-v-ca6d01d8] {\n  transition: opacity .5s\n}\n.fade-enter[data-v-ca6d01d8],\n.fade-leave-to[data-v-ca6d01d8] {\n  opacity: 0\n}\n", ""]);
 
 /***/ }),
 /* 169 */
@@ -48809,7 +48905,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "app-index"
     }
-  }, [(_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.justDeleted),
+      expression: "justDeleted"
+    }],
+    staticClass: "alert alert-success alert-dismissible",
+    attrs: {
+      "role": "alert"
+    }
+  }, [_vm._m(0), _vm._v(" "), _c('strong', [_vm._v("Success!")]), _vm._v(" You have deleted your dream entry.\n  ")]), _vm._v(" "), (_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -48836,7 +48943,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "href": "http://localhost:8888/add"
     }
   }, [_vm._v("add one.")])])], 1)
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "alert",
+      "aria-label": "Close"
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -48918,7 +49038,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "app-add"
     }
-  }, [_c('EntryForm')], 1)
+  }, [_c('EntryForm', {
+    attrs: {
+      "id": _vm.id
+    }
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -48952,7 +49076,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "http://localhost:8888/"
     }
-  }, [_vm._v("homepage")]), _vm._v(".\n  ")]), _vm._v(" "), (_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_vm._v("homepage")]), _vm._v(".\n  ")]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.justUpdated),
+      expression: "justUpdated"
+    }],
+    staticClass: "alert alert-success alert-dismissible",
+    attrs: {
+      "role": "alert"
+    }
+  }, [_vm._m(1), _vm._v(" "), _c('strong', [_vm._v("Success!")]), _vm._v(" You have edited your dream entry.\n  ")]), _vm._v(" "), (_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -48964,8 +49099,46 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "entry": _vm.entryData
     }
-  })], 1)], 1)
+  })], 1), _vm._v(" "), _c('button', {
+    staticClass: "btn my-green-button btn-default pull-right",
+    staticStyle: {
+      "margin-top": "-5px"
+    },
+    attrs: {
+      "type": "button",
+      "disabled": _vm.loading
+    },
+    on: {
+      "click": _vm.deleteEntry
+    }
+  }, [_vm._v("Delete Entry")]), _vm._v(" "), _c('button', {
+    staticClass: "btn my-btn btn-default pull-right",
+    staticStyle: {
+      "margin-right": "7px",
+      "margin-top": "-5px"
+    },
+    attrs: {
+      "type": "button",
+      "disabled": _vm.loading
+    },
+    on: {
+      "click": _vm.updateEntry
+    }
+  }, [_vm._v("Edit Entry")])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "alert",
+      "aria-label": "Close"
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",
     attrs: {
@@ -49051,6 +49224,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])])])])])]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.update),
+      expression: "!update"
+    }],
     staticClass: "btn my-btn pull-right",
     attrs: {
       "disabled": _vm.loading
@@ -49058,7 +49237,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.create
     }
-  }, [_vm._v("Add Entry")])], 1)
+  }, [_vm._v("Add Entry")]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.update),
+      expression: "update"
+    }],
+    staticClass: "btn my-btn pull-right",
+    attrs: {
+      "disabled": _vm.loading
+    },
+    on: {
+      "click": _vm.updateEntry
+    }
+  }, [_vm._v("Update Entry")])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",

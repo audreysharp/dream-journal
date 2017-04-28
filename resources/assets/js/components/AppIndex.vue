@@ -1,5 +1,12 @@
+// Index page that shows entries
+
 <template>
   <div id="app-index" v-cloak>
+
+    <div v-show="justDeleted" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Success!</strong> You have deleted your dream entry.
+    </div>
 
     <Spinner v-if="loading"></Spinner>
 
@@ -24,10 +31,15 @@ export default {
     Spinner
   },
 
+  props: [
+    'just-deleted'
+  ],
+
   data() {
     return {
       entries: [],
-      loading: false
+      loading: false,
+      showDeletedMessage: this.justDeleted
     }
   },
 
@@ -56,7 +68,7 @@ export default {
         .catch((response) => {
           console.log('App -> fetch error');
           // show error
-          console.log(reponse);
+          console.log(response);
           this.loading = false;
         })
     }

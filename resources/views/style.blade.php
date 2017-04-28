@@ -53,10 +53,6 @@
   margin-bottom: 15px;
 }
 
-button {
-  padding: 20px;
-}
-
 .text-regular {
   font-family: Lato;
   font-weight: 400;
@@ -128,7 +124,8 @@ button {
     <button type="button" class="btn my-btn btn-default btn-lg" href="#">Large Button</button>&nbsp;
     <button type="button" class="btn btn-default" href="#">Medium Button</button>&nbsp;
     <button type="button" class="btn btn-default btn-sm" href="#">Small Button</button>&nbsp;
-    <button type="button" class="btn my-btn btn-default" href="#">Add Button</button>
+    <button type="button" class="btn my-btn btn-default" href="#" style="margin-top:5px">Add Button</button>
+    <button type="button" class="btn my-green-button">Delete Button</button>
     
     <!-- Input types -->
     <h3 class="style-heading"><b>Input</b></h3>

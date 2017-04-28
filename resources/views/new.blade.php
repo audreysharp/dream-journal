@@ -2,6 +2,6 @@
 
 @section('content')
     <div id="app">
-        <app-add></app-add>
+        <app-add :update-entry-id="{{ $id }}"></app-add>
     </div>
 @endsection

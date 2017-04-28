@@ -25,11 +25,22 @@ Route::delete('/entries/{id}', 'EntryController@destroy');
 
 // HTML/view responses
 Route::get('/', function () {
-    return view('index');
+    $data = [];
+    if (Input::has('deleted')) {
+        $data['justDeleted'] = 'true';
+    } else {
+        $data['justDeleted'] = 'false';
+    }
+    return view('index', $data);
 });
 
 Route::get('/add', function () {
-    return view('new');
+    if (Input::has('update')) {
+        $data['id'] = (string) Input::get('update');
+    } else {
+        $data['id'] = '-1';
+    }
+    return view('new', $data);
 });
 
 Route::get('/view/{id}', function ($id) {
@@ -39,6 +50,11 @@ Route::get('/view/{id}', function ($id) {
         $data['justCreated'] = 'true';
     } else {
         $data['justCreated'] = 'false';
+    }
+    if (Input::has('updated')) {
+        $data['justUpdated'] = 'true';
+    } else {
+        $data['justUpdated'] = 'false';
     }
     return view('view', $data);
 });

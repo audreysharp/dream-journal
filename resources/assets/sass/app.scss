@@ -80,3 +80,50 @@ body {
   color: #79BD9A;
   background-color: #FFFFFF;
 }
+
+// my darker green button
+.my-green-button { 
+  color: #FFFFFF; 
+  background-color: #0B486B; 
+  border-color: #204F6B; 
+} 
+ 
+.my-green-button:hover, 
+.my-green-button:focus, 
+.my-green-button:active, 
+.my-green-button.active, 
+.open .dropdown-toggle.my-green-button { 
+  color: #FFFFFF; 
+  background-color: #0B5F8F; 
+  border-color: #204F6B; 
+} 
+ 
+.my-green-button:active, 
+.my-green-button.active, 
+.open .dropdown-toggle.my-green-button { 
+  background-image: none; 
+} 
+ 
+.my-green-button.disabled, 
+.my-green-button[disabled], 
+fieldset[disabled] .my-green-button, 
+.my-green-button.disabled:hover, 
+.my-green-button[disabled]:hover, 
+fieldset[disabled] .my-green-button:hover, 
+.my-green-button.disabled:focus, 
+.my-green-button[disabled]:focus, 
+fieldset[disabled] .my-green-button:focus, 
+.my-green-button.disabled:active, 
+.my-green-button[disabled]:active, 
+fieldset[disabled] .my-green-button:active, 
+.my-green-button.disabled.active, 
+.my-green-button[disabled].active, 
+fieldset[disabled] .my-green-button.active { 
+  background-color: #0B486B; 
+  border-color: #204F6B; 
+} 
+ 
+.my-green-button .badge { 
+  color: #0B486B; 
+  background-color: #FFFFFF; 
+}

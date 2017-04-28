@@ -1,3 +1,5 @@
+// Entry view shown on homepage
+
 <template>
   <div class="Entry" @mouseover="change">
     <div class="panel panel-default">

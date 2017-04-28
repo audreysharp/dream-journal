@@ -1,6 +1,8 @@
+// Page that shows form to add an entry
+
 <template>
     <div id="app-add" v-cloak>
-      <EntryForm></EntryForm>
+      <EntryForm :id="id"></EntryForm>
     </div>
 </template>
 
@@ -13,8 +15,13 @@ export default {
     EntryForm
   },
 
+  props: [
+    'update-entry-id'
+  ],
+
   data() {
     return {
+      id: this.updateEntryId
     }
   },
 

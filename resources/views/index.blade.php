@@ -2,6 +2,6 @@
 
 @section('content')
     <div id="app">
-        <app-index></app-index>
+        <app-index :just-deleted="{{ $justDeleted }}"></app-index>
     </div>
 @endsection

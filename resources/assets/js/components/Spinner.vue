@@ -1,3 +1,5 @@
+// Spinning loader
+
 <template>
 <div id="overlay">
   <transition name="fade">

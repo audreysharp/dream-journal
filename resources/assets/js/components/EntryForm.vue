@@ -1,3 +1,5 @@
+// Form where you add entry
+
 <template>
   <div class="EntryForm">
 
@@ -27,7 +29,8 @@
       </table>
     </div>
 
-    <button class="btn my-btn pull-right" @click="create" :disabled="loading">Add Entry</button>
+    <button v-show="!update" class="btn my-btn pull-right" @click="create" :disabled="loading">Add Entry</button>
+    <button v-show="update" class="btn my-btn pull-right" @click="updateEntry" :disabled="loading">Update Entry</button>
   </div>
 </template>
 
@@ -42,6 +45,10 @@ export default {
     Spinner
   },
 
+  props: [
+    'id'
+  ],
+
   data() {
     return {
       creationDate: new Date().toString(),
@@ -49,6 +56,15 @@ export default {
       loading: false,
       error: false,
       success: false,
+      key: this.id,
+      update: false
+    }
+  },
+
+  mounted() {
+    if (parseInt(this.key) > -1) {
+      this.setEntryData();
+      this.update = true;
     }
   },
 
@@ -61,11 +77,15 @@ export default {
         return false;
       }
       this.loading = true;
-      this.sendRequest();
+      this.sendPostRequest();
     },
 
-    sendRequest() {
-      console.log(this.creationDate);
+    updateEntry() {
+      this.loading = true;
+      this.sendPutRequest();
+    },
+
+    sendPostRequest() {
       axios.post('/entries', { // post input to 'entries' table
         creationDate: this.creationDate,
         text: this.entry
@@ -89,6 +109,42 @@ export default {
     reset() { // make form blank
       this.creationDate = new Date().toString(),
       this.entry = ''
+    },
+
+    setEntryData() {
+      console.log('AppView -> fetch');
+      this.loading = true;
+      axios.get('/entries/' + this.key)
+        .then((response) => {
+          console.log('EntryForm -> fetch success');
+          // console.log(response.data);
+          this.loading = false;
+          this.creationDate = response.data.creationDate;
+          this.entry = response.data.text;
+        })
+        .catch((response) => {
+          console.log('EntryForm -> fetch error');
+          // show error
+          console.log(response); // show error
+          this.loading = false;
+        })
+    },
+
+    sendPutRequest() {
+      axios.put('/entries/' + this.key, { 
+        creationDate: this.creationDate, 
+        text: this.entry 
+      })
+        .then((response) => {
+          console.log('EntryForm -> update success');
+          console.log(response.data);
+          // redirect user to page of edited entry entry
+          window.location.href = 'http://localhost:8888/view/' + this.key + '?updated=true';
+        })
+        .catch((response) => {
+          console.log('EntryForm -> update error');
+          console.log(response); // show error
+        })
     }
   },
 };
