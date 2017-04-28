@@ -19,10 +19,12 @@ The Apache port should be 8888 and the MySQL port 8889.
 The database the tables are stored in is named 'app'.
 Ensure that you already have or have created a database named 'app'.
 
-Run npm install to install the node dependencies.
+Run `npm install` to install the node dependencies.
 
-Run php artisan:migrate to make the tables for the API.
+Run `php artisan:migrate` to make the tables for the API.
 
-Point your browser to [http://localhost:8888].  This is where you will find the link to the documentation.
+In the terminal, enter `npm run dev`. This starts the Vueapplication.
+
+Point your browser to [http://localhost:8888](http://localhost:8888). This is where the application lives.
 
 You can use any code library or GUI that allows you to make POST requests to interact with the API.
