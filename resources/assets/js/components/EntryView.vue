@@ -7,9 +7,8 @@
       <div class="panel-heading">
         {{ creationDate }}
         <span class="pull-right">
-          <span class="glyphicon glyphicon-arrow-up" @click="upvote" :style="{ color: upvoteArrowColor }" ></span>
-          <span class="glyphicon glyphicon-arrow-down" @click="downvote" :style="{ color: downvoteArrowColor }"></span>
-        </span>
+            <VoteArrows :entry="entry" style="display:inline"></VoteArrows>&nbsp;
+          </span>
       </div>
       <div class="panel-body">
         {{ entryText }}
@@ -30,8 +29,13 @@
 <script>
 
 import axios from 'axios';
+import VoteArrows from './VoteArrows';
 
 export default {
+
+  components: {
+    VoteArrows
+  },
 
   props: [
     'entry'
@@ -54,41 +58,6 @@ export default {
       var parsedDate = new Date(dateToParse);
       var result = monthNames[parsedDate.getMonth()] + ' ' + parsedDate.getDate() + ', ' + parsedDate.getFullYear();
       return result;
-    },
-
-    upvote() { // give user feedback that they've upvoted it and tell AppIndex.vue to update the upvote count
-      if (!this.upvoted) { // not already upvoted
-        this.upvoted = true;
-        this.upvoteArrowColor = '#79BD9A';
-        console.log('upvote');
-        this.$evt.$emit('upvote', {
-          upvotes: this.entry.upvotes+1
-        });
-      } else {
-        // remove upvote and change color back to default
-        this.upvoted = false;
-        this.upvoteArrowColor = '#0B486B';
-        this.$evt.$emit('upvote', {
-          upvotes: this.entry.upvotes-1
-        });
-      }
-    },
-
-    downvote() { // give user feedback that they've downvoted it and tell AppIndex.vue to update the downvoted count
-      if (!this.downvoted) {
-        this.downvoted = true;
-        this.downvoteArrowColor = '#79BD9A';
-        this.$evt.$emit('downvote', {
-          downvotes: this.entry.downvotes+1
-        });
-      } else {
-        // remove downvoted and change color back to default
-        this.downvoted = false;
-        this.downvoteArrowColor = '#0B486B';
-        this.$evt.$emit('downvote', {
-          downvotes: this.entry.downvotes-1
-        });
-      }
     }
 
   },

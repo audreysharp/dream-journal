@@ -7,8 +7,7 @@
         {{ this.parseCreationDate(creationDate) }}
         <span class="pull-right">
           <a :href="linkToEntry">View Details</a>&nbsp;&nbsp;&nbsp;
-          <span class="glyphicon glyphicon-arrow-up" @click="upvote" :style="{ color: upvoteArrowColor }" ></span>
-          <span class="glyphicon glyphicon-arrow-down" @click="downvote" :style="{ color: downvoteArrowColor }"></span>&nbsp;
+          <VoteArrows :entry="entry" :arrayIndex="arrayIndex" style="display:inline"></VoteArrows>&nbsp;
           <span>{{ totalScore }}</span>
         </span>
       </div>
@@ -21,7 +20,13 @@
 
 <script>
   
+import VoteArrows from './VoteArrows';
+
   export default {
+
+    components: {
+      VoteArrows
+    },
   
     props: [
       'entry',
@@ -50,48 +55,6 @@
         var result = monthNames[parsedDate.getMonth()] + ' ' + parsedDate.getDate() + ', ' + parsedDate.getFullYear();
         return result;
       },
-
-      upvote() { // give user feedback that they've upvoted it and tell AppIndex.vue to update the upvote count
-      if (!this.upvoted) {
-        this.upvoted = true;
-        this.upvoteArrowColor = '#79BD9A';
-        this.$evt.$emit('indexPageUpvote', {
-          upvotes: this.entry.upvotes+1,
-          id: this.id,
-          index: this.arrayIndex
-        });
-      } else {
-        // remove upvote and change color back to default
-        this.upvoted = false;
-        this.upvoteArrowColor = '#0B486B';
-        this.$evt.$emit('indexPageUpvote', {
-          upvotes: this.entry.upvotes-1,
-          id: this.id,
-          index: this.arrayIndex
-        });
-      }
-    },
-
-    downvote() { // give user feedback that they've downvoted it and tell AppIndex.vue to update the downvoted count
-      if (!this.downvoted) {
-        this.downvoted = true;
-        this.downvoteArrowColor = '#79BD9A';
-        this.$evt.$emit('indexPageDownvote', {
-          downvotes: this.entry.downvotes+1,
-          id: this.id,
-          index: this.arrayIndex
-        });
-      } else {
-        // remove downvoted and change color back to default
-        this.downvoted = false;
-        this.downvoteArrowColor = '#0B486B';
-        this.$evt.$emit('indexPageDownvote', {
-          downvotes: this.entry.downvotes-1,
-          id: this.id,
-          index: this.arrayIndex
-        });
-      }
-    }
   
     },
 

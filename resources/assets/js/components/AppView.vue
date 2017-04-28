@@ -2,13 +2,13 @@
 
 <template>
   <div id="app-view" v-cloak>
-
+  
     <!-- Show success alert if just created new entry -->
     <div v-show="justCreated" class="alert alert-success alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <strong>You have successfully posted your dream!</strong> You can view it along with the rest of the dreams on the <a href="http://localhost:8888/">homepage</a>.
     </div>
-    
+  
     <!-- Show success alert if just updated new entry -->
     <div v-show="justUpdated" class="alert alert-success alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -56,14 +56,12 @@ export default {
   mounted() {
     console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
-    this.$evt.$on('upvote', this.updateUpvotes) // add event handlers
-    this.$evt.$on('downvote', this.updateDownvotes)
+    this.$evt.$on('voted', this.updateVotes) // add event handler
   },
 
   beforeDestroy() {
     console.log('AppView -> beforeDestroy')
-    this.$evt.$off('upvote', this.updateUpvotes)
-    this.$evt.$off('downvote', this.updateDownvotes)
+    this.$evt.$off('voted', this.updateVotes) // remove event handler
   },
 
   methods: {
@@ -80,7 +78,6 @@ export default {
         })
         .catch((response) => {
           console.log('AppView -> fetch error');
-          // show error
           console.log(response); // show error
           this.loading = false;
         })
@@ -105,36 +102,12 @@ export default {
       window.location.href = 'http://localhost:8888/add?update=' + this.key;
     },
 
-    updateUpvotes(data) { // update upvote count
-      console.log('AppView -> update upvotes');
-      axios.put('/entries/' + this.entryData.id, { upvotes: data.upvotes })
-        .then((response) => {
-          console.log('AppView -> upvote success');
-          console.log(response.data);
-          this.entryData.upvotes = data.upvotes;
-        })
-        .catch((response) => {
-          console.log('AppView -> upvote error');
-          console.log(response); // show error
-        })
-    },
-
-    updateDownvotes(data) { // update downvote count
-      console.log('AppView -> update downvotes');
-      axios.put('/entries/' + this.entryData.id, { downvotes: data.downvotes })
-        .then((response) => {
-          console.log('AppView -> downvote success');
-          console.log(response.data);
-          this.entryData.downvotes = data.downvotes;
-        })
-        .catch((response) => {
-          console.log('AppView -> downvote error');
-          console.log(response); // show error
-        })
+    updateVotes(data) { // update vote count
+      this.entryData.upvotes = data.upvotes;
+      this.entryData.downvotes = data.downvotes;
     }
 
   }
-
 }
 </script>
 

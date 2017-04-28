@@ -28217,9 +28217,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -28245,17 +28242,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     console.log('AppIndex -> mounted.');
     this.fetch(); // get entries from database
-    this.$evt.$on('indexPageUpvote', this.updateUpvotes); // add event handlers
-    this.$evt.$on('indexPageDownvote', this.updateDownvotes);
-    if (this.entries.length === 0) {
-      this.showModal = true;
-      $("#startModal").modal("show");
-    }
+    this.$evt.$on('voted', this.updateVotes); // add event handler
   },
   beforeDestroy: function beforeDestroy() {
     console.log('AppIndex -> beforeDestroy.');
-    this.$evt.$off('indexPageUpvote', this.updateUpvotes);
-    this.$evt.$off('indexPageDownvote', this.updateDownvotes);
+    this.$evt.$off('voted', this.updateVotes); // remove event handler
   },
 
 
@@ -28272,6 +28263,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.loading = false; // stop showing spinner
         _this.entries = response.data;
         _this.entries.sort(_this.compare); // sort entries to display based on number of upvotes
+        if (_this.entries.length === 0) {
+          _this.toggleModal();
+        }
       }).catch(function (response) {
         console.log('AppIndex -> fetch error');
         // show error
@@ -28279,40 +28273,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.loading = false; // stop showing spinner
       });
     },
-    updateUpvotes: function updateUpvotes(data) {
-      var _this2 = this;
-
-      // 'PUT' request to update upvote count
-      console.log('AppView -> update upvotes');
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + data.id, { upvotes: data.upvotes }).then(function (response) {
-        console.log('AppIndex -> upvote success');
-        console.log(response.data);
-        // update upvote total since fetch()ing again makes all the entries reload and that is bad
-        _this2.entries[data.index].upvotes = data.upvotes;
-      }).catch(function (response) {
-        console.log('AppIndex -> upvote error');
-        console.log(response); // show error
-      });
-    },
-    updateDownvotes: function updateDownvotes(data) {
-      var _this3 = this;
-
-      // 'PUT' request to update downvote count
-      console.log('AppIndex -> update downvotes');
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + data.id, { downvotes: data.downvotes }).then(function (response) {
-        console.log('AppIndex -> downvote success');
-        console.log(response.data);
-        // update downvote total since fetch()ing again makes all the entries reload
-        _this3.entries[data.index].downvotes = data.downvotes;
-      }).catch(function (response) {
-        console.log('AppIndex -> downvote error');
-        console.log(response); // show error
-      });
+    updateVotes: function updateVotes(data) {
+      // update vote count
+      this.entries[data.index].upvotes = data.upvotes;
+      this.entries[data.index].downvotes = data.downvotes;
     },
     toggleModal: function toggleModal() {
       // close modal
       this.showModal = !this.showModal;
-      $("#startModal").modal("hide");
+      if (this.showModal) {
+        $("#startModal").modal("show");
+      } else {
+        $("#startModal").modal("hide");
+      }
     },
     compare: function compare(a, b) {
       // function to sort entries and display the most upvoted entries first
@@ -28395,13 +28368,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
-    this.$evt.$on('upvote', this.updateUpvotes); // add event handlers
-    this.$evt.$on('downvote', this.updateDownvotes);
+    this.$evt.$on('voted', this.updateVotes); // add event handler
   },
   beforeDestroy: function beforeDestroy() {
     console.log('AppView -> beforeDestroy');
-    this.$evt.$off('upvote', this.updateUpvotes);
-    this.$evt.$off('downvote', this.updateDownvotes);
+    this.$evt.$off('voted', this.updateVotes); // remove event handler
   },
 
 
@@ -28419,7 +28390,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.entryData = response.data;
       }).catch(function (response) {
         console.log('AppView -> fetch error');
-        // show error
         console.log(response); // show error
         _this.loading = false;
       });
@@ -28441,36 +28411,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // redirect to entry edit page
       window.location.href = 'http://localhost:8888/add?update=' + this.key;
     },
-    updateUpvotes: function updateUpvotes(data) {
-      var _this2 = this;
-
-      // update upvote count
-      console.log('AppView -> update upvotes');
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entryData.id, { upvotes: data.upvotes }).then(function (response) {
-        console.log('AppView -> upvote success');
-        console.log(response.data);
-        _this2.entryData.upvotes = data.upvotes;
-      }).catch(function (response) {
-        console.log('AppView -> upvote error');
-        console.log(response); // show error
-      });
-    },
-    updateDownvotes: function updateDownvotes(data) {
-      var _this3 = this;
-
-      // update downvote count
-      console.log('AppView -> update downvotes');
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entryData.id, { downvotes: data.downvotes }).then(function (response) {
-        console.log('AppView -> downvote success');
-        console.log(response.data);
-        _this3.entryData.downvotes = data.downvotes;
-      }).catch(function (response) {
-        console.log('AppView -> downvote error');
-        console.log(response); // show error
-      });
+    updateVotes: function updateVotes(data) {
+      // update vote count
+      this.entryData.upvotes = data.upvotes;
+      this.entryData.downvotes = data.downvotes;
     }
   }
-
 });
 
 /***/ }),
@@ -28479,6 +28425,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VoteArrows__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VoteArrows___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VoteArrows__);
 //
 //
 //
@@ -28499,10 +28447,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
+  components: {
+    VoteArrows: __WEBPACK_IMPORTED_MODULE_0__VoteArrows___default.a
+  },
 
   props: ['entry', 'arrayIndex'],
 
@@ -28528,48 +28481,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var parsedDate = new Date(dateToParse);
       var result = monthNames[parsedDate.getMonth()] + ' ' + parsedDate.getDate() + ', ' + parsedDate.getFullYear();
       return result;
-    },
-    upvote: function upvote() {
-      // give user feedback that they've upvoted it and tell AppIndex.vue to update the upvote count
-      if (!this.upvoted) {
-        this.upvoted = true;
-        this.upvoteArrowColor = '#79BD9A';
-        this.$evt.$emit('indexPageUpvote', {
-          upvotes: this.entry.upvotes + 1,
-          id: this.id,
-          index: this.arrayIndex
-        });
-      } else {
-        // remove upvote and change color back to default
-        this.upvoted = false;
-        this.upvoteArrowColor = '#0B486B';
-        this.$evt.$emit('indexPageUpvote', {
-          upvotes: this.entry.upvotes - 1,
-          id: this.id,
-          index: this.arrayIndex
-        });
-      }
-    },
-    downvote: function downvote() {
-      // give user feedback that they've downvoted it and tell AppIndex.vue to update the downvoted count
-      if (!this.downvoted) {
-        this.downvoted = true;
-        this.downvoteArrowColor = '#79BD9A';
-        this.$evt.$emit('indexPageDownvote', {
-          downvotes: this.entry.downvotes + 1,
-          id: this.id,
-          index: this.arrayIndex
-        });
-      } else {
-        // remove downvoted and change color back to default
-        this.downvoted = false;
-        this.downvoteArrowColor = '#0B486B';
-        this.$evt.$emit('indexPageDownvote', {
-          downvotes: this.entry.downvotes - 1,
-          id: this.id,
-          index: this.arrayIndex
-        });
-      }
     }
   },
 
@@ -28750,6 +28661,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VoteArrows__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__VoteArrows___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__VoteArrows__);
 //
 //
 //
@@ -28778,12 +28691,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
+  components: {
+    VoteArrows: __WEBPACK_IMPORTED_MODULE_1__VoteArrows___default.a
+  },
 
   props: ['entry'],
 
@@ -28805,42 +28722,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var parsedDate = new Date(dateToParse);
       var result = monthNames[parsedDate.getMonth()] + ' ' + parsedDate.getDate() + ', ' + parsedDate.getFullYear();
       return result;
-    },
-    upvote: function upvote() {
-      // give user feedback that they've upvoted it and tell AppIndex.vue to update the upvote count
-      if (!this.upvoted) {
-        // not already upvoted
-        this.upvoted = true;
-        this.upvoteArrowColor = '#79BD9A';
-        console.log('upvote');
-        this.$evt.$emit('upvote', {
-          upvotes: this.entry.upvotes + 1
-        });
-      } else {
-        // remove upvote and change color back to default
-        this.upvoted = false;
-        this.upvoteArrowColor = '#0B486B';
-        this.$evt.$emit('upvote', {
-          upvotes: this.entry.upvotes - 1
-        });
-      }
-    },
-    downvote: function downvote() {
-      // give user feedback that they've downvoted it and tell AppIndex.vue to update the downvoted count
-      if (!this.downvoted) {
-        this.downvoted = true;
-        this.downvoteArrowColor = '#79BD9A';
-        this.$evt.$emit('downvote', {
-          downvotes: this.entry.downvotes + 1
-        });
-      } else {
-        // remove downvoted and change color back to default
-        this.downvoted = false;
-        this.downvoteArrowColor = '#0B486B';
-        this.$evt.$emit('downvote', {
-          downvotes: this.entry.downvotes - 1
-        });
-      }
     }
   },
 
@@ -31368,7 +31249,7 @@ exports.push([module.i, "\n.v-spinner .v-moon1\n{\n\n    -webkit-animation: v-mo
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 165 */
@@ -31382,7 +31263,7 @@ exports.push([module.i, "\n@media (min-width: 40.0rem) {\n.container[data-v-6a0d
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 167 */
@@ -49033,23 +48914,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_vm._v("\n      " + _vm._s(_vm.creationDate) + "\n      "), _c('span', {
     staticClass: "pull-right"
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-arrow-up",
-    style: ({
-      color: _vm.upvoteArrowColor
-    }),
-    on: {
-      "click": _vm.upvote
+  }, [_c('VoteArrows', {
+    staticStyle: {
+      "display": "inline"
+    },
+    attrs: {
+      "entry": _vm.entry
     }
-  }), _vm._v(" "), _c('span', {
-    staticClass: "glyphicon glyphicon-arrow-down",
-    style: ({
-      color: _vm.downvoteArrowColor
-    }),
-    on: {
-      "click": _vm.downvote
-    }
-  })])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" \n        ")], 1)]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_vm._v("\n      " + _vm._s(_vm.entryText) + "\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "panel-footer"
@@ -49082,8 +48954,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (this.showModal),
-      expression: "this.showModal"
+      value: (_vm.showModal),
+      expression: "showModal"
     }],
     staticClass: "modal fade",
     staticStyle: {
@@ -49163,15 +49035,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-body"
-  }, [_c('p', [_c('b', [_vm._v("Welcome to the dream journal!")]), _vm._v("  This web application is a public, anonymous dream journal \n          that lets you post your dreams, view others' dreams, and share and vote on the most interesting ones.")]), _vm._v(" "), _c('p', [_vm._v("If you like an entry, you can upvote it, and it will move closer to the top. Similarly, if\n            you thought an entry was boring, you can downvote it, and it will move closer to the bottom.\n          ")]), _vm._v(" "), _c('p', [_vm._v("To get started, you can "), _c('a', {
+  }, [_c('p', [_c('b', [_vm._v("Welcome to the dream journal!")]), _vm._v(" This web application is a public, anonymous dream journal that lets you post your dreams, view others' dreams, and share and vote on the most interesting ones.")]), _vm._v(" "), _c('p', [_vm._v("If you like an entry, you can upvote it, and it will move closer to the top. Similarly, if you thought an entry was boring, you can downvote it, and it will move closer to the bottom.\n          ")]), _vm._v(" "), _c('p', [_vm._v("To get started, you can "), _c('a', {
     attrs: {
       "href": "http://localhost:8888/add"
     }
-  }, [_vm._v("add a new dream")]), _vm._v(". If you'd like, you can\n          also "), _c('a', {
+  }, [_vm._v("add a new dream")]), _vm._v(". If you'd like, you can also "), _c('a', {
     attrs: {
       "href": "https://audreysharp.gitbooks.io/dream-journal/content/"
     }
-  }, [_vm._v("view the API documentation")]), _vm._v(" for this\n          application.")])])
+  }, [_vm._v("view the API documentation")]), _vm._v(" for this application.\n          ")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",
@@ -49243,23 +49115,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": _vm.linkToEntry
     }
-  }, [_vm._v("View Details")]), _vm._v("   \n        "), _c('span', {
-    staticClass: "glyphicon glyphicon-arrow-up",
-    style: ({
-      color: _vm.upvoteArrowColor
-    }),
-    on: {
-      "click": _vm.upvote
+  }, [_vm._v("View Details")]), _vm._v("   \n        "), _c('VoteArrows', {
+    staticStyle: {
+      "display": "inline"
+    },
+    attrs: {
+      "entry": _vm.entry,
+      "arrayIndex": _vm.arrayIndex
     }
-  }), _vm._v(" "), _c('span', {
-    staticClass: "glyphicon glyphicon-arrow-down",
-    style: ({
-      color: _vm.downvoteArrowColor
-    }),
-    on: {
-      "click": _vm.downvote
-    }
-  }), _vm._v(" \n        "), _c('span', [_vm._v(_vm._s(_vm.totalScore))])])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" \n        "), _c('span', [_vm._v(_vm._s(_vm.totalScore))])], 1)]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_vm._v("\n      " + _vm._s(_vm.entry.text) + "\n    ")])])])
 },staticRenderFns: []}
@@ -59128,6 +58992,247 @@ var t=L[e]=S(A[N]);return t._k=e,t},K=$&&"symbol"==typeof A.iterator?function(e)
 __webpack_require__(132);
 module.exports = __webpack_require__(133);
 
+
+/***/ }),
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+  props: ['entry', 'arrayIndex'],
+
+  data: function data() {
+    return {
+      entryData: this.entry,
+      upvoteArrowColor: '#0B486B',
+      downvoteArrowColor: '#0B486B',
+      upvoted: false, // to toggle upvoting
+      downvoted: false };
+  },
+
+
+  methods: {
+
+    // give user feedback that they've upvoted by changing arrow color and update vote count in database table
+    upvote: function upvote() {
+      if (!this.upvoted) {
+        // not already upvoted
+        this.upvoted = true;
+        this.upvoteArrowColor = '#79BD9A';
+        console.log('upvote');
+        this.updateUpvotes(this.entry.upvotes + 1);
+      } else {
+        // if already upvoted, remove upvote and change color back to default
+        this.upvoted = false;
+        this.upvoteArrowColor = '#0B486B';
+        this.updateUpvotes(this.entry.upvotes - 1);
+      }
+    },
+
+
+    // give user feedback that they've downvoted by changing arrow color update vote count in database table
+    downvote: function downvote() {
+      if (!this.downvoted) {
+        this.downvoted = true;
+        this.downvoteArrowColor = '#79BD9A';
+        this.updateDownvotes(this.entry.downvotes + 1);
+      } else {
+        // if already downvoted, remove downvoted and change color back to default
+        this.downvoted = false;
+        this.downvoteArrowColor = '#0B486B';
+        this.updateDownvotes(this.entry.downvotes - 1);
+      }
+    },
+
+
+    // 'PUT' request to update upvote count and emit 'voted' event for parents to update
+    updateUpvotes: function updateUpvotes(newUpvoteCount) {
+      var _this = this;
+
+      console.log('AppView -> update upvotes');
+      console.log(this.entryId);
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entryId, { upvotes: newUpvoteCount }).then(function (response) {
+        console.log('AppIndex -> upvote success');
+        console.log(response.data);
+        // emit 'voted' entry so parent and grandparents components can update properly
+        _this.$evt.$emit('voted', {
+          id: _this.id,
+          index: _this.arrayIndex,
+          upvotes: newUpvoteCount,
+          downvotes: _this.entry.downvotes
+        });
+      }).catch(function (response) {
+        console.log('AppIndex -> upvote error');
+        console.log(response); // show error
+      });
+    },
+
+
+    // 'PUT' request to update downvote count and emit 'voted' event for parents to update
+    updateDownvotes: function updateDownvotes(newDownvoteCount) {
+      var _this2 = this;
+
+      console.log('AppIndex -> update downvotes');
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entryId, { downvotes: newDownvoteCount }).then(function (response) {
+        console.log('AppIndex -> downvote success');
+        console.log(response.data);
+        // emit 'voted' entry so parent and grandparents components can update properly
+        _this2.$evt.$emit('voted', {
+          id: _this2.id,
+          index: _this2.arrayIndex,
+          upvotes: _this2.entry.upvotes,
+          downvotes: newDownvoteCount
+        });
+      }).catch(function (response) {
+        console.log('AppIndex -> downvote error');
+        console.log(response); // show error
+      });
+    }
+  },
+
+  computed: {
+    // based on 'entry' property, for easier access and to make template HTML look nicer
+    entryId: function entryId() {
+      return this.entry.id;
+    },
+    upvotes: function upvotes() {
+      return this.entry.upvotes;
+    },
+    downvotes: function downvotes() {
+      return this.entry.downvotes;
+    }
+  }
+
+});
+
+/***/ }),
+/* 208 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.glyphicon-arrow-up:hover,\n.glyphicon-arrow-down:hover {\n  cursor: pointer\n}\n", ""]);
+
+/***/ }),
+/* 209 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(211)
+
+var Component = __webpack_require__(3)(
+  /* script */
+  __webpack_require__(207),
+  /* template */
+  __webpack_require__(210),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/Audrey/Dropbox/school/MEJO 583/project4/dream-journal/resources/assets/js/components/VoteArrows.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VoteArrows.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d6dec02e", Component.options)
+  } else {
+    hotAPI.reload("data-v-d6dec02e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 210 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "arrows"
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-arrow-up",
+    style: ({
+      color: _vm.upvoteArrowColor
+    }),
+    on: {
+      "click": _vm.upvote
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "glyphicon glyphicon-arrow-down",
+    style: ({
+      color: _vm.downvoteArrowColor
+    }),
+    on: {
+      "click": _vm.downvote
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-d6dec02e", module.exports)
+  }
+}
+
+/***/ }),
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(208);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("1258efc8", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-d6dec02e!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VoteArrows.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-d6dec02e!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VoteArrows.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

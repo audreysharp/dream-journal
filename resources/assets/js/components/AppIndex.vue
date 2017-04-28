@@ -2,9 +2,9 @@
 
 <template>
   <div id="app-index" v-cloak>
-
+  
     <!-- Show modal only the first time the user logs into the application - if there are no entries -->
-    <div v-show="this.showModal" class="modal fade" role="dialog" id="startModal" style="display:block; top:60px">
+    <div v-show="showModal" class="modal fade" role="dialog" id="startModal" style="display:block; top:60px">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -12,14 +12,11 @@
             <h4 class="modal-title">Welcome!</h4>
           </div>
           <div class="modal-body">
-            <p><b>Welcome to the dream journal!</b>  This web application is a public, anonymous dream journal 
-            that lets you post your dreams, view others' dreams, and share and vote on the most interesting ones.</p>
-            <p>If you like an entry, you can upvote it, and it will move closer to the top. Similarly, if
-              you thought an entry was boring, you can downvote it, and it will move closer to the bottom.
+            <p><b>Welcome to the dream journal!</b> This web application is a public, anonymous dream journal that lets you post your dreams, view others' dreams, and share and vote on the most interesting ones.</p>
+            <p>If you like an entry, you can upvote it, and it will move closer to the top. Similarly, if you thought an entry was boring, you can downvote it, and it will move closer to the bottom.
             </p>
-            <p>To get started, you can <a href="http://localhost:8888/add">add a new dream</a>. If you'd like, you can
-            also <a href="https://audreysharp.gitbooks.io/dream-journal/content/">view the API documentation</a> for this
-            application.</p>
+            <p>To get started, you can <a href="http://localhost:8888/add">add a new dream</a>. If you'd like, you can also <a href="https://audreysharp.gitbooks.io/dream-journal/content/">view the API documentation</a> for this application.
+            </p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" @click="toggleModal">Close</button>
@@ -27,7 +24,7 @@
         </div>
       </div>
     </div>
-    
+  
     <!-- Show success alert box if user just deleted entry -->
     <div v-show="justDeleted" class="alert alert-success alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -75,18 +72,12 @@ export default {
   mounted() {
     console.log('AppIndex -> mounted.')
     this.fetch(); // get entries from database
-    this.$evt.$on('indexPageUpvote', this.updateUpvotes) // add event handlers
-    this.$evt.$on('indexPageDownvote', this.updateDownvotes)
-    if (this.entries.length === 0) {
-      this.showModal = true;
-      $("#startModal").modal("show");
-    }
+    this.$evt.$on('voted', this.updateVotes) // add event handler
   },
 
   beforeDestroy() {
     console.log('AppIndex -> beforeDestroy.')
-    this.$evt.$off('indexPageUpvote', this.updateUpvotes)
-    this.$evt.$off('indexPageDownvote', this.updateDownvotes)
+    this.$evt.$off('voted', this.updateVotes) // remove event handler
   },
 
   methods: {
@@ -101,6 +92,9 @@ export default {
           this.loading = false; // stop showing spinner
           this.entries = response.data;
           this.entries.sort(this.compare); // sort entries to display based on number of upvotes
+          if (this.entries.length === 0) {
+            this.toggleModal();
+          }
         })
         .catch((response) => {
           console.log('AppIndex -> fetch error');
@@ -110,47 +104,26 @@ export default {
         })
     },
 
-    updateUpvotes(data) { // 'PUT' request to update upvote count
-      console.log('AppView -> update upvotes');
-      axios.put('/entries/' + data.id, { upvotes: data.upvotes })
-        .then((response) => {
-          console.log('AppIndex -> upvote success');
-          console.log(response.data);
-          // update upvote total since fetch()ing again makes all the entries reload and that is bad
-          this.entries[data.index].upvotes = data.upvotes;
-        })
-        .catch((response) => {
-          console.log('AppIndex -> upvote error');
-          console.log(response); // show error
-        })
-    },
-
-    updateDownvotes(data) { // 'PUT' request to update downvote count
-      console.log('AppIndex -> update downvotes');
-      axios.put('/entries/' + data.id, { downvotes: data.downvotes })
-        .then((response) => {
-          console.log('AppIndex -> downvote success');
-          console.log(response.data);
-          // update downvote total since fetch()ing again makes all the entries reload
-          this.entries[data.index].downvotes = data.downvotes;
-        })
-        .catch((response) => {
-          console.log('AppIndex -> downvote error');
-          console.log(response); // show error
-        })
+    updateVotes(data) { // update vote count
+      this.entries[data.index].upvotes = data.upvotes;
+      this.entries[data.index].downvotes = data.downvotes;
     },
 
     toggleModal() { // close modal
       this.showModal = !this.showModal;
-      $("#startModal").modal("hide");
+      if (this.showModal) {
+        $("#startModal").modal("show");
+      } else {
+        $("#startModal").modal("hide");
+      }
     },
 
     compare(a, b) { // function to sort entries and display the most upvoted entries first
       console.log(a);
-      if (a.upvotes-a.downvotes > b.upvotes-b.downvotes) {
+      if (a.upvotes - a.downvotes > b.upvotes - b.downvotes) {
         return -1;
       }
-      if (a.upvotes-a.downvotes < b.upvotes-b.downvotes) {
+      if (a.upvotes - a.downvotes < b.upvotes - b.downvotes) {
         return 1;
       }
       return 0;
