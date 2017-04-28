@@ -29,6 +29,7 @@
         <li><a href="/add">Add Dream</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="/help">Instructions</a></li>
         <li><a href="https://audreysharp.gitbooks.io/dream-journal/content/">API Documentation</a></li>
         <li><a href="/styleguide">Style Guide</a></li>
         <li><a href="/credits">Credits</a></li>

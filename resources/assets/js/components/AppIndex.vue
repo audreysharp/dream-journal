@@ -3,19 +3,45 @@
 <template>
   <div id="app-index" v-cloak>
 
+    <!-- Show modal only the first time the user logs into the application - if there are no entries, it's not loading, and the user didn't just delete the last entry' ' -->
+    <div v-show="!showModal && entries.length === 0 && !loading && !justDeleted" class="model fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" @click="toggleModal">&times;</button>
+            <h4 class="modal-title">Welcome!</h4>
+          </div>
+          <div class="modal-body">
+            <p><b>Welcome to the dream journal!</b>  This web application is a public, anonymous dream journal 
+            that lets you post your dreams, view others' dreams, and share and vote on the most interesting ones.</p>
+            <p>If you like an entry, you can upvote it, and it will move closer to the top. Similarly, if
+              you thought an entry was boring, you can downvote it, and it will move closer to the bottom.
+            </p>
+            <p>To get started, you can <a href="http://localhost:8888/add">add a new dream</a>. If you'd like, you can
+            also <a href="https://audreysharp.gitbooks.io/dream-journal/content/">view the API documentation</a> for this
+            application.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" @click="toggleModal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Show success alert box if user just deleted entry -->
     <div v-show="justDeleted" class="alert alert-success alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <strong>Success!</strong> You have deleted your dream entry.
     </div>
-
+  
     <Spinner v-if="loading"></Spinner>
-
+  
     <div class="EntryList" v-show="entries.length > 0 && !loading">
       <Entry v-for="(entry, index) in entries" :key="index" :arrayIndex="index" :entry="entry"></Entry>
     </div>
   
-    <p v-show="entries.length === 0 && !loading">No one has added any dreams yet! You should <a href="http://localhost:8888/add">add one.</a></p>
-
+    <p v-show="entries.length === 0 && !loading" class="my-message">No one has added any dreams yet! You should <a href="http://localhost:8888/add">add one.</a></p>
+  
   </div>
 </template>
 
@@ -39,7 +65,8 @@ export default {
     return {
       entries: [],
       loading: false,
-      showDeletedMessage: this.justDeleted // show success message if entry was just deleted
+      showDeletedMessage: this.justDeleted, // show success message if entry was just deleted
+      showModal: false // show instructions on start
     }
   },
 
@@ -67,6 +94,7 @@ export default {
           // console.log(response.data);
           this.loading = false; // stop showing spinner
           this.entries = response.data;
+          this.entries.sort(this.compare); // sort entries to display based on number of upvotes
         })
         .catch((response) => {
           console.log('AppIndex -> fetch error');
@@ -104,6 +132,21 @@ export default {
           console.log('AppIndex -> downvote error');
           console.log(response); // show error
         })
+    },
+
+    toggleModal() { // close modal
+      this.showModal = !this.showModal;
+    },
+
+    compare(a, b) { // function to sort entries and display the most upvoted entries first
+      console.log(a);
+      if (a.upvotes-a.downvotes > b.upvotes-b.downvotes) {
+        return -1;
+      }
+      if (a.upvotes-a.downvotes < b.upvotes-b.downvotes) {
+        return 1;
+      }
+      return 0;
     }
 
   }
@@ -112,7 +155,11 @@ export default {
 </script>
 
 <style scoped>
-p {
+.my-message {
   color: #E3E5E9;
+}
+
+.my-modal {
+  display: inline;
 }
 </style>

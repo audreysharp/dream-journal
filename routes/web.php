@@ -34,6 +34,7 @@ Route::get('/', function () {
     return view('index', $data);
 });
 
+// Add or update entry
 Route::get('/add', function () {
     if (Input::has('update')) { // if ?update={id} in URL
         $data['id'] = (string) Input::get('update');
@@ -43,6 +44,7 @@ Route::get('/add', function () {
     return view('new', $data);
 });
 
+// View single entry
 Route::get('/view/{id}', function ($id) {
     $data = [];
     $data['id'] = $id;
@@ -59,10 +61,17 @@ Route::get('/view/{id}', function ($id) {
     return view('view', $data);
 });
 
+// View styleguide
 Route::get('/styleguide', function () {
     return view('style');
 });
 
+// View credits
 Route::get('/credits', function () {
     return view('credits');
+});
+
+// View instructions
+Route::get('/help', function () {
+    return view('help');
 });

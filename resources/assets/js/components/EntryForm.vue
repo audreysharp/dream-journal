@@ -3,6 +3,7 @@
 <template>
   <div class="EntryForm">
 
+    <!-- Show success alert if error adding new entry -->
     <div v-show="error" class="alert alert-danger alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <strong>There was an error adding your dream entry.</strong> Please try again.
@@ -11,7 +12,6 @@
     <Spinner v-if="loading"></Spinner>
 
     <div>
-      <!-- A table was the only way to get them inline because of the Datepicker component I'm so sorry -->
       <table class="table">
         <tbody>
           <tr>
@@ -51,13 +51,12 @@ export default {
 
   data() {
     return {
-      creationDate: new Date().toString(),
+      creationDate: new Date().toString(), // populate calendar
       entry: '',
       loading: false,
-      error: false,
-      success: false,
+      error: false, // display error message
       key: this.id, // ID of entry if editing
-      update: false
+      update: false // allows application to check if updating entry or adding new entry
     }
   },
 
@@ -87,8 +86,8 @@ export default {
       this.sendPutRequest();
     },
 
-    sendPostRequest() {
-      axios.post('/entries', { // post input to 'entries' table
+    sendPostRequest() { // add entry
+      axios.post('/entries', { // POST input to 'entries' table
         creationDate: this.creationDate,
         text: this.entry
       })
@@ -133,7 +132,7 @@ export default {
     },
 
     sendPutRequest() { // update entry
-      axios.put('/entries/' + this.key, { 
+      axios.put('/entries/' + this.key, { // PUT new entry fields in table
         creationDate: this.creationDate, 
         text: this.entry 
       })

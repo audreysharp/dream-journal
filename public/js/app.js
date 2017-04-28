@@ -28192,6 +28192,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -28210,7 +28236,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       entries: [],
       loading: false,
-      showDeletedMessage: this.justDeleted // show success message if entry was just deleted
+      showDeletedMessage: this.justDeleted, // show success message if entry was just deleted
+      showModal: false // show instructions on start
     };
   },
   mounted: function mounted() {
@@ -28238,6 +28265,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // console.log(response.data);
         _this.loading = false; // stop showing spinner
         _this.entries = response.data;
+        _this.entries.sort(_this.compare); // sort entries to display based on number of upvotes
       }).catch(function (response) {
         console.log('AppIndex -> fetch error');
         // show error
@@ -28274,6 +28302,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('AppIndex -> downvote error');
         console.log(response); // show error
       });
+    },
+    toggleModal: function toggleModal() {
+      // close modal
+      this.showModal = !this.showModal;
+    },
+    compare: function compare(a, b) {
+      // function to sort entries and display the most upvoted entries first
+      console.log(a);
+      if (a.upvotes - a.downvotes > b.upvotes - b.downvotes) {
+        return -1;
+      }
+      if (a.upvotes - a.downvotes < b.upvotes - b.downvotes) {
+        return 1;
+      }
+      return 0;
     }
   }
 
@@ -28291,6 +28334,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EntryView___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__EntryView__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Spinner__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Spinner__);
+//
+//
 //
 //
 //
@@ -28477,6 +28522,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return result;
     },
     upvote: function upvote() {
+      // give user feedback that they've upvoted it and tell AppIndex.vue to update the upvote count
       if (!this.upvoted) {
         this.upvoted = true;
         this.upvoteArrowColor = '#79BD9A';
@@ -28497,6 +28543,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     downvote: function downvote() {
+      // give user feedback that they've downvoted it and tell AppIndex.vue to update the downvoted count
       if (!this.downvoted) {
         this.downvoted = true;
         this.downvoteArrowColor = '#79BD9A';
@@ -28589,13 +28636,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   data: function data() {
     return {
-      creationDate: new Date().toString(),
+      creationDate: new Date().toString(), // populate calendar
       entry: '',
       loading: false,
-      error: false,
-      success: false,
+      error: false, // display error message
       key: this.id, // ID of entry if editing
-      update: false
+      update: false // allows application to check if updating entry or adding new entry
     };
   },
   mounted: function mounted() {
@@ -28627,7 +28673,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     sendPostRequest: function sendPostRequest() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/entries', { // post input to 'entries' table
+      // add entry
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/entries', { // POST input to 'entries' table
         creationDate: this.creationDate,
         text: this.entry
       }).then(function (response) {
@@ -28671,7 +28718,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this3 = this;
 
       // update entry
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.key, {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.key, { // PUT new entry fields in table
         creationDate: this.creationDate,
         text: this.entry
       }).then(function (response) {
@@ -28752,6 +28799,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return result;
     },
     upvote: function upvote() {
+      // give user feedback that they've upvoted it and tell AppIndex.vue to update the upvote count
       if (!this.upvoted) {
         // not already upvoted
         this.upvoted = true;
@@ -28770,6 +28818,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     downvote: function downvote() {
+      // give user feedback that they've downvoted it and tell AppIndex.vue to update the downvoted count
       if (!this.downvoted) {
         this.downvoted = true;
         this.downvoteArrowColor = '#79BD9A';
@@ -31307,7 +31356,7 @@ exports.push([module.i, "\n.v-spinner .v-moon1\n{\n\n    -webkit-animation: v-mo
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 167 */
@@ -49007,6 +49056,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
+      value: (!_vm.showModal && _vm.entries.length === 0 && !_vm.loading && !_vm.justDeleted),
+      expression: "!showModal && entries.length === 0 && !loading && !justDeleted"
+    }],
+    staticClass: "model fade",
+    attrs: {
+      "role": "dialog"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog"
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.toggleModal
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('h4', {
+    staticClass: "modal-title"
+  }, [_vm._v("Welcome!")])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.toggleModal
+    }
+  }, [_vm._v("Close")])])])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
       value: (_vm.justDeleted),
       expression: "justDeleted"
     }],
@@ -49014,7 +49100,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "role": "alert"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('strong', [_vm._v("Success!")]), _vm._v(" You have deleted your dream entry.\n  ")]), _vm._v(" "), (_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_vm._m(1), _vm._v(" "), _c('strong', [_vm._v("Success!")]), _vm._v(" You have deleted your dream entry.\n  ")]), _vm._v(" "), (_vm.loading) ? _c('Spinner') : _vm._e(), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -49036,13 +49122,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       rawName: "v-show",
       value: (_vm.entries.length === 0 && !_vm.loading),
       expression: "entries.length === 0 && !loading"
-    }]
+    }],
+    staticClass: "my-message"
   }, [_vm._v("No one has added any dreams yet! You should "), _c('a', {
     attrs: {
       "href": "http://localhost:8888/add"
     }
   }, [_vm._v("add one.")])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal-body"
+  }, [_c('p', [_c('b', [_vm._v("Welcome to the dream journal!")]), _vm._v("  This web application is a public, anonymous dream journal \n          that lets you post your dreams, view others' dreams, and share and vote on the most interesting ones.")]), _vm._v(" "), _c('p', [_vm._v("If you like an entry, you can upvote it, and it will move closer to the top. Similarly, if\n            you thought an entry was boring, you can downvote it, and it will move closer to the bottom.\n          ")]), _vm._v(" "), _c('p', [_vm._v("To get started, you can "), _c('a', {
+    attrs: {
+      "href": "http://localhost:8888/add"
+    }
+  }, [_vm._v("add a new dream")]), _vm._v(". If you'd like, you can\n          also "), _c('a', {
+    attrs: {
+      "href": "https://audreysharp.gitbooks.io/dream-journal/content/"
+    }
+  }, [_vm._v("view the API documentation")]), _vm._v(" for this\n          application.")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",
     attrs: {
@@ -58937,7 +59036,7 @@ module.exports = __webpack_require__(133);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\np[data-v-2ce3aac6] {\n  color: #E3E5E9;\n}\n", ""]);
+exports.push([module.i, "\n.my-message[data-v-2ce3aac6] {\n  color: #E3E5E9;\n}\n.my-modal[data-v-2ce3aac6] {\n  display: inline;\n}\n", ""]);
 
 /***/ }),
 /* 208 */

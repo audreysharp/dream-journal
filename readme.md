@@ -2,6 +2,8 @@
 
 A public, anonymous dream journal that lets you post your dreams, view others' dreams, and share and vote on the most interesting ones.
 
+If you like an entry, you can upvote it, and it will move closer to the top. Similarly, if you thought an entry was boring, you can downvote it, and it will move closer to the bottom.
+
 This web application was built with Laravel, PHP, Vue.js, and Bootstrap.
 
 ### Screenshot

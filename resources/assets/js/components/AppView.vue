@@ -2,12 +2,14 @@
 
 <template>
   <div id="app-view" v-cloak>
-  
+
+    <!-- Show success alert if just created new entry -->
     <div v-show="justCreated" class="alert alert-success alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <strong>You have successfully posted your dream!</strong> You can view it along with the rest of the dreams on the <a href="http://localhost:8888/">homepage</a>.
     </div>
-
+    
+    <!-- Show success alert if just updated new entry -->
     <div v-show="justUpdated" class="alert alert-success alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <strong>Success!</strong> You have edited your dream entry.

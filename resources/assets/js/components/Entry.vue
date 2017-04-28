@@ -51,7 +51,7 @@
         return result;
       },
 
-      upvote() {
+      upvote() { // give user feedback that they've upvoted it and tell AppIndex.vue to update the upvote count
       if (!this.upvoted) {
         this.upvoted = true;
         this.upvoteArrowColor = '#79BD9A';
@@ -72,7 +72,7 @@
       }
     },
 
-    downvote() {
+    downvote() { // give user feedback that they've downvoted it and tell AppIndex.vue to update the downvoted count
       if (!this.downvoted) {
         this.downvoted = true;
         this.downvoteArrowColor = '#79BD9A';
