@@ -27182,10 +27182,11 @@ __webpack_require__(159);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// event bus
+// Event bus to emit events between child and parent
 var evt = new Vue();
 Vue.prototype.$evt = evt;
 
+// Add route components
 Vue.component('app-index', __webpack_require__(174));
 Vue.component('app-add', __webpack_require__(173));
 Vue.component('app-view', __webpack_require__(175));
@@ -28138,7 +28139,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     EntryForm: __WEBPACK_IMPORTED_MODULE_0__EntryForm___default.a
   },
 
-  props: ['update-entry-id'],
+  props: ['update-entry-id' // ID of entry to update passed from .blade file
+  ],
 
   data: function data() {
     return {
@@ -28146,10 +28148,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   mounted: function mounted() {
-    console.log('App -> mounted.');
+    console.log('AppAdd -> mounted.');
   },
   beforeDestroy: function beforeDestroy() {
-    console.log('App -> beforeDestroy.');
+    console.log('AppAddAppAdd -> beforeDestroy.');
   },
 
 
@@ -28208,17 +28210,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       entries: [],
       loading: false,
-      showDeletedMessage: this.justDeleted
+      showDeletedMessage: this.justDeleted // show success message if entry was just deleted
     };
   },
   mounted: function mounted() {
     console.log('AppIndex -> mounted.');
     this.fetch(); // get entries from database
-    this.$evt.$on('indexPageUpvote', this.updateUpvotes);
+    this.$evt.$on('indexPageUpvote', this.updateUpvotes); // add event handlers
     this.$evt.$on('indexPageDownvote', this.updateDownvotes);
   },
   beforeDestroy: function beforeDestroy() {
-    console.log('App -> beforeDestroy.');
+    console.log('AppIndex -> beforeDestroy.');
     this.$evt.$off('indexPageUpvote', this.updateUpvotes);
     this.$evt.$off('indexPageDownvote', this.updateDownvotes);
   },
@@ -28232,12 +28234,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       console.log('App -> fetch');
       this.loading = true;
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/entries').then(function (response) {
-        console.log('App -> fetch success');
+        console.log('AppIndex -> fetch success');
         // console.log(response.data);
         _this.loading = false; // stop showing spinner
         _this.entries = response.data;
       }).catch(function (response) {
-        console.log('App -> fetch error');
+        console.log('AppIndex -> fetch error');
         // show error
         console.log(response);
         _this.loading = false; // stop showing spinner
@@ -28246,28 +28248,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateUpvotes: function updateUpvotes(data) {
       var _this2 = this;
 
+      // 'PUT' request to update upvote count
       console.log('AppView -> update upvotes');
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + data.id, { upvotes: data.upvotes }).then(function (response) {
-        console.log('AppView -> upvote success');
+        console.log('AppIndex -> upvote success');
         console.log(response.data);
-        // update upvote total since fetch()ing again makes all the entires reload and that is bad
+        // update upvote total since fetch()ing again makes all the entries reload and that is bad
         _this2.entries[data.index].upvotes = data.upvotes;
       }).catch(function (response) {
-        console.log('AppView -> upvote error');
+        console.log('AppIndex -> upvote error');
         console.log(response); // show error
       });
     },
     updateDownvotes: function updateDownvotes(data) {
       var _this3 = this;
 
-      console.log('EntryView -> update downvotes');
+      // 'PUT' request to update downvote count
+      console.log('AppIndex -> update downvotes');
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + data.id, { downvotes: data.downvotes }).then(function (response) {
-        console.log('EntryView -> downvote success');
+        console.log('AppIndex -> downvote success');
         console.log(response.data);
-        // update downvote total since fetch()ing again makes all the entires reload
+        // update downvote total since fetch()ing again makes all the entries reload
         _this3.entries[data.index].downvotes = data.downvotes;
       }).catch(function (response) {
-        console.log('EntryView -> downvote error');
+        console.log('AppIndex -> downvote error');
         console.log(response); // show error
       });
     }
@@ -28331,14 +28335,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       entryData: [],
       loading: false, // stop showing spinner
       key: this.entryId, // component passed from view.blade.php file
-      justCreated: this.isJustCreated,
-      justUpdated: this.wasJustUpdated
+      justCreated: this.isJustCreated, // if new entry was just created, show success alert box
+      justUpdated: this.wasJustUpdated // if entry was just updated, show success alert box
     };
   },
   mounted: function mounted() {
     console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
-    this.$evt.$on('upvote', this.updateUpvotes);
+    this.$evt.$on('upvote', this.updateUpvotes); // add event handlers
     this.$evt.$on('downvote', this.updateDownvotes);
   },
   beforeDestroy: function beforeDestroy() {
@@ -28368,6 +28372,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     deleteEntry: function deleteEntry() {
+      // delete dream journal entry
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/entries/' + this.entryData.id).then(function (response) {
         console.log('AppView -> delete success');
         console.log(response.data);
@@ -28379,12 +28384,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     updateEntry: function updateEntry() {
+      // update journal entry
       // redirect to entry edit page
       window.location.href = 'http://localhost:8888/add?update=' + this.key;
     },
     updateUpvotes: function updateUpvotes(data) {
       var _this2 = this;
 
+      // update upvote count
       console.log('AppView -> update upvotes');
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entryData.id, { upvotes: data.upvotes }).then(function (response) {
         console.log('AppView -> upvote success');
@@ -28398,13 +28405,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateDownvotes: function updateDownvotes(data) {
       var _this3 = this;
 
-      console.log('EntryView -> update downvotes');
+      // update downvote count
+      console.log('AppView -> update downvotes');
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.entryData.id, { downvotes: data.downvotes }).then(function (response) {
-        console.log('EntryView -> downvote success');
+        console.log('AppView -> downvote success');
         console.log(response.data);
         _this3.entryData.downvotes = data.downvotes;
       }).catch(function (response) {
-        console.log('EntryView -> downvote error');
+        console.log('AppView -> downvote error');
         console.log(response); // show error
       });
     }
@@ -28451,12 +28459,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       entryText: this.entry.text,
       id: this.entry.id,
       linkToEntry: '/view/' + this.entry.id, // to go to individual entry page
-      editing: false,
-      loading: false,
+      loading: false, // show spinner
       upvoteArrowColor: '#0B486B',
       downvoteArrowColor: '#0B486B',
       upvoted: false, // to toggle upvoting
-      downvoted: false
+      downvoted: false // toggle downvoting
     };
   },
 
@@ -28587,11 +28594,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       loading: false,
       error: false,
       success: false,
-      key: this.id,
+      key: this.id, // ID of entry if editing
       update: false
     };
   },
   mounted: function mounted() {
+    // web.php router sends key as -1 if not editing an existing entry
+    // so if editing an existing entry, populate it with the data
     if (parseInt(this.key) > -1) {
       this.setEntryData();
       this.update = true;
@@ -28601,6 +28610,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     create: function create() {
+      // create new entry
       console.log('EntryForm -> create');
       if (this.loading) {
         alert('Request is already being made');
@@ -28610,6 +28620,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.sendPostRequest();
     },
     updateEntry: function updateEntry() {
+      // update entry
       this.loading = true;
       this.sendPutRequest();
     },
@@ -28640,6 +28651,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     setEntryData: function setEntryData() {
       var _this2 = this;
 
+      // populate fields with entry you're editing
       console.log('AppView -> fetch');
       this.loading = true;
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/entries/' + this.key).then(function (response) {
@@ -28658,6 +28670,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     sendPutRequest: function sendPutRequest() {
       var _this3 = this;
 
+      // update entry
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + this.key, {
         creationDate: this.creationDate,
         text: this.entry
@@ -28725,7 +28738,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       upvoteArrowColor: '#0B486B',
       downvoteArrowColor: '#0B486B',
       upvoted: false, // to toggle upvoting
-      downvoted: false
+      downvoted: false // toggle downvoting
     };
   },
 
@@ -28740,6 +28753,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     upvote: function upvote() {
       if (!this.upvoted) {
+        // not already upvoted
         this.upvoted = true;
         this.upvoteArrowColor = '#79BD9A';
         console.log('upvote');
@@ -28774,6 +28788,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   computed: {
+    // based on 'entry' property, for easier access and to make template HTML look nicer
     entryText: function entryText() {
       return this.entry.text;
     },
@@ -31299,7 +31314,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\nlabel[data-v-6b938bde] {\n  color: #bbc0c8;\n}\n.my-btn[data-v-6b938bde] {\n  margin-top: -25px;\n}\ntextarea[data-v-6b938bde] {\n  min-height: 295px;\n}\n.table[data-v-6b938bde] {\n  border-bottom: 0px !important;\n  padding: 0px;\n}\n.table th[data-v-6b938bde],\n.table td[data-v-6b938bde] {\n  border: 1px !important;\n  padding: 0px;\n}\n\n/* Styling for mobile devices */\n@media (max-width: 40.0rem) {\n  /*.entryForm {\n    width: 100%;\n  }*/\ntd[data-v-6b938bde] {\n    display: block;\n}\n.calendar[data-v-6b938bde] {\n    height: 330px;\n}\n\n  /*.text-entry {\n    width: 100%;\n  }*/\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n.calendar[data-v-6b938bde] {\n    width: 45%;\n}\n.text-entry[data-v-6b938bde] {\n    width: 55%;\n    padding-left: 15px !important;\n}\n}\n.fixed-table-container[data-v-6b938bde] {\n  border: 0px !important;\n  padding: 0px;\n}\n", ""]);
+exports.push([module.i, "\nlabel[data-v-6b938bde] {\n  color: #E3E5E9;\n}\n.my-btn[data-v-6b938bde] {\n  margin-top: -25px;\n}\ntextarea[data-v-6b938bde] {\n  min-height: 295px;\n}\n.table[data-v-6b938bde] {\n  border-bottom: 0px !important;\n  padding: 0px;\n}\n.table th[data-v-6b938bde],\n.table td[data-v-6b938bde] {\n  border: 1px !important;\n  padding: 0px;\n}\n\n/* Styling for mobile devices */\n@media (max-width: 40.0rem) {\ntd[data-v-6b938bde] {\n    display: block;\n}\n.calendar[data-v-6b938bde] {\n    height: 330px;\n}\n}\n\n/* Styling for desktop devices */\n@media (min-width: 40.0rem) {\n.calendar[data-v-6b938bde] {\n    width: 45%;\n}\n.text-entry[data-v-6b938bde] {\n    width: 55%;\n    padding-left: 15px !important;\n}\n}\n.fixed-table-container[data-v-6b938bde] {\n  border: 0px !important;\n  padding: 0px;\n}\n", ""]);
 
 /***/ }),
 /* 168 */
@@ -58922,7 +58937,7 @@ module.exports = __webpack_require__(133);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\np[data-v-2ce3aac6] {\n  color: #bbc0c8;\n}\n", ""]);
+exports.push([module.i, "\np[data-v-2ce3aac6] {\n  color: #E3E5E9;\n}\n", ""]);
 
 /***/ }),
 /* 208 */
@@ -58988,7 +59003,7 @@ if(false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 212 */

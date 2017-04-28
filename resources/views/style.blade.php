@@ -2,9 +2,8 @@
 
 @section('styles')
 <style>
-
 * {
-  color: #bbc0c8;
+  color: #e3e5e9;
 }
 
 /* Color boxes */
@@ -20,10 +19,6 @@
   background-color: #0B486B;
 }
 
-.white {
-  background-color: #ffffff;
-}
-
 .teal {
   background-color: #3B8686;
 }
@@ -37,7 +32,7 @@
 }
 
 .gray {
-  background-color: #bbc0c8
+  background-color: #e3e5e9
 }
 
 /* Fonts */
@@ -72,6 +67,10 @@
   font-family: Raleway;
   font-weight: 700;
 }
+
+.light-text {
+  color: #9599a0
+}
 </style>
 @endsection
 
@@ -89,9 +88,7 @@
     <br>
     <div class="box seafoam"></div> #A8DBA8
     <br>
-    <div class="box gray"></div> #BBC0C8
-    <br>
-    <div class="box white"></div> #FFFFFF
+    <div class="box gray"></div> #E3E5E9
     
     <h3 class="style-heading"><b>Typography</b></h3>
     
@@ -117,15 +114,15 @@
   
     <p><b>A paragraph.</b> Proin scelerisque sed turpis id suscipit. Duis vitae nibh id risus tristique tristique. Duis non posuere mi, nec tincidunt lectus. Praesent in ex quis libero dictum porta. Curabitur efficitur, purus vel egestas vestibulum, eros nunc rutrum ipsum, eget interdum diam turpis sed nibh.</p>
     <p class="lead"><b>p.lead paragraph.</b> Morbi vitae bibendum neque, id egestas enim. Etiam fermentum gravida orci, quis rhoncus purus aliquam non. Maecenas sit amet sapien sit amet ligula dapibus rhoncus. Nulla consectetur egestas tempor.</p>
-    <p class="light text-muted"><b>p.light-text paragraph.</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc risus erat, vulputate vel commodo et, rutrum eu dolor. Curabitur id mauris a odio condimentum pretium. In eget aliquam tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p class="light-text"><b>p.light-text paragraph.</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc risus erat, vulputate vel commodo et, rutrum eu dolor. Curabitur id mauris a odio condimentum pretium. In eget aliquam tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     
     <!-- Button types -->
     <h3 class="style-heading"><b>Buttons</b></h3>
-    <button type="button" class="btn my-btn btn-default btn-lg" href="#">Large Button</button>&nbsp;
-    <button type="button" class="btn btn-default" href="#">Medium Button</button>&nbsp;
-    <button type="button" class="btn btn-default btn-sm" href="#">Small Button</button>&nbsp;
-    <button type="button" class="btn my-btn btn-default" href="#" style="margin-top:5px">Add Button</button>
-    <button type="button" class="btn my-green-button">Delete Button</button>
+    <button type="button" class="btn my-btn btn-default btn-lg" href="#" style="margin-top:5px">Large Button</button>&nbsp;
+    <button type="button" class="btn btn-default" href="#" style="margin-top:5px">Medium Button</button>&nbsp;
+    <button type="button" class="btn btn-default btn-sm" href="#" style="margin-top:5px">Small Button</button>&nbsp;
+    <button type="button" class="btn my-btn btn-default" href="#" style="margin-top:5px">Add Button</button>&nbsp;
+    <button type="button" class="btn my-green-button" href="#" style="margin-top:5px">Delete Button</button>
     
     <!-- Input types -->
     <h3 class="style-heading"><b>Input</b></h3>

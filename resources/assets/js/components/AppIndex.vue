@@ -39,19 +39,19 @@ export default {
     return {
       entries: [],
       loading: false,
-      showDeletedMessage: this.justDeleted
+      showDeletedMessage: this.justDeleted // show success message if entry was just deleted
     }
   },
 
   mounted() {
     console.log('AppIndex -> mounted.')
     this.fetch(); // get entries from database
-    this.$evt.$on('indexPageUpvote', this.updateUpvotes)
+    this.$evt.$on('indexPageUpvote', this.updateUpvotes) // add event handlers
     this.$evt.$on('indexPageDownvote', this.updateDownvotes)
   },
 
   beforeDestroy() {
-    console.log('App -> beforeDestroy.')
+    console.log('AppIndex -> beforeDestroy.')
     this.$evt.$off('indexPageUpvote', this.updateUpvotes)
     this.$evt.$off('indexPageDownvote', this.updateDownvotes)
   },
@@ -63,45 +63,45 @@ export default {
       this.loading = true;
       axios.get('/entries')
         .then((response) => {
-          console.log('App -> fetch success');
+          console.log('AppIndex -> fetch success');
           // console.log(response.data);
           this.loading = false; // stop showing spinner
           this.entries = response.data;
         })
         .catch((response) => {
-          console.log('App -> fetch error');
+          console.log('AppIndex -> fetch error');
           // show error
           console.log(response);
           this.loading = false; // stop showing spinner
         })
     },
 
-    updateUpvotes(data) {
+    updateUpvotes(data) { // 'PUT' request to update upvote count
       console.log('AppView -> update upvotes');
       axios.put('/entries/' + data.id, { upvotes: data.upvotes })
         .then((response) => {
-          console.log('AppView -> upvote success');
+          console.log('AppIndex -> upvote success');
           console.log(response.data);
-          // update upvote total since fetch()ing again makes all the entires reload and that is bad
+          // update upvote total since fetch()ing again makes all the entries reload and that is bad
           this.entries[data.index].upvotes = data.upvotes;
         })
         .catch((response) => {
-          console.log('AppView -> upvote error');
+          console.log('AppIndex -> upvote error');
           console.log(response); // show error
         })
     },
 
-    updateDownvotes(data) {
-      console.log('EntryView -> update downvotes');
+    updateDownvotes(data) { // 'PUT' request to update downvote count
+      console.log('AppIndex -> update downvotes');
       axios.put('/entries/' + data.id, { downvotes: data.downvotes })
         .then((response) => {
-          console.log('EntryView -> downvote success');
+          console.log('AppIndex -> downvote success');
           console.log(response.data);
-          // update downvote total since fetch()ing again makes all the entires reload
+          // update downvote total since fetch()ing again makes all the entries reload
           this.entries[data.index].downvotes = data.downvotes;
         })
         .catch((response) => {
-          console.log('EntryView -> downvote error');
+          console.log('AppIndex -> downvote error');
           console.log(response); // show error
         })
     }
@@ -113,6 +113,6 @@ export default {
 
 <style scoped>
 p {
-  color: #bbc0c8;
+  color: #E3E5E9;
 }
 </style>

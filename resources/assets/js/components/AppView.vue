@@ -46,15 +46,15 @@ export default {
       entryData: [],
       loading: false, // stop showing spinner
       key: this.entryId, // component passed from view.blade.php file
-      justCreated: this.isJustCreated,
-      justUpdated: this.wasJustUpdated
+      justCreated: this.isJustCreated, // if new entry was just created, show success alert box
+      justUpdated: this.wasJustUpdated // if entry was just updated, show success alert box
     }
   },
 
   mounted() {
     console.log('AppView -> mounted');
     this.fetch(this.key); // get entry from database
-    this.$evt.$on('upvote', this.updateUpvotes)
+    this.$evt.$on('upvote', this.updateUpvotes) // add event handlers
     this.$evt.$on('downvote', this.updateDownvotes)
   },
 
@@ -84,7 +84,7 @@ export default {
         })
     },
 
-    deleteEntry() {
+    deleteEntry() { // delete dream journal entry
       axios.delete('/entries/' + this.entryData.id)
         .then((response) => {
           console.log('AppView -> delete success');
@@ -98,12 +98,12 @@ export default {
         })
     },
 
-    updateEntry() {
+    updateEntry() { // update journal entry
       // redirect to entry edit page
       window.location.href = 'http://localhost:8888/add?update=' + this.key;
     },
 
-    updateUpvotes(data) {
+    updateUpvotes(data) { // update upvote count
       console.log('AppView -> update upvotes');
       axios.put('/entries/' + this.entryData.id, { upvotes: data.upvotes })
         .then((response) => {
@@ -117,16 +117,16 @@ export default {
         })
     },
 
-    updateDownvotes(data) {
-      console.log('EntryView -> update downvotes');
+    updateDownvotes(data) { // update downvote count
+      console.log('AppView -> update downvotes');
       axios.put('/entries/' + this.entryData.id, { downvotes: data.downvotes })
         .then((response) => {
-          console.log('EntryView -> downvote success');
+          console.log('AppView -> downvote success');
           console.log(response.data);
           this.entryData.downvotes = data.downvotes;
         })
         .catch((response) => {
-          console.log('EntryView -> downvote error');
+          console.log('AppView -> downvote error');
           console.log(response); // show error
         })
     }

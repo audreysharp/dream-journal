@@ -56,12 +56,14 @@ export default {
       loading: false,
       error: false,
       success: false,
-      key: this.id,
+      key: this.id, // ID of entry if editing
       update: false
     }
   },
 
   mounted() {
+    // web.php router sends key as -1 if not editing an existing entry
+    // so if editing an existing entry, populate it with the data
     if (parseInt(this.key) > -1) {
       this.setEntryData();
       this.update = true;
@@ -70,7 +72,7 @@ export default {
 
   methods: {
 
-    create() {
+    create() { // create new entry
       console.log('EntryForm -> create');
       if (this.loading) {
         alert('Request is already being made');
@@ -80,7 +82,7 @@ export default {
       this.sendPostRequest();
     },
 
-    updateEntry() {
+    updateEntry() { // update entry
       this.loading = true;
       this.sendPutRequest();
     },
@@ -111,7 +113,7 @@ export default {
       this.entry = ''
     },
 
-    setEntryData() {
+    setEntryData() { // populate fields with entry you're editing
       console.log('AppView -> fetch');
       this.loading = true;
       axios.get('/entries/' + this.key)
@@ -130,7 +132,7 @@ export default {
         })
     },
 
-    sendPutRequest() {
+    sendPutRequest() { // update entry
       axios.put('/entries/' + this.key, { 
         creationDate: this.creationDate, 
         text: this.entry 
@@ -153,7 +155,7 @@ export default {
 <style scoped>
 
 label {
-  color: #bbc0c8;
+  color: #E3E5E9;
 }
 
 .my-btn {
@@ -177,10 +179,6 @@ textarea {
 
 /* Styling for mobile devices */
 @media (max-width: 40.0rem) {
-  /*.entryForm {
-    width: 100%;
-  }*/
-
   td {
     display: block;
   }
@@ -188,10 +186,6 @@ textarea {
   .calendar {
     height: 330px;
   }
-
-  /*.text-entry {
-    width: 100%;
-  }*/
 }
 
 /* Styling for desktop devices */

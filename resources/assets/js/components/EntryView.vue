@@ -34,7 +34,7 @@ import axios from 'axios';
 export default {
 
   props: [
-    'entry',
+    'entry'
   ],
 
   data() {
@@ -43,7 +43,7 @@ export default {
       upvoteArrowColor: '#0B486B',
       downvoteArrowColor: '#0B486B',
       upvoted: false, // to toggle upvoting
-      downvoted: false
+      downvoted: false // toggle downvoting
     }
   },
 
@@ -57,7 +57,7 @@ export default {
     },
 
     upvote() {
-      if (!this.upvoted) {
+      if (!this.upvoted) { // not already upvoted
         this.upvoted = true;
         this.upvoteArrowColor = '#79BD9A';
         console.log('upvote');
@@ -93,7 +93,7 @@ export default {
 
   },
 
-  computed: {
+  computed: { // based on 'entry' property, for easier access and to make template HTML look nicer
     entryText() {
       return this.entry.text
     },

@@ -34,12 +34,11 @@
         entryText: this.entry.text,
         id: this.entry.id,
         linkToEntry: '/view/' + this.entry.id, // to go to individual entry page
-        editing: false,
-        loading: false,
+        loading: false, // show spinner
         upvoteArrowColor: '#0B486B',
         downvoteArrowColor: '#0B486B',
         upvoted: false, // to toggle upvoting
-        downvoted: false
+        downvoted: false // toggle downvoting
       }
     },
   

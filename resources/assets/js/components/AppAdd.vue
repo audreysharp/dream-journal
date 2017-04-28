@@ -16,7 +16,7 @@ export default {
   },
 
   props: [
-    'update-entry-id'
+    'update-entry-id' // ID of entry to update passed from .blade file
   ],
 
   data() {
@@ -26,11 +26,11 @@ export default {
   },
 
   mounted() {
-    console.log('App -> mounted.')
+    console.log('AppAdd -> mounted.')
   },
 
   beforeDestroy() {
-    console.log('App -> beforeDestroy.')
+    console.log('AppAddAppAdd -> beforeDestroy.')
   },
 
   methods: {

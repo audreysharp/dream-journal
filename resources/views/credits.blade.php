@@ -2,9 +2,8 @@
 
 @section('styles')
 <style>
-
 * {
-  color: #bbc0c8;
+  color: #E3E5E9;
 }
 </style>
 @endsection
