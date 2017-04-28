@@ -6,6 +6,8 @@ If you like an entry, you can upvote it, and it will move closer to the top. Sim
 
 This web application was built with Laravel, PHP, Vue.js, and Bootstrap.
 
+You can view the API documentation [here](https://audreysharp.gitbooks.io/dream-journal/content/).
+
 ### Screenshot
 ![screenshot](screenshot.png)
 
