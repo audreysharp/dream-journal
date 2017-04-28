@@ -1,4 +1,4 @@
-// Component that shows upvote/downvote arrows
+// Component that handles upvoting and downvoting
 
 <template>
   <div class="arrows">

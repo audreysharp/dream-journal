@@ -28,3 +28,19 @@ In the terminal, enter `npm run dev`. This builds and starts the Vue application
 Point your browser to [http://localhost:8888](http://localhost:8888). This is where the application lives.
 
 You can use any code library or GUI that allows you to make POST requests to interact with the API.
+
+___
+
+### Technical Details
+
+Laravel and PHP are used for the backend. Eloquent ORM is used for database handling. Vue.js was used for building the user interface. Bootstrap was the CSS framework used to style the user interface.
+
+#### Vue Components
+* AppAdd - Page that shows form to add an entry
+* AppIndex - Index page that shows entries
+* AppView - View page that allows you to view single entry, vote on an entry, and delete or update an entry
+* Entry - Entry view shown on homepage (used in AppIndex.vue)
+* EntryForm - Form where you add entry (used in AppAdd.vue)
+* EntryView - Shows single entry in /view/{id} (used in AppView.vue)
+* Spinner - Spinning loader
+* VoteArrows - Handles upvoting and downvoting (used in Entry.vue and EntryView.vue)
