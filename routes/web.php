@@ -26,7 +26,7 @@ Route::delete('/entries/{id}', 'EntryController@destroy');
 // HTML/view responses
 Route::get('/', function () {
     $data = [];
-    if (Input::has('deleted')) {
+    if (Input::has('deleted')) { // if ?deleted=true in URL
         $data['justDeleted'] = 'true';
     } else {
         $data['justDeleted'] = 'false';
@@ -35,7 +35,7 @@ Route::get('/', function () {
 });
 
 Route::get('/add', function () {
-    if (Input::has('update')) {
+    if (Input::has('update')) { // if ?update={id} in URL
         $data['id'] = (string) Input::get('update');
     } else {
         $data['id'] = '-1';
@@ -46,12 +46,12 @@ Route::get('/add', function () {
 Route::get('/view/{id}', function ($id) {
     $data = [];
     $data['id'] = $id;
-    if (Input::has('created')) {
+    if (Input::has('created')) { // if ?created=true in URL
         $data['justCreated'] = 'true';
     } else {
         $data['justCreated'] = 'false';
     }
-    if (Input::has('updated')) {
+    if (Input::has('updated')) { // if ?updated=true in URL
         $data['justUpdated'] = 'true';
     } else {
         $data['justUpdated'] = 'false';
