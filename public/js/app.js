@@ -28214,10 +28214,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     console.log('AppIndex -> mounted.');
     this.fetch(); // get entries from database
+    this.$evt.$on('indexPageUpvote', this.updateUpvotes);
+    this.$evt.$on('indexPageDownvote', this.updateDownvotes);
   },
   beforeDestroy: function beforeDestroy() {
     console.log('App -> beforeDestroy.');
-    this.$evt.$off('addEntry', this.entryAdded);
+    this.$evt.$off('indexPageUpvote', this.updateUpvotes);
+    this.$evt.$off('indexPageDownvote', this.updateDownvotes);
   },
 
 
@@ -28237,7 +28240,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('App -> fetch error');
         // show error
         console.log(response);
-        _this.loading = false;
+        _this.loading = false; // stop showing spinner
+      });
+    },
+    updateUpvotes: function updateUpvotes(data) {
+      var _this2 = this;
+
+      console.log('AppView -> update upvotes');
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + data.id, { upvotes: data.upvotes }).then(function (response) {
+        console.log('AppView -> upvote success');
+        console.log(response.data);
+        // update upvote total since fetch()ing again makes all the entires reload and that is bad
+        _this2.entries[data.index].upvotes = data.upvotes;
+      }).catch(function (response) {
+        console.log('AppView -> upvote error');
+        console.log(response); // show error
+      });
+    },
+    updateDownvotes: function updateDownvotes(data) {
+      var _this3 = this;
+
+      console.log('EntryView -> update downvotes');
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/entries/' + data.id, { downvotes: data.downvotes }).then(function (response) {
+        console.log('EntryView -> downvote success');
+        console.log(response.data);
+        // update downvote total since fetch()ing again makes all the entires reload
+        _this3.entries[data.index].downvotes = data.downvotes;
+      }).catch(function (response) {
+        console.log('EntryView -> downvote error');
+        console.log(response); // show error
       });
     }
   }
@@ -28256,7 +28287,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EntryView___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__EntryView__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Spinner__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Spinner__);
-//
 //
 //
 //
@@ -28404,11 +28434,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-  props: ['entry'],
+  props: ['entry', 'arrayIndex'],
 
   data: function data() {
     return {
@@ -28417,7 +28452,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       id: this.entry.id,
       linkToEntry: '/view/' + this.entry.id, // to go to individual entry page
       editing: false,
-      loading: false
+      loading: false,
+      upvoteArrowColor: '#0B486B',
+      downvoteArrowColor: '#0B486B',
+      upvoted: false, // to toggle upvoting
+      downvoted: false
     };
   },
 
@@ -28430,8 +28469,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var result = monthNames[parsedDate.getMonth()] + ' ' + parsedDate.getDate() + ', ' + parsedDate.getFullYear();
       return result;
     },
-    change: function change() {
-      // alert("mouseover");
+    upvote: function upvote() {
+      if (!this.upvoted) {
+        this.upvoted = true;
+        this.upvoteArrowColor = '#79BD9A';
+        this.$evt.$emit('indexPageUpvote', {
+          upvotes: this.entry.upvotes + 1,
+          id: this.id,
+          index: this.arrayIndex
+        });
+      } else {
+        // remove upvote and change color back to default
+        this.upvoted = false;
+        this.upvoteArrowColor = '#0B486B';
+        this.$evt.$emit('indexPageUpvote', {
+          upvotes: this.entry.upvotes - 1,
+          id: this.id,
+          index: this.arrayIndex
+        });
+      }
+    },
+    downvote: function downvote() {
+      if (!this.downvoted) {
+        this.downvoted = true;
+        this.downvoteArrowColor = '#79BD9A';
+        this.$evt.$emit('indexPageDownvote', {
+          downvotes: this.entry.downvotes + 1,
+          id: this.id,
+          index: this.arrayIndex
+        });
+      } else {
+        // remove downvoted and change color back to default
+        this.downvoted = true;
+        this.downvoteArrowColor = '#0B486B';
+        this.$evt.$emit('indexPageDownvote', {
+          downvotes: this.entry.downvotes - 1,
+          id: this.id,
+          index: this.arrayIndex
+        });
+      }
+    }
+  },
+
+  computed: {
+    totalScore: function totalScore() {
+      return this.entry.upvotes - this.entry.downvotes;
     }
   }
 
@@ -28625,6 +28707,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -28657,14 +28743,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.upvoted = true;
         this.upvoteArrowColor = '#79BD9A';
         console.log('upvote');
-        this.$evt.$emit('upvoted', {
+        this.$evt.$emit('upvote', {
           upvotes: this.entry.upvotes + 1
         });
       } else {
         // remove upvote and change color back to default
         this.upvoted = false;
         this.upvoteArrowColor = '#0B486B';
-        this.$evt.$emit('upvoted', {
+        this.$evt.$emit('upvote', {
           upvotes: this.entry.upvotes - 1
         });
       }
@@ -28673,14 +28759,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       if (!this.downvoted) {
         this.downvoted = true;
         this.downvoteArrowColor = '#79BD9A';
-        this.$evt.$emit('downvoted', {
+        this.$evt.$emit('downvote', {
           downvotes: this.entry.downvotes + 1
         });
       } else {
         // remove downvoted and change color back to default
         this.downvoted = false;
         this.downvoteArrowColor = '#0B486B';
-        this.$evt.$emit('downvoted', {
+        this.$evt.$emit('downvote', {
           downvotes: this.entry.downvotes - 1
         });
       }
@@ -28702,6 +28788,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     downvotes: function downvotes() {
       return this.entry.downvotes;
+    },
+    totalScore: function totalScore() {
+      return this.entry.upvotes - this.entry.downvotes;
     }
   }
 
@@ -31197,19 +31286,13 @@ exports = module.exports = __webpack_require__(2)();
 exports.push([module.i, "\n.v-spinner .v-moon1\n{\n\n    -webkit-animation: v-moonStretchDelay 0.6s 0s infinite linear;\n            animation: v-moonStretchDelay 0.6s 0s infinite linear;\n    -webkit-animation-fill-mode: forwards;\n            animation-fill-mode: forwards;\n    position: relative;\n}\n.v-spinner .v-moon2\n{\n    -webkit-animation: v-moonStretchDelay 0.6s 0s infinite linear;\n            animation: v-moonStretchDelay 0.6s 0s infinite linear;\n    -webkit-animation-fill-mode: forwards;\n            animation-fill-mode: forwards;\n    opacity: 0.8;\n    position: absolute;\n}\n.v-spinner .v-moon3\n{\n    opacity: 0.1;\n}\n@-webkit-keyframes v-moonStretchDelay\n{\n100%\n    {\n        -webkit-transform: rotate(360deg);\n                transform: rotate(360deg);\n}\n}\n@keyframes v-moonStretchDelay\n{\n100%\n    {\n        -webkit-transform: rotate(360deg);\n                transform: rotate(360deg);\n}\n}\n", ""]);
 
 /***/ }),
-/* 164 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-/***/ }),
+/* 164 */,
 /* 165 */,
 /* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 167 */
@@ -48739,7 +48822,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(190)
+__webpack_require__(212)
 
 var Component = __webpack_require__(3)(
   /* script */
@@ -48747,7 +48830,7 @@ var Component = __webpack_require__(3)(
   /* template */
   __webpack_require__(182),
   /* scopeId */
-  "data-v-5a6d5dad",
+  null,
   /* cssModules */
   null
 )
@@ -48880,7 +48963,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_vm._v("\n      " + _vm._s(_vm.entryText) + "\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "panel-footer"
-  }, [_c('b', [_vm._v("Upvotes")]), _vm._v(": " + _vm._s(_vm.upvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Downvotes")]), _vm._v(": " + _vm._s(_vm.downvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Share Link")]), _vm._v(": http://localhost:8888/view/" + _vm._s(_vm.entryId) + "\n    ")])])])
+  }, [_c('b', [_vm._v("Total Entry Score")]), _vm._v(": " + _vm._s(_vm.totalScore) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Upvotes")]), _vm._v(": " + _vm._s(_vm.upvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Downvotes")]), _vm._v(": " + _vm._s(_vm.downvotes) + "\n      "), _c('br'), _vm._v(" "), _c('b', [_vm._v("Share Link")]), _vm._v(": http://localhost:8888/view/" + _vm._s(_vm.entryId) + "\n    ")])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('h4', [_c('a', {
     attrs: {
@@ -48928,6 +49011,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('Entry', {
       key: index,
       attrs: {
+        "arrayIndex": index,
         "entry": entry
       }
     })
@@ -49003,10 +49087,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "Entry",
-    on: {
-      "mouseover": _vm.change
-    }
+    staticClass: "Entry"
   }, [_c('div', {
     staticClass: "panel panel-default"
   }, [_c('div', {
@@ -49017,7 +49098,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": _vm.linkToEntry
     }
-  }, [_vm._v("View Details")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("View Details")]), _vm._v("   \n        "), _c('span', {
+    staticClass: "glyphicon glyphicon-arrow-up",
+    style: ({
+      color: _vm.upvoteArrowColor
+    }),
+    on: {
+      "click": _vm.upvote
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "glyphicon glyphicon-arrow-down",
+    style: ({
+      color: _vm.downvoteArrowColor
+    }),
+    on: {
+      "click": _vm.downvote
+    }
+  }), _vm._v(" \n        "), _c('span', [_vm._v(_vm._s(_vm.totalScore))])])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_vm._v("\n      " + _vm._s(_vm.entry.text) + "\n    ")])])])
 },staticRenderFns: []}
@@ -49099,7 +49196,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "entry": _vm.entryData
     }
-  })], 1), _vm._v(" "), _c('button', {
+  }), _vm._v(" "), _c('button', {
     staticClass: "btn my-green-button btn-default pull-right",
     staticStyle: {
       "margin-top": "-5px"
@@ -49124,7 +49221,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.updateEntry
     }
-  }, [_vm._v("Edit Entry")])], 1)
+  }, [_vm._v("Edit Entry")])], 1)], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",
@@ -49356,32 +49453,7 @@ if(false) {
 }
 
 /***/ }),
-/* 190 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(164);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(4)("a3248410", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5a6d5dad&scoped=true!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Entry.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5a6d5dad&scoped=true!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Entry.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 190 */,
 /* 191 */,
 /* 192 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -58903,6 +58975,39 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-6a0de215&scoped=true!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AppAdd.vue", function() {
      var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-6a0de215&scoped=true!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AppAdd.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(211);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("47cce1a6", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5a6d5dad!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Entry.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5a6d5dad!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Entry.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

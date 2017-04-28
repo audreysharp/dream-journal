@@ -17,10 +17,9 @@
   
     <div class="EntryDisplay" v-show="!loading">
       <EntryView :entry="entryData"></EntryView>
+      <button type="button" class="btn my-green-button btn-default pull-right" @click="deleteEntry" :disabled="loading" style="margin-top:-5px">Delete Entry</button>
+      <button type="button" class="btn my-btn btn-default pull-right" @click="updateEntry" :disabled="loading" style="margin-right: 7px; margin-top:-5px">Edit Entry</button>
     </div>
-
-    <button type="button" class="btn my-green-button btn-default pull-right" @click="deleteEntry" :disabled="loading" style="margin-top:-5px">Delete Entry</button>
-    <button type="button" class="btn my-btn btn-default pull-right" @click="updateEntry" :disabled="loading" style="margin-right: 7px; margin-top:-5px">Edit Entry</button>
   </div>
 </template>
 

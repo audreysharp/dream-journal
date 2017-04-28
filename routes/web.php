@@ -59,7 +59,7 @@ Route::get('/view/{id}', function ($id) {
     return view('view', $data);
 });
 
-Route::get('/style', function () {
+Route::get('/styleguide', function () {
     return view('style');
 });
 

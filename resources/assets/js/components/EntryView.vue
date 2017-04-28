@@ -1,3 +1,5 @@
+// Component that shows single entry in /view/{id}
+
 <template>
   <div class="Entry">
     <h4><a href="/">← View all</a></h4>
@@ -13,6 +15,8 @@
         {{ entryText }}
       </div>
       <div class="panel-footer">
+        <b>Total Entry Score</b>: {{ totalScore }}
+        <br>
         <b>Upvotes</b>: {{ upvotes }}
         <br>
         <b>Downvotes</b>: {{ downvotes }}
@@ -57,14 +61,14 @@ export default {
         this.upvoted = true;
         this.upvoteArrowColor = '#79BD9A';
         console.log('upvote');
-        this.$evt.$emit('upvoted', {
+        this.$evt.$emit('upvote', {
           upvotes: this.entry.upvotes+1
         });
       } else {
         // remove upvote and change color back to default
         this.upvoted = false;
         this.upvoteArrowColor = '#0B486B';
-        this.$evt.$emit('upvoted', {
+        this.$evt.$emit('upvote', {
           upvotes: this.entry.upvotes-1
         });
       }
@@ -74,14 +78,14 @@ export default {
       if (!this.downvoted) {
         this.downvoted = true;
         this.downvoteArrowColor = '#79BD9A';
-        this.$evt.$emit('downvoted', {
+        this.$evt.$emit('downvote', {
           downvotes: this.entry.downvotes+1
         });
       } else {
         // remove downvoted and change color back to default
         this.downvoted = false;
         this.downvoteArrowColor = '#0B486B';
-        this.$evt.$emit('downvoted', {
+        this.$evt.$emit('downvote', {
           downvotes: this.entry.downvotes-1
         });
       }
@@ -109,6 +113,10 @@ export default {
     downvotes() {
       return this.entry.downvotes
     },
+
+    totalScore() {
+      return this.entry.upvotes - this.entry.downvotes
+    }
   }
 
 }

@@ -28,7 +28,7 @@
         <li><a href="/add">Add Dream</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/style">Style Guide</a></li>
+        <li><a href="/styleguide">Style Guide</a></li>
         <li><a href="/credits">Credits</a></li>
       </ul>
     </div>

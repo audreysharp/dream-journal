@@ -11,7 +11,7 @@
     <Spinner v-if="loading"></Spinner>
 
     <div class="EntryList" v-show="entries.length > 0 && !loading">
-      <Entry v-for="(entry, index) in entries" :key="index" :entry="entry"></Entry>
+      <Entry v-for="(entry, index) in entries" :key="index" :arrayIndex="index" :entry="entry"></Entry>
     </div>
   
     <p v-show="entries.length === 0 && !loading">No one has added any dreams yet! You should <a href="http://localhost:8888/add">add one.</a></p>
@@ -46,11 +46,14 @@ export default {
   mounted() {
     console.log('AppIndex -> mounted.')
     this.fetch(); // get entries from database
+    this.$evt.$on('indexPageUpvote', this.updateUpvotes)
+    this.$evt.$on('indexPageDownvote', this.updateDownvotes)
   },
 
   beforeDestroy() {
     console.log('App -> beforeDestroy.')
-    this.$evt.$off('addEntry', this.entryAdded)
+    this.$evt.$off('indexPageUpvote', this.updateUpvotes)
+    this.$evt.$off('indexPageDownvote', this.updateDownvotes)
   },
 
   methods: {
@@ -69,7 +72,37 @@ export default {
           console.log('App -> fetch error');
           // show error
           console.log(response);
-          this.loading = false;
+          this.loading = false; // stop showing spinner
+        })
+    },
+
+    updateUpvotes(data) {
+      console.log('AppView -> update upvotes');
+      axios.put('/entries/' + data.id, { upvotes: data.upvotes })
+        .then((response) => {
+          console.log('AppView -> upvote success');
+          console.log(response.data);
+          // update upvote total since fetch()ing again makes all the entires reload and that is bad
+          this.entries[data.index].upvotes = data.upvotes;
+        })
+        .catch((response) => {
+          console.log('AppView -> upvote error');
+          console.log(response); // show error
+        })
+    },
+
+    updateDownvotes(data) {
+      console.log('EntryView -> update downvotes');
+      axios.put('/entries/' + data.id, { downvotes: data.downvotes })
+        .then((response) => {
+          console.log('EntryView -> downvote success');
+          console.log(response.data);
+          // update downvote total since fetch()ing again makes all the entires reload
+          this.entries[data.index].downvotes = data.downvotes;
+        })
+        .catch((response) => {
+          console.log('EntryView -> downvote error');
+          console.log(response); // show error
         })
     }
 
