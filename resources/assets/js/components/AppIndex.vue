@@ -3,8 +3,8 @@
 <template>
   <div id="app-index" v-cloak>
 
-    <!-- Show modal only the first time the user logs into the application - if there are no entries, it's not loading, and the user didn't just delete the last entry -->
-    <div v-show="!this.showModal && this.entries.length === 0 && !this.loading && !this.showDeletedMessage" class="modal fade" role="dialog" id="startModal" style="display:block; top:60px">
+    <!-- Show modal only the first time the user logs into the application - if there are no entries -->
+    <div v-show="this.showModal" class="modal fade" role="dialog" id="startModal" style="display:block; top:60px">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -77,7 +77,10 @@ export default {
     this.fetch(); // get entries from database
     this.$evt.$on('indexPageUpvote', this.updateUpvotes) // add event handlers
     this.$evt.$on('indexPageDownvote', this.updateDownvotes)
-    $("#startModal").modal("show");
+    if (this.entries.length === 0) {
+      this.showModal = true;
+      $("#startModal").modal("show");
+    }
   },
 
   beforeDestroy() {

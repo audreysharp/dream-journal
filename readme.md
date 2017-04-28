@@ -13,7 +13,7 @@ This web application was built with Laravel, PHP, Vue.js, and Bootstrap.
 
 Clone this repository.
 
-In MAMP, set the project root to the 'public' folder of the project.
+In MAMP > Preferences > Web Server, set the project root to the 'public' folder of the directory.
 
 The Apache port should be 8888 and the MySQL port 8889.
 The database the tables are stored in is named 'app'.
@@ -21,9 +21,9 @@ Ensure that you already have or have created a database named 'app'.
 
 Run `npm install` to install the node dependencies.
 
-Run `php artisan:migrate` to make the tables for the API.
+Run `php artisan:migrate` to make the 'entries' table for the API.
 
-In the terminal, enter `npm run dev`. This starts the Vue application.
+In the terminal, enter `npm run dev`. This builds and starts the Vue application.
 
 Point your browser to [http://localhost:8888](http://localhost:8888). This is where the application lives.
 
