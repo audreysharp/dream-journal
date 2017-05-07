@@ -1,4 +1,4 @@
-## Dream Journal
+# Dream Journal
 
 A public, anonymous dream journal that lets you post your dreams, view others' dreams, and share and vote on the most interesting ones.
 
@@ -11,7 +11,7 @@ You can view the API documentation [here](https://audreysharp.gitbooks.io/dream-
 ### Screenshot
 ![screenshot](screenshot.png)
 
-### Setup
+## Setup
 
 Clone this repository.
 
@@ -43,7 +43,7 @@ You can use any code library or GUI that allows you to make POST requests to int
 
 ___
 
-### Technical Details
+## Technical Details
 
 Laravel and PHP are used for the backend. Eloquent ORM is used for database handling. Vue.js was used for building the user interface. Bootstrap was the CSS framework used to style the user interface.
 

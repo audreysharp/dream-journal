@@ -54,7 +54,7 @@ export default {
   methods: {
 
     parseCreationDate(dateToParse) { // parse date to "month day, year"
-      var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       var parsedDate = new Date(dateToParse);
       var result = monthNames[parsedDate.getMonth()] + ' ' + parsedDate.getDate() + ', ' + parsedDate.getFullYear();
       return result;
@@ -92,8 +92,4 @@ export default {
 </script>
 
 <style>
-.glyphicon-arrow-up:hover,
-.glyphicon-arrow-down:hover {
-  cursor: pointer
-}
 </style>
